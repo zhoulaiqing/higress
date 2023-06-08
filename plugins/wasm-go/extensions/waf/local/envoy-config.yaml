@@ -36,21 +36,23 @@ static_resources:
                             path: "/user-agent"
                           route:
                             cluster: httpbin_server
-                        - name: "route_3"
-                          match:
-                            path: "/flask/test1"
-                          route:
-                            cluster: flask_server
-                        - name: "route_4"
-                          match:
-                            path: "/flask/test2"
-                          route:
-                            cluster: flask_server
-                        - name: "route_finally"
+                        # - name: "route_flask"
+                        #   match:
+                        #     prefix: "/flask"
+                        #   route:
+                        #     cluster: flask_server
+                        - name: "route_httpbin"
                           match:
                             prefix: "/"
                           route:
                             cluster: httpbin_server
+                        # - name: "route_mock"
+                        #   match:
+                        #     prefix: "/"
+                        #   direct_response:
+                        #     status: 200
+                        #     body:
+                        #       inline_string: "mock response\n"
                 http_filters:
                   - name: envoy.filters.http.wasm
                     typed_config:
@@ -101,7 +103,7 @@ static_resources:
                             }
                         vm_config:
                           runtime: "envoy.wasm.runtime.v8"
-                          vm_id: "my_vm_id"
+                          vm_id: "10086"
                           code:
                             local:
                               filename: "build/main.wasm"
