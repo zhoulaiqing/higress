@@ -7,6 +7,7 @@ require (
 	github.com/stretchr/testify v1.8.0
 	github.com/tetratelabs/proxy-wasm-go-sdk v0.19.1-0.20220822060051-f9d179a57f8c
 	github.com/tidwall/gjson v1.14.3
+	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df
 )
 
 require (
