@@ -32,6 +32,15 @@ func (bf *BloomFilter) AddIpv6(ip string) {
 
 }
 
+func setBitsInRange(c, a, b int) int {
+	// 首先创建一个掩码，将目标范围内的位设置为1，其他位保持为0
+	mask := (1 << (b - a + 1)) - 1<<a
+
+	// 将掩码与c进行按位或运算，将目标范围内的位设置为1
+	result := c | mask
+	return result
+}
+
 func (bf *BloomFilter) Contains(data string) bool {
 	hash1, hash2 := hashData(data)
 	if bf.bits[hash1%64]&(1<<(hash1%64)) == 0 {
@@ -68,7 +77,7 @@ func ipv4ToInt(ip string) (uint64, error) {
 	return ipInt, nil
 }
 
-func IPRange(ipStr string) (uint32, uint32, error) {
+func IPRange(ipStr string) (uint64, uint64, error) {
 	var ip net.IP
 	var mask net.IPMask
 
@@ -90,8 +99,8 @@ func IPRange(ipStr string) (uint32, uint32, error) {
 		mask = net.IPv4Mask(255, 255, 255, 255)
 	}
 
-	ipInt := ipToUint32(ip)
-	maskInt := ipMaskToUint32(mask)
+	ipInt := ipToUint64(ip)
+	maskInt := ipMaskToUint64(mask)
 
 	networkInt := ipInt & maskInt
 	minIPInt := networkInt
@@ -100,13 +109,13 @@ func IPRange(ipStr string) (uint32, uint32, error) {
 	return minIPInt, maxIPInt, nil
 }
 
-func ipToUint32(ip net.IP) uint32 {
-	return (uint32(ip[0]) << 24) | (uint32(ip[1]) << 16) | (uint32(ip[2]) << 8) | uint32(ip[3])
+func ipToUint64(ip net.IP) uint64 {
+	return (uint64(ip[0]) << 24) | (uint64(ip[1]) << 16) | (uint64(ip[2]) << 8) | uint64(ip[3])
 }
 
-func ipMaskToUint32(mask net.IPMask) uint32 {
+func ipMaskToUint64(mask net.IPMask) uint64 {
 	if len(mask) == 4 {
-		return (uint32(mask[0]) << 24) | (uint32(mask[1]) << 16) | (uint32(mask[2]) << 8) | uint32(mask[3])
+		return (uint64(mask[0]) << 24) | (uint64(mask[1]) << 16) | (uint64(mask[2]) << 8) | uint64(mask[3])
 	}
 	return 0
 }
