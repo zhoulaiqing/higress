@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 type Interval struct {
 	Start int
 	End   int
@@ -54,18 +52,4 @@ func Search(root *Node, point int) *Interval {
 	}
 
 	return Search(root.Right, point)
-}
-
-func main() {
-	root := Insert(nil, Interval{Start: 15, End: 20})
-	root = Insert(root, Interval{Start: 10, End: 30})
-	root = Insert(root, Interval{Start: 17, End: 19})
-	root = Insert(root, Interval{Start: 5, End: 20})
-	root = Insert(root, Interval{Start: 12, End: 15})
-	root = Insert(root, Interval{Start: 30, End: 40})
-
-	fmt.Println("Search results:")
-	fmt.Println("Search(14):", Search(root, 14))
-	fmt.Println("Search(18):", Search(root, 18))
-	fmt.Println("Search(25):", Search(root, 25))
 }

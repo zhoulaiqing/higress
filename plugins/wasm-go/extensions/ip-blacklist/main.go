@@ -11,16 +11,34 @@ import (
 
 func main() {
 	fmt.Printf("hello world")
+	ip := "10.1.1.1"
+	minIP, maxIP, err := IPRange(ip)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println("Min IP:", intToIP(minIP).String()) // 输出: 10.1.1.1
+	fmt.Println("Max IP:", intToIP(maxIP).String()) // 输出: 10.1.1.1
 
-	wrapper.SetCtx(
-		"ip_deny",
-		wrapper.ParseConfigBy(parseConfig),
-		wrapper.ProcessRequestHeadersBy(onHttpRequestHeaders),
-	)
+	ipWithMask := "10.1.1.1/16"
+	minIP, maxIP, err = IPRange(ipWithMask)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println("Min IP:", intToIP(minIP).String()) // 输出: 10.1.0.0
+	fmt.Println("Max IP:", intToIP(maxIP).String()) // 输出: 10.1.255.255
+
+	//wrapper.SetCtx(
+	//	"ip_deny",
+	//	wrapper.ParseConfigBy(parseConfig),
+	//	wrapper.ProcessRequestHeadersBy(onHttpRequestHeaders),
+	//)
 }
 
 type IpBlacklistConfig struct {
 	ipBlackList []string
+	ipBlackBit  int32
 }
 
 func parseConfig(json gjson.Result, config *IpBlacklistConfig, log wrapper.Log) error {
