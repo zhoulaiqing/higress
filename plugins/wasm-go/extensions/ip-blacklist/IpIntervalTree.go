@@ -1,15 +1,19 @@
 package main
 
-import "math/big"
+import "fmt"
 
 type IPInterval struct {
-	Start *big.Int
-	End   *big.Int
+	Start *IPInt
+	End   *IPInt
+}
+
+func (i *IPInterval) String() string {
+	return "(Start: " + i.Start.String() + ", End: " + i.End.String() + ")"
 }
 
 type IPIntervalNode struct {
 	Interval    IPInterval
-	MaxEnd      *big.Int
+	MaxEnd      *IPInt
 	Left, Right *IPIntervalNode
 }
 
@@ -23,6 +27,8 @@ func NewIPIntervalNode(interval IPInterval) *IPIntervalNode {
 }
 
 func IPIntervalTreeInsert(root *IPIntervalNode, interval IPInterval) *IPIntervalNode {
+	fmt.Println("Interval: ", interval.String())
+
 	if root == nil {
 		return NewIPIntervalNode(interval)
 	}
@@ -40,7 +46,7 @@ func IPIntervalTreeInsert(root *IPIntervalNode, interval IPInterval) *IPInterval
 	return root
 }
 
-func IPSearch(root *IPIntervalNode, ipInt *big.Int) *IPInterval {
+func IPSearch(root *IPIntervalNode, ipInt *IPInt) *IPInterval {
 	if root == nil {
 		return nil
 	}

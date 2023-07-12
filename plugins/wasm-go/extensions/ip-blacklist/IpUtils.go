@@ -124,23 +124,43 @@ func getIPIntRange(ipStr string) (*IPInt, *IPInt, error) {
 			return nil, nil, fmt.Errorf("Invalid IP address")
 		}
 
-		ipInt := IPIntFromIP(ip)
+		var ipInt *IPInt
+		if ip.To4() != nil {
+			ipInt = IPIntFromIP(ip.To4())
+		} else {
+			ipInt = IPIntFromIP(ip.To16())
+		}
+
 		return ipInt, ipInt, nil
 	}
 
-	_, _, err := net.ParseCIDR(ipStr)
+	ip, ipNet, err := net.ParseCIDR(ipStr)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	return nil, nil, fmt.Errorf("Not Implemented")
+	var ipStartInt, ipEndInt *IPInt
+	if ip.To4() != nil {
+		ipStartInt = IPIntFromIP(ip.To4())
+	} else {
+		ipStartInt = IPIntFromIP(ip.To16())
+	}
+
+	ipMask := IPIntFromIPMask(ipNet.Mask)
+	ipMaskInverse, _ := ipMask.BitInverse()
+
+	ipStartInt, _ = ipStartInt.BitAnd(ipMask)
+	ipEndInt, _ = ipStartInt.BitOr(ipMaskInverse)
+
+	return ipStartInt, ipEndInt, nil
 }
 
 func IPIntFromIP(ip net.IP) *IPInt {
-	var result *IPInt
+	result := &IPInt{integers: nil}
 	if ip.To4() != nil {
-		intVal := (uint64(ip[0]) << 24) | (uint64(ip[1]) << 16) | (uint64(ip[2]) << 8) | uint64(ip[3])
-		result.integers = []uint64{intVal}
+		//intVal := (uint64(ip[0]) << 24) | (uint64(ip[1]) << 16) | (uint64(ip[2]) << 8) | uint64(ip[3])
+		intVal2 := ipToUint64(ip)
+		result.integers = []uint64{intVal2}
 	} else {
 
 		var intVar1, intVar2 uint64
@@ -156,7 +176,7 @@ func IPIntFromIP(ip net.IP) *IPInt {
 }
 
 func IPIntFromIPMask(mask net.IPMask) *IPInt {
-	var result *IPInt
+	result := &IPInt{integers: nil}
 	if len(mask) == 4 {
 		intVal := (uint64(mask[0]) << 24) | (uint64(mask[1]) << 16) | (uint64(mask[2]) << 8) | uint64(mask[3])
 		result.integers = []uint64{intVal}

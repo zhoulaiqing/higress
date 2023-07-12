@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 type IPInt struct {
 	integers []uint64
@@ -57,11 +61,13 @@ func (u *IPInt) BitAnd(other *IPInt) (*IPInt, error) {
 		return nil, fmt.Errorf("BitAnd Error: Not the same length.")
 	}
 
+	var integers []uint64
+
 	for i := 0; i < len(u.integers); i++ {
-		u.integers[i] &= other.integers[i]
+		integers = append(integers, u.integers[i]&other.integers[i])
 	}
 
-	return u, nil
+	return &IPInt{integers: integers}, nil
 }
 
 func (u *IPInt) BitOr(other *IPInt) (*IPInt, error) {
@@ -69,9 +75,31 @@ func (u *IPInt) BitOr(other *IPInt) (*IPInt, error) {
 		return nil, fmt.Errorf("BitOr Error: Not the same length.")
 	}
 
+	var integers []uint64
+
 	for i := 0; i < len(u.integers); i++ {
-		u.integers[i] |= other.integers[i]
+		integers = append(integers, u.integers[i]|other.integers[i])
 	}
 
-	return u, nil
+	return &IPInt{integers}, nil
+}
+
+func (u *IPInt) BitInverse() (*IPInt, error) {
+	var integers []uint64
+
+	for i := 0; i < len(u.integers); i++ {
+		integers = append(integers, ^u.integers[i])
+	}
+
+	return &IPInt{integers}, nil
+}
+
+func (u *IPInt) String() string {
+	strArr := make([]string, len(u.integers))
+
+	for i, val := range u.integers {
+		strArr[i] = strconv.FormatUint(val, 10)
+	}
+
+	return strings.Join(strArr, ",")
 }
