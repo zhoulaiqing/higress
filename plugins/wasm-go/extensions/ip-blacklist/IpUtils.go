@@ -147,6 +147,7 @@ func getIPIntRange(ipStr string) (*IPInt, *IPInt, error) {
 	}
 
 	ipMask := IPIntFromIPMask(ipNet.Mask)
+	// todo: 这里得到的值太大了
 	ipMaskInverse, _ := ipMask.BitInverse()
 
 	ipStartInt, _ = ipStartInt.BitAnd(ipMask)
