@@ -12,23 +12,35 @@ func main() {
 	fmt.Println("hello world")
 
 	// ===================== For Test ============================
-	var ipIntervalRoot *Node
-	minIp, maxIp, _ := IPRange("1.1.1.1")
-	ipIntervalRoot = Insert(ipIntervalRoot, Interval{minIp, maxIp})
+	var ipIntervalRoot *IPIntervalNode
 
-	minIp2, maxIp2, _ := IPRange("2.2.2.2/16")
-	ipIntervalRoot = Insert(ipIntervalRoot, Interval{minIp2, maxIp2})
+	minIp, maxIp, _ := getIPRange("1.1.1.1")
+	ipIntervalRoot = IPIntervalTreeInsert(ipIntervalRoot, IPInterval{minIp, maxIp})
 
-	res1 := Search(ipIntervalRoot, minIp) != nil
+	minIp2, maxIp2, _ := getIPRange("2.2.2.2/16")
+	ipIntervalRoot = IPIntervalTreeInsert(ipIntervalRoot, IPInterval{minIp2, maxIp2})
+
+	minIp3, maxIp3, _ := getIPRange("2001:0db8:85a3:0000:0000:8a2e:0000:0000")
+	ipIntervalRoot = IPIntervalTreeInsert(ipIntervalRoot, IPInterval{minIp3, maxIp3})
+
+	// true
+	res1 := IPSearch(ipIntervalRoot, minIp) != nil
 	fmt.Println("Contains 1.1.1.1", res1)
 
-	otherIp, _, _ := IPRange("10.23.2.2")
-	res2 := Search(ipIntervalRoot, otherIp) != nil
+	// false
+	otherIp, _, _ := getIPRange("10.23.2.2")
+	res2 := IPSearch(ipIntervalRoot, otherIp) != nil
 	fmt.Println("Contains 10.23.2.2", res2)
 
-	ip3, _, _ := IPRange("2.2.1.1")
-	res3 := Search(ipIntervalRoot, ip3) != nil
+	// true
+	ip3, _, _ := getIPRange("2.2.1.1")
+	res3 := IPSearch(ipIntervalRoot, ip3) != nil
 	fmt.Println("Contains 2.2.1.1", res3)
+
+	//true
+	ip4, _, _ := getIPRange("2001:0db8:85a3:0000:0000:8a2e:0370:7334")
+	res4 := IPSearch(ipIntervalRoot, ip4) != nil
+	fmt.Println("Contains 2001:0db8:85a3:0000:0000:8a2e:0370:7334", res4)
 
 	// ===================== For Test ============================
 
