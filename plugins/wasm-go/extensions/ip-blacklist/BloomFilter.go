@@ -23,9 +23,6 @@ func (bf *BloomFilter) Add(data string) {
 }
 
 func (bf *BloomFilter) AddIpv4(ip string) {
-	data, _ := ipv4ToInt(ip)
-
-	bf.bits[0] = 1 << (data % 64)
 }
 
 func (bf *BloomFilter) AddIpv6(ip string) {
@@ -80,6 +77,7 @@ func ipv4ToInt(ip string) (uint64, error) {
 func IPRange(ipStr string) (uint64, uint64, error) {
 	var ip net.IP
 	var mask net.IPMask
+	isFixedIp := false
 
 	if strings.Contains(ipStr, "/") {
 		// 处理带掩码的IP地址
@@ -96,10 +94,14 @@ func IPRange(ipStr string) (uint64, uint64, error) {
 			return 0, 0, fmt.Errorf("Invalid IP address")
 		}
 		ip = ip.To4()
-		mask = net.IPv4Mask(255, 255, 255, 255)
+		isFixedIp = true
 	}
 
 	ipInt := ipToUint64(ip)
+	if isFixedIp {
+		return ipInt, ipInt, nil
+	}
+
 	maskInt := ipMaskToUint64(mask)
 
 	networkInt := ipInt & maskInt

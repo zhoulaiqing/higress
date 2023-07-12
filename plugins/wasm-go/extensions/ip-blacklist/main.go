@@ -6,49 +6,50 @@ import (
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm/types"
 	"github.com/tidwall/gjson"
-	"golang.org/x/exp/slices"
 )
 
 func main() {
-	fmt.Printf("hello world")
-	//ip := "10.1.1.1"
-	//minIP, maxIP, err := IPRange(ip)
-	//if err != nil {
-	//	fmt.Println("Error:", err)
-	//	return
-	//}
-	//fmt.Println("Min IP:", intToIP(minIP).String()) // 输出: 10.1.1.1
-	//fmt.Println("Max IP:", intToIP(maxIP).String()) // 输出: 10.1.1.1
-	//
-	//ipWithMask := "10.1.1.1/16"
-	//minIP, maxIP, err = IPRange(ipWithMask)
-	//if err != nil {
-	//	fmt.Println("Error:", err)
-	//	return
-	//}
-	//fmt.Println("Min IP:", intToIP(minIP).String()) // 输出: 10.1.0.0
-	//fmt.Println("Max IP:", intToIP(maxIP).String()) // 输出: 10.1.255.255
+	fmt.Println("hello world")
 
-	wrapper.SetCtx(
-		"ip_deny",
-		wrapper.ParseConfigBy(parseConfig),
-		wrapper.ProcessRequestHeadersBy(onHttpRequestHeaders),
-	)
+	// ===================== For Test ============================
+	var ipIntervalRoot *Node
+	minIp, maxIp, _ := IPRange("1.1.1.1")
+	ipIntervalRoot = Insert(ipIntervalRoot, Interval{minIp, maxIp})
+
+	minIp2, maxIp2, _ := IPRange("2.2.2.2/16")
+	ipIntervalRoot = Insert(ipIntervalRoot, Interval{minIp2, maxIp2})
+
+	res1 := Search(ipIntervalRoot, minIp) != nil
+	fmt.Println("Contains 1.1.1.1", res1)
+
+	otherIp, _, _ := IPRange("10.23.2.2")
+	res2 := Search(ipIntervalRoot, otherIp) != nil
+	fmt.Println("Contains 10.23.2.2", res2)
+
+	ip3, _, _ := IPRange("2.2.1.1")
+	res3 := Search(ipIntervalRoot, ip3) != nil
+	fmt.Println("Contains 2.2.1.1", res3)
+
+	// ===================== For Test ============================
+
+	//wrapper.SetCtx(
+	//	"ip_deny",
+	//	wrapper.ParseConfigBy(parseConfig),
+	//	wrapper.ProcessRequestHeadersBy(onHttpRequestHeaders),
+	//)
 }
 
 type IpBlacklistConfig struct {
-	ipBlackList []string
-	ipBlackBit  int32
+	ipIntervalRoot *Node
 }
 
 func parseConfig(json gjson.Result, config *IpBlacklistConfig, log wrapper.Log) error {
 	ipBlackArray := json.Get("ip_blacklist").Array()
-	ipBlackList := make([]string, len(ipBlackArray))
 	for _, blackIp := range ipBlackArray {
-		ipBlackList = append(ipBlackList, blackIp.String())
+		minIp, maxIp, _ := IPRange(blackIp.String())
+		config.ipIntervalRoot = Insert(config.ipIntervalRoot, Interval{minIp, maxIp})
 	}
 
-	config.ipBlackList = ipBlackList
 	return nil
 }
 
@@ -61,7 +62,9 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config IpBlacklistConfig, log
 		return types.ActionContinue
 	}
 
-	if slices.Contains(config.ipBlackList, ip) {
+	ipInt, _, _ := IPRange(ip)
+
+	if Search(config.ipIntervalRoot, ipInt) != nil {
 		log.Error("Hit ip blacklist rule")
 		proxywasm.SendHttpResponse(403, nil, []byte("denied by ip"), -1)
 

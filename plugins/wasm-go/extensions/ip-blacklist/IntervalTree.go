@@ -1,13 +1,13 @@
 package main
 
 type Interval struct {
-	Start int
-	End   int
+	Start uint64
+	End   uint64
 }
 
 type Node struct {
 	Interval    Interval
-	MaxEnd      int
+	MaxEnd      uint64
 	Left, Right *Node
 }
 
@@ -38,7 +38,7 @@ func Insert(root *Node, interval Interval) *Node {
 	return root
 }
 
-func Search(root *Node, point int) *Interval {
+func Search(root *Node, point uint64) *Interval {
 	if root == nil {
 		return nil
 	}
