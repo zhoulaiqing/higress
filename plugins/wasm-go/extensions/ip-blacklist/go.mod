@@ -20,3 +20,11 @@ require (
 	golang.org/x/net v0.11.0 // indirect
 	rsc.io/binaryregexp v0.2.0 // indirect
 )
+
+require (
+	ip-tools v0.0.0
+)
+
+replace (
+	ip-tools => "./ip-tools"
+)

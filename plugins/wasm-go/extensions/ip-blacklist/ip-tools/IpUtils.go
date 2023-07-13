@@ -1,4 +1,4 @@
-package main
+package ip_tools
 
 import (
 	"fmt"
@@ -6,55 +6,7 @@ import (
 	"strings"
 )
 
-func IPRange(ipStr string) (uint64, uint64, error) {
-	var ip net.IP
-	var mask net.IPMask
-	isFixedIp := false
-
-	if strings.Contains(ipStr, "/") {
-		// 处理带掩码的IP地址
-		pureIp, ipNet, err := net.ParseCIDR(ipStr)
-		if err != nil {
-			return 0, 0, fmt.Errorf("Invalid IP or mask address")
-		}
-		ip = pureIp.To4()
-		mask = ipNet.Mask
-	} else {
-		// 处理固定IP地址
-		ip = net.ParseIP(ipStr)
-		if ip == nil {
-			return 0, 0, fmt.Errorf("Invalid IP address")
-		}
-		ip = ip.To4()
-		isFixedIp = true
-	}
-
-	ipInt := ipToUint64(ip)
-	if isFixedIp {
-		return ipInt, ipInt, nil
-	}
-
-	maskInt := ipMaskToUint64(mask)
-
-	networkInt := ipInt & maskInt
-	minIPInt := networkInt
-	maxIPInt := networkInt | ^maskInt
-
-	return minIPInt, maxIPInt, nil
-}
-
-func ipToUint64(ip net.IP) uint64 {
-	return (uint64(ip[0]) << 24) | (uint64(ip[1]) << 16) | (uint64(ip[2]) << 8) | uint64(ip[3])
-}
-
-func ipMaskToUint64(mask net.IPMask) uint64 {
-	if len(mask) == 4 {
-		return (uint64(mask[0]) << 24) | (uint64(mask[1]) << 16) | (uint64(mask[2]) << 8) | uint64(mask[3])
-	}
-	return 0
-}
-
-func getIPIntRange(ipStr string) (*IPInt, *IPInt, error) {
+func GetIPIntRange(ipStr string) (*IPInt, *IPInt, error) {
 	// 一个IP地址
 	if !strings.Contains(ipStr, "/") {
 		ip := net.ParseIP(ipStr)

@@ -2,45 +2,46 @@ package main
 
 import (
 	"fmt"
+	"ip-tools"
 	"testing"
 )
 
 func TestIpDeny(t *testing.T) {
-	var ipIntervalRoot *IPIntervalNode
+	var ipIntervalRoot *ip_tools.IPIntervalNode
 
-	minIp, maxIp, _ := getIPIntRange("1.1.1.1")
-	ipIntervalRoot = IPIntervalTreeInsert(ipIntervalRoot, IPInterval{minIp, maxIp})
+	minIp, maxIp, _ := ip_tools.GetIPIntRange("1.1.1.1")
+	ipIntervalRoot = ip_tools.IPIntervalTreeInsert(ipIntervalRoot, ip_tools.IPInterval{minIp, maxIp})
 
-	minIp2, maxIp2, _ := getIPIntRange("2.2.2.2/16")
-	ipIntervalRoot = IPIntervalTreeInsert(ipIntervalRoot, IPInterval{minIp2, maxIp2})
+	minIp2, maxIp2, _ := ip_tools.GetIPIntRange("2.2.2.2/16")
+	ipIntervalRoot = ip_tools.IPIntervalTreeInsert(ipIntervalRoot, ip_tools.IPInterval{minIp2, maxIp2})
 
-	minIp3, maxIp3, _ := getIPIntRange("2001:0db8:85a3:0000:0000:8a2e:0000:0000")
-	ipIntervalRoot = IPIntervalTreeInsert(ipIntervalRoot, IPInterval{minIp3, maxIp3})
+	minIp3, maxIp3, _ := ip_tools.GetIPIntRange("2001:0db8:85a3:0000:0000:8a2e:0000:0000")
+	ipIntervalRoot = ip_tools.IPIntervalTreeInsert(ipIntervalRoot, ip_tools.IPInterval{minIp3, maxIp3})
 
-	minIp4, maxIp4, _ := getIPIntRange("2023:0db8::/32")
-	ipIntervalRoot = IPIntervalTreeInsert(ipIntervalRoot, IPInterval{minIp4, maxIp4})
+	minIp4, maxIp4, _ := ip_tools.GetIPIntRange("2023:0db8::/32")
+	ipIntervalRoot = ip_tools.IPIntervalTreeInsert(ipIntervalRoot, ip_tools.IPInterval{minIp4, maxIp4})
 
 	// true
-	res1 := IPSearch(ipIntervalRoot, minIp) != nil
+	res1 := ip_tools.IPSearch(ipIntervalRoot, minIp) != nil
 	fmt.Println("Contains 1.1.1.1", res1)
 
 	// false
-	otherIp, _, _ := getIPIntRange("10.23.2.2")
-	res2 := IPSearch(ipIntervalRoot, otherIp) != nil
+	otherIp, _, _ := ip_tools.GetIPIntRange("10.23.2.2")
+	res2 := ip_tools.IPSearch(ipIntervalRoot, otherIp) != nil
 	fmt.Println("Contains 10.23.2.2", res2)
 
 	// true
-	ip3, _, _ := getIPIntRange("2.2.1.1")
-	res3 := IPSearch(ipIntervalRoot, ip3) != nil
+	ip3, _, _ := ip_tools.GetIPIntRange("2.2.1.1")
+	res3 := ip_tools.IPSearch(ipIntervalRoot, ip3) != nil
 	fmt.Println("Contains 2.2.1.1", res3)
 
 	// true
-	ip4, _, _ := getIPIntRange("2001:0db8:85a3:0000:0000:8a2e:0000:0000")
-	res4 := IPSearch(ipIntervalRoot, ip4) != nil
+	ip4, _, _ := ip_tools.GetIPIntRange("2001:0db8:85a3:0000:0000:8a2e:0000:0000")
+	res4 := ip_tools.IPSearch(ipIntervalRoot, ip4) != nil
 	fmt.Println("Contains 2001:0db8:85a3:0000:0000:8a2e:0000:0000", res4)
 
 	// true
-	ip5, _, _ := getIPIntRange("2023:0db8:85a3:0000:0000:8a2e:0000:0000")
-	res5 := IPSearch(ipIntervalRoot, ip5) != nil
+	ip5, _, _ := ip_tools.GetIPIntRange("2023:0db8:85a3:0000:0000:8a2e:0000:0000")
+	res5 := ip_tools.IPSearch(ipIntervalRoot, ip5) != nil
 	fmt.Println("Contains 2023:0db8:85a3:0000:0000:8a2e:0000:0000", res5)
 }
