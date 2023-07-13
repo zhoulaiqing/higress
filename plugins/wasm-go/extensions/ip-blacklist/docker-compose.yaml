@@ -10,7 +10,7 @@ services:
       - "10000:10000"
     volumes:
       - ./envoy.yaml:/etc/envoy/envoy.yaml
-      - ./main.wasm:/etc/envoy/main.wasm
+      - ./plugin.wasm:/etc/envoy/main.wasm
 
   httpbin:
     image: kennethreitz/httpbin:latest

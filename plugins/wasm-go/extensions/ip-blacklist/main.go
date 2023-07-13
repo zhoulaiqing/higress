@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/alibaba/higress/plugins/wasm-go/pkg/wrapper"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm/types"
@@ -10,8 +9,6 @@ import (
 )
 
 func main() {
-	fmt.Println("hello world")
-
 	// ===================== For Test ============================
 	//TestIpDeny(nil)
 	// ===================== For Test ============================

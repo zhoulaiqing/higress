@@ -31,13 +31,13 @@ static_resources:
                           route:
                             cluster: httpbin
                 http_filters:
-                  - name: ipblacklist
+                  - name: ip_deny
                     typed_config:
                       "@type": type.googleapis.com/udpa.type.v1.TypedStruct
                       type_url: type.googleapis.com/envoy.extensions.filters.http.wasm.v3.Wasm
                       value:
                         config:
-                          name: ipblacklist
+                          name: ip_deny
                           vm_config:
                             runtime: envoy.wasm.runtime.v8
                             code:
@@ -50,7 +50,7 @@ static_resources:
                               {
                                 "ip_blacklist": [
                                   "1.1.1.1",
-                                  "2.2.2.2"
+                                  "2.2.2.2/16"
                                 ] 
                               }
                   - name: envoy.filters.http.router
