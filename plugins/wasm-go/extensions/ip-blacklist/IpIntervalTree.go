@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 type IPInterval struct {
 	Start *IPInt
 	End   *IPInt
@@ -27,10 +25,15 @@ func NewIPIntervalNode(interval IPInterval) *IPIntervalNode {
 }
 
 func IPIntervalTreeInsert(root *IPIntervalNode, interval IPInterval) *IPIntervalNode {
-	fmt.Println("Interval: ", interval.String())
+	//fmt.Println("Interval: ", interval.String())
 
 	if root == nil {
 		return NewIPIntervalNode(interval)
+	}
+
+	// 优化：如果待插入区间 interval 完全被 root 对应的区间包含，则不做任何操作
+	if interval.Start.GreaterThanOrEqual(root.Interval.Start) && interval.End.LessThanOrEqual(root.Interval.End) {
+		return root
 	}
 
 	if interval.Start.Cmp(root.Interval.Start) < 0 {

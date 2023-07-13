@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"testing"
 )
 
-func test_ip_deny() {
+func TestIpDeny(t *testing.T) {
 	var ipIntervalRoot *IPIntervalNode
 
 	minIp, maxIp, _ := getIPIntRange("1.1.1.1")

@@ -12,7 +12,7 @@ func main() {
 	fmt.Println("hello world")
 
 	// ===================== For Test ============================
-
+	//TestIpDeny(nil)
 	// ===================== For Test ============================
 
 	wrapper.SetCtx(
