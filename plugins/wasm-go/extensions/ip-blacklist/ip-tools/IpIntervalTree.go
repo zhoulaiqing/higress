@@ -69,3 +69,5 @@ func IPSearch(root *IPIntervalNode, ipInt *IPInt) *IPInterval {
 
 	return IPSearch(root.Right, ipInt)
 }
+
+// todo: 添加后继者的合并与树的平衡（旋转）功能
