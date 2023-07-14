@@ -39,7 +39,12 @@ func IPIntervalTreeInsert(root *IPIntervalNode, interval IPInterval) *IPInterval
 	if interval.Start.Cmp(root.Interval.Start) < 0 {
 		root.Left = IPIntervalTreeInsert(root.Left, interval)
 	} else {
-		root.Right = IPIntervalTreeInsert(root.Right, interval)
+		if interval.Start.LessThanOrEqual(root.Interval.End) {
+			// 优化，如果待插入区间在 root 区间右侧且与 root 区间有重叠，则直接合并
+			root.Interval.End = interval.End
+		} else {
+			root.Right = IPIntervalTreeInsert(root.Right, interval)
+		}
 	}
 
 	if root.MaxEnd.Cmp(interval.End) < 0 {

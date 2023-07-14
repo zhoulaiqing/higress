@@ -21,14 +21,20 @@ func main() {
 }
 
 type IpBlacklistConfig struct {
-	ipIntervalRoot *ip_tools.IPIntervalNode
+	ipIntervalRootV4 *ip_tools.IPIntervalNode
+	ipIntervalRootV6 *ip_tools.IPIntervalNode
 }
 
 func parseConfig(json gjson.Result, config *IpBlacklistConfig, log wrapper.Log) error {
 	ipBlackArray := json.Get("ip_blacklist").Array()
 	for _, blackIp := range ipBlackArray {
-		minIp, maxIp, _ := ip_tools.GetIPIntRange(blackIp.String())
-		config.ipIntervalRoot = ip_tools.IPIntervalTreeInsert(config.ipIntervalRoot, ip_tools.IPInterval{minIp, maxIp})
+		isV4, minIp, maxIp, _ := ip_tools.GetIPIntRange(blackIp.String())
+		if isV4 {
+			config.ipIntervalRootV4 = ip_tools.IPIntervalTreeInsert(config.ipIntervalRootV4, ip_tools.IPInterval{Start: minIp, End: maxIp})
+		} else {
+			config.ipIntervalRootV6 = ip_tools.IPIntervalTreeInsert(config.ipIntervalRootV6, ip_tools.IPInterval{Start: minIp, End: maxIp})
+		}
+
 	}
 
 	return nil
@@ -43,10 +49,17 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config IpBlacklistConfig, log
 		return types.ActionContinue
 	}
 
-	ipInt, _, _ := ip_tools.GetIPIntRange(ip)
+	isV4, ipInt, _, _ := ip_tools.GetIPIntRange(ip)
 
-	if ip_tools.IPSearch(config.ipIntervalRoot, ipInt) != nil {
-		log.Error("Hit ip blacklist rule")
+	var intervalRoot *ip_tools.IPIntervalNode
+	if isV4 {
+		intervalRoot = config.ipIntervalRootV4
+	} else {
+		intervalRoot = config.ipIntervalRootV6
+	}
+
+	if ip_tools.IPSearch(intervalRoot, ipInt) != nil {
+		//log.Error("Hit ip blacklist rule")
 		proxywasm.SendHttpResponse(403, nil, []byte("denied by ip"), -1)
 
 		return types.ActionContinue

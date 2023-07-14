@@ -6,33 +6,39 @@ import (
 	"strings"
 )
 
-func GetIPIntRange(ipStr string) (*IPInt, *IPInt, error) {
+func GetIPIntRange(ipStr string) (bool, *IPInt, *IPInt, error) {
 	// 一个IP地址
 	if !strings.Contains(ipStr, "/") {
 		ip := net.ParseIP(ipStr)
 		if ip == nil {
-			return nil, nil, fmt.Errorf("Invalid IP address")
+			return false, nil, nil, fmt.Errorf("Invalid IP address")
 		}
 
 		var ipInt *IPInt
+		var isV4 bool
 		if ip.To4() != nil {
+			isV4 = true
 			ipInt = IPIntFromIP(ip.To4())
 		} else {
+			isV4 = false
 			ipInt = IPIntFromIP(ip.To16())
 		}
 
-		return ipInt, ipInt, nil
+		return isV4, ipInt, ipInt, nil
 	}
 
 	ip, ipNet, err := net.ParseCIDR(ipStr)
 	if err != nil {
-		return nil, nil, err
+		return false, nil, nil, err
 	}
 
+	var isV4 bool
 	var ipStartInt, ipEndInt *IPInt
 	if ip.To4() != nil {
+		isV4 = true
 		ipStartInt = IPIntFromIP(ip.To4())
 	} else {
+		isV4 = false
 		ipStartInt = IPIntFromIP(ip.To16())
 	}
 
@@ -42,7 +48,7 @@ func GetIPIntRange(ipStr string) (*IPInt, *IPInt, error) {
 	ipStartInt, _ = ipStartInt.BitAnd(ipMask)
 	ipEndInt, _ = ipStartInt.BitOr(ipMaskInverse)
 
-	return ipStartInt, ipEndInt, nil
+	return isV4, ipStartInt, ipEndInt, nil
 }
 
 func IPIntFromIP(ip net.IP) *IPInt {
