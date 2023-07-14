@@ -48,17 +48,19 @@ func GetIPIntRange(ipStr string) (*IPInt, *IPInt, error) {
 func IPIntFromIP(ip net.IP) *IPInt {
 	result := &IPInt{integers: nil}
 	if ip.To4() != nil {
-		intVal := (uint64(ip[0]) << 24) | (uint64(ip[1]) << 16) | (uint64(ip[2]) << 8) | uint64(ip[3])
-		result.integers = []uint64{intVal}
+		intVal := (uint32(ip[0]) << 24) | (uint32(ip[1]) << 16) | (uint32(ip[2]) << 8) | uint32(ip[3])
+		result.integers = []uint32{intVal}
 	} else {
 
-		var intVar1, intVar2 uint64
-		for i := 0; i < 8; i++ {
-			intVar1 |= uint64(ip[i]) << (8 - i - 1) * 8
-			intVar2 |= uint64(ip[i+8]) << (8 - i - 1) * 8
+		var intVar1, intVar2, intVar3, intVar4 uint32
+		for i := 0; i < 4; i++ {
+			intVar1 |= uint32(ip[i]) << (4 - i - 1) * 8
+			intVar2 |= uint32(ip[i+4]) << (4 - i - 1) * 8
+			intVar3 |= uint32(ip[i+8]) << (4 - i - 1) * 8
+			intVar4 |= uint32(ip[i+12]) << (4 - i - 1) * 8
 		}
 
-		result.integers = []uint64{intVar1, intVar2}
+		result.integers = []uint32{intVar1, intVar2, intVar3, intVar4}
 	}
 
 	return result
@@ -67,30 +69,39 @@ func IPIntFromIP(ip net.IP) *IPInt {
 func IPIntFromIPMask(mask net.IPMask, inverse bool) *IPInt {
 	result := &IPInt{integers: nil}
 	if len(mask) == 4 {
-		var intVal uint64
+		var intVal uint32
 		if inverse {
-			intVal = (uint64(^mask[0]) << 24) | (uint64(^mask[1]) << 16) | (uint64(^mask[2]) << 8) | uint64(^mask[3])
+			intVal = (uint32(^mask[0]) << 24) | (uint32(^mask[1]) << 16) | (uint32(^mask[2]) << 8) | uint32(^mask[3])
 		} else {
-			intVal = (uint64(mask[0]) << 24) | (uint64(mask[1]) << 16) | (uint64(mask[2]) << 8) | uint64(mask[3])
+			intVal = (uint32(mask[0]) << 24) | (uint32(mask[1]) << 16) | (uint32(mask[2]) << 8) | uint32(mask[3])
 		}
-		result.integers = []uint64{intVal}
+		result.integers = []uint32{intVal}
 	} else if len(mask) == 16 {
-		var intVar1, intVar2 uint64
-		for i := 0; i < 8; i++ {
+		var intVar1, intVar2, intVar3, intVar4 uint32
+		for i := 0; i < 4; i++ {
 			maskI := mask[i]
 			if inverse {
 				maskI = ^mask[i]
 			}
-
+			maskIPlus4 := mask[i+4]
+			if inverse {
+				maskIPlus4 = ^mask[i+4]
+			}
 			maskIPlus8 := mask[i+8]
 			if inverse {
 				maskIPlus8 = ^mask[i+8]
 			}
-			intVar1 |= uint64(maskI) << (8 - i - 1) * 8
-			intVar2 |= uint64(maskIPlus8) << (8 - i - 1) * 8
+			maskIPlus12 := mask[i+12]
+			if inverse {
+				maskIPlus12 = ^mask[i+12]
+			}
+			intVar1 |= uint32(maskI) << (4 - i - 1) * 8
+			intVar2 |= uint32(maskIPlus4) << (4 - i - 1) * 8
+			intVar3 |= uint32(maskIPlus8) << (4 - i - 1) * 8
+			intVar4 |= uint32(maskIPlus12) << (4 - i - 1) * 8
 		}
 
-		result.integers = []uint64{intVar1, intVar2}
+		result.integers = []uint32{intVar1, intVar2, intVar3, intVar4}
 	}
 
 	return result

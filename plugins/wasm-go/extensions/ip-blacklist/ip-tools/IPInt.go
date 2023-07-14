@@ -7,7 +7,7 @@ import (
 )
 
 type IPInt struct {
-	integers []uint64
+	integers []uint32
 }
 
 const (
@@ -61,7 +61,7 @@ func (u *IPInt) BitAnd(other *IPInt) (*IPInt, error) {
 		return nil, fmt.Errorf("BitAnd Error: Not the same length.")
 	}
 
-	var integers []uint64
+	var integers []uint32
 
 	for i := 0; i < len(u.integers); i++ {
 		integers = append(integers, u.integers[i]&other.integers[i])
@@ -75,7 +75,7 @@ func (u *IPInt) BitOr(other *IPInt) (*IPInt, error) {
 		return nil, fmt.Errorf("BitOr Error: Not the same length.")
 	}
 
-	var integers []uint64
+	var integers []uint32
 
 	for i := 0; i < len(u.integers); i++ {
 		integers = append(integers, u.integers[i]|other.integers[i])
@@ -85,7 +85,7 @@ func (u *IPInt) BitOr(other *IPInt) (*IPInt, error) {
 }
 
 func (u *IPInt) BitInverse() (*IPInt, error) {
-	var integers []uint64
+	var integers []uint32
 
 	for i := 0; i < len(u.integers); i++ {
 		integers = append(integers, ^u.integers[i])
@@ -98,7 +98,7 @@ func (u *IPInt) String() string {
 	strArr := make([]string, len(u.integers))
 
 	for i, val := range u.integers {
-		strArr[i] = strconv.FormatUint(val, 10)
+		strArr[i] = strconv.FormatUint(uint64(val), 10)
 	}
 
 	return strings.Join(strArr, ",")
