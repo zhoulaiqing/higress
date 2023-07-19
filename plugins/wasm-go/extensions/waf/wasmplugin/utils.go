@@ -95,7 +95,7 @@ func handleInterruption(ctx wrapper.HttpContext, phase string, interruption *cty
 	if statusCode == 0 {
 		statusCode = 403
 	}
-	if err := proxywasm.SendHttpResponse(uint32(statusCode), nil, nil, noGRPCStream); err != nil {
+	if err := proxywasm.SendHttpResponse(uint32(statusCode), nil, []byte("denied by waf"), noGRPCStream); err != nil {
 		panic(err)
 	}
 
