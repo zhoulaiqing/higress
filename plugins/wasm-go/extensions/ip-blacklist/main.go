@@ -45,7 +45,7 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config IpBlacklistConfig, log
 	ip, err := proxywasm.GetHttpRequestHeader("x-real-ip")
 
 	if err != nil {
-		log.Error("Failed to get IP Header")
+		//log.Error("Failed to get IP Header")
 		return types.ActionContinue
 	}
 
