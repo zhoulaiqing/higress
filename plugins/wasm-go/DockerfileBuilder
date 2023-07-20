@@ -60,6 +60,9 @@ ARG USE_HIGRESS_TINYGO
 
 LABEL go_version=$GO_VERSION tinygo_version=$TINYGO_VERSION oras_version=$ORAS_VERSION
 
+RUN sed -i 's/ports.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
+RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
+
 RUN apt-get update \
   && apt-get install -y wget \
   && rm -rf /var/lib/apt/lists/*
