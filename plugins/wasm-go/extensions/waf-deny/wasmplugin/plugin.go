@@ -23,11 +23,16 @@ func PluginStart() {
 	wrapper.SetCtx(
 		"waf_deny",
 		//wrapper.ParseConfigBy(parseConfig),
-		wrapper.ProcessRequestHeadersBy(onHttpRequestHeaders),
-		wrapper.ProcessRequestBodyBy(onHttpRequestBody),
-		wrapper.ProcessResponseBodyBy(onHttpResponseBody),
-		wrapper.ProcessResponseHeadersBy(onHttpResponseHeaders),
-		wrapper.ProcessStreamDoneBy(onHttpStreamDone),
+		//wrapper.ProcessRequestHeadersBy(onHttpRequestHeaders),
+		//wrapper.ProcessRequestBodyBy(onHttpRequestBody),
+		//wrapper.ProcessResponseBodyBy(onHttpResponseBody),
+		//wrapper.ProcessResponseHeadersBy(onHttpResponseHeaders),
+		//wrapper.ProcessStreamDoneBy(onHttpStreamDone),
+		wrapper.ProcessRequestHeadersBy(onHttpRequestHeadersEmpty),
+		wrapper.ProcessRequestBodyBy(onHttpRequestBodyEmpty),
+		wrapper.ProcessResponseBodyBy(onHttpResponseBodyEmpty),
+		wrapper.ProcessResponseHeadersBy(onHttpResponseHeadersEmpty),
+		wrapper.ProcessStreamDoneBy(onHttpStreamDoneEmpty),
 	)
 }
 
@@ -81,6 +86,26 @@ func parseConfig(json gjson.Result, config *WafConfig, log wrapper.Log) error {
 	//config.waf = waf
 	//log.Infof("Create waf conf succeed!")
 	return nil
+}
+
+func onHttpRequestHeadersEmpty(ctx wrapper.HttpContext, config WafConfig, log wrapper.Log) types.Action {
+	return types.ActionContinue
+}
+
+func onHttpRequestBodyEmpty(ctx wrapper.HttpContext, config WafConfig, body []byte, log wrapper.Log) types.Action {
+	return types.ActionContinue
+}
+
+func onHttpResponseHeadersEmpty(ctx wrapper.HttpContext, config WafConfig, log wrapper.Log) types.Action {
+	return types.ActionContinue
+}
+
+func onHttpResponseBodyEmpty(ctx wrapper.HttpContext, config WafConfig, body []byte, log wrapper.Log) types.Action {
+	return types.ActionContinue
+}
+
+func onHttpStreamDoneEmpty(ctx wrapper.HttpContext, config WafConfig, log wrapper.Log) {
+
 }
 
 func onHttpRequestHeaders(ctx wrapper.HttpContext, config WafConfig, log wrapper.Log) types.Action {

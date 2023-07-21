@@ -1,5 +1,5 @@
 PLUGIN_NAME ?= hello-world
-BUILDER_REGISTRY ?= registry.cn-beijing.aliyuncs.com/zhou-default/
+BUILDER_REGISTRY ?= higress-registry.cn-hangzhou.cr.aliyuncs.com/plugins/
 REGISTRY ?=
 GO_VERSION ?= 1.19
 TINYGO_VERSION ?= 0.25.0
