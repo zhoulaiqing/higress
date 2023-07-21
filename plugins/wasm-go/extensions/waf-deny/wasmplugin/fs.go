@@ -1,4 +1,7 @@
-package coraza_tools
+// Copyright The OWASP Coraza contributors
+// SPDX-License-Identifier: Apache-2.0
+
+package wasmplugin
 
 import (
 	"embed"
@@ -10,12 +13,12 @@ import (
 var (
 	//go:embed rules
 	crs  embed.FS
-	Root fs.FS
+	root fs.FS
 )
 
 func init() {
 	rules, _ := fs.Sub(crs, "rules")
-	Root = &rulesFS{
+	root = &rulesFS{
 		rules,
 		map[string]string{
 			"@recommended-conf":    "coraza.conf-recommended.conf",

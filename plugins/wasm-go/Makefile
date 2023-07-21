@@ -38,7 +38,7 @@ build-push: build-image
 	docker push ${IMG}
 
 # builder:
-# To build a wasm-go-builder image.
+# To build a wasm-go-builder image.Ï
 # e.g.
 #   REGISTRY=<your_docker_registry> make builder
 # If you want to use Go/TinyGo/Oras with another version, please modify GO_VERSION/TINYGO_VERSION/ORAS_VERSION.

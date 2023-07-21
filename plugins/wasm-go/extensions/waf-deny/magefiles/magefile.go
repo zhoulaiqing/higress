@@ -134,7 +134,11 @@ func Lint() error {
 
 // Test runs all unit tests.
 func Test() error {
-	return sh.RunV("go", "test", "./...")
+	// by default multiphase is enabled
+	if os.Getenv("MULTIPHASE_EVAL") == "false" {
+		return sh.RunV("go", "test", "./...")
+	}
+	return sh.RunV("go", "test", "-tags=coraza.rule.multiphase_evaluation", "./...")
 }
 
 // Coverage runs tests with coverage and race detector enabled.
@@ -142,11 +146,25 @@ func Coverage() error {
 	if err := os.MkdirAll("build", 0755); err != nil {
 		return err
 	}
-	if err := sh.RunV("go", "test", "-race", "-coverprofile=build/coverage.txt", "-covermode=atomic", "-coverpkg=./...", "./..."); err != nil {
-		return err
+
+	if _, err := os.Stat("build/mainraw.wasm"); err != nil {
+		return errors.New("build/mainraw.wasm not found, please run `go run mage.go build`")
 	}
 
-	return sh.RunV("go", "tool", "cover", "-html=build/coverage.txt", "-o", "build/coverage.html")
+	if os.Getenv("MULTIPHASE_EVAL") == "false" {
+		// Test coraza-wasm filter without multiphase evaluation
+		if err := sh.RunV("go", "test", "-race", "-coverprofile=build/coverage.txt", "-covermode=atomic", "-coverpkg=./...", "./..."); err != nil {
+			return err
+		}
+		return sh.RunV("go", "tool", "cover", "-html=build/coverage.txt", "-o", "build/coverage.html")
+
+	} else {
+		// Test coraza-wasm filter with multiphase evaluation
+		if err := sh.RunV("go", "test", "-race", "-coverprofile=build/coverage_multi.txt", "-covermode=atomic", "-coverpkg=./...", "-tags=coraza.rule.multiphase_evaluation", "./..."); err != nil {
+			return err
+		}
+		return sh.RunV("go", "tool", "cover", "-html=build/coverage_multi.txt", "-o", "build/coverage.html")
+	}
 }
 
 // Doc runs godoc, access at http://localhost:6060
@@ -161,11 +179,15 @@ func Check() {
 
 // Build builds the Coraza wasm plugin.
 func Build() error {
-	if err := os.MkdirAll("local", 0755); err != nil {
+	if err := os.MkdirAll("build", 0755); err != nil {
 		return err
 	}
 
 	buildTags := []string{"custommalloc", "no_fs_access"}
+	// By default multiphase evaluation is enabled
+	if os.Getenv("MULTIPHASE_EVAL") != "false" {
+		buildTags = append(buildTags, "coraza.rule.multiphase_evaluation")
+	}
 	if os.Getenv("TIMING") == "true" {
 		buildTags = append(buildTags, "timing", "proxywasm_timing")
 	}
@@ -185,19 +207,11 @@ func Build() error {
 		}
 	}
 
-	if err := sh.RunV("tinygo", "build", "-gc=custom", "-opt=2", "-o", filepath.Join("local", "mainraw.wasm"), "-scheduler=none", "-target=wasi", buildTagArg); err != nil {
+	if err := sh.RunV("tinygo", "build", "-gc=custom", "-opt=2", "-o", filepath.Join("build", "mainraw.wasm"), "-scheduler=none", "-target=wasi", buildTagArg); err != nil {
 		return err
 	}
 
-	if err := patchWasm(filepath.Join("local", "mainraw.wasm"), filepath.Join("local", "main.wasm"), initialPages); err != nil {
-		return err
-	}
-
-	if err := sh.RunV("rm", filepath.Join("local", "mainraw.wasm")); err != nil {
-		return err
-	}
-
-	return nil
+	return patchWasm(filepath.Join("build", "mainraw.wasm"), filepath.Join("build", "main.wasm"), initialPages)
 }
 
 // E2e runs e2e tests with a built plugin against the example deployment. Requires docker-compose.
