@@ -127,6 +127,7 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config WafConfig, log wrapper
 	// CRS rules tend to expect Host even with HTTP/2
 	authority, err := proxywasm.GetHttpRequestHeader(":authority")
 	if err == nil {
+		log.Info("authority: " + authority)
 		tx.AddRequestHeader("Host", authority)
 		tx.SetServerName(parseServerName(log, authority))
 	}

@@ -4,14 +4,13 @@
 package main
 
 import (
-	wasilibs "github.com/corazawaf/coraza-wasilibs"
-	"wasm_plugin"
+	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
+
+	"github.com/corazawaf/coraza-proxy-wasm/internal/operators"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin"
 )
 
 func main() {
-	wasilibs.RegisterRX()
-	wasilibs.RegisterPM()
-	wasilibs.RegisterSQLi()
-	wasilibs.RegisterXSS()
-	wasmplugin.PluginStart()
+	operators.Register()
+	proxywasm.SetVMContext(wasmplugin.NewVMContext())
 }
