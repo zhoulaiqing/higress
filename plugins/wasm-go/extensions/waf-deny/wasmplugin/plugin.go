@@ -90,9 +90,9 @@ func (ctx *corazaPlugin) OnPluginStart(pluginConfigurationSize int) types.OnPlug
 		WithRootFS(root)
 
 	var secRules []string
-	secRules = append(secRules, "Include @recommended-conf")
-	secRules = append(secRules, "Include @ftw-conf")
-	secRules = append(secRules, "Include @crs-setup-conf")
+	secRules = append(secRules, "Include @demo-conf")
+	secRules = append(secRules, "Include @crs-setup-demo-conf")
+	//secRules = append(secRules, "Include @ftw-conf")
 	secRules = append(secRules, "Include @owasp_crs/*.conf")
 	//secRules = append(secRules, "SecRuleEngine On")
 
@@ -670,7 +670,7 @@ func (ctx *httpContext) handleInterruption(phase interruptionPhase, interruption
 	if statusCode == 0 {
 		statusCode = defaultInterruptionStatusCode
 	}
-	if err := proxywasm.SendHttpResponse(uint32(statusCode), nil, nil, noGRPCStream); err != nil {
+	if err := proxywasm.SendHttpResponse(uint32(statusCode), nil, []byte("denied by waf_deny"), noGRPCStream); err != nil {
 		panic(err)
 	}
 
