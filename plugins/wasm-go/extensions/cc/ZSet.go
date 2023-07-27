@@ -1,7 +1,8 @@
 package main
 
 type ZSet struct {
-	data map[string]*SkipList
+	capacity int
+	data     map[string]*SkipList
 }
 
 func (z *ZSet) ZAdd(key string, score int64) {
@@ -13,6 +14,7 @@ func (z *ZSet) ZAdd(key string, score int64) {
 	if !found {
 		sl = NewSkipList()
 		z.data[key] = sl
+		z.capacity++
 	}
 
 	sl.Insert(score)
