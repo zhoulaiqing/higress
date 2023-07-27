@@ -175,3 +175,40 @@ func (sl *SkipList) Delete(key int) bool {
 
 	return false
 }
+
+// RangeDelete 删除范围 [start, end] 内的节点
+func (sl *SkipList) RangeDelete(start, end int) {
+	update := make([]*node, maxLevel)
+	current := sl.head
+
+	// 寻找每层删除位置
+	for i := sl.level - 1; i >= 0; i-- {
+		for current.forward[i] != nil && current.forward[i].key < start {
+			current = current.forward[i]
+		}
+		update[i] = current
+	}
+
+	current = current.forward[0]
+
+	// 删除范围内的节点
+	for current != nil && current.key <= end {
+		// 逐层删除
+		for i := 0; i < sl.level; i++ {
+			if update[i].forward[i] != current {
+				break
+			}
+			update[i].forward[i] = current.forward[i]
+		}
+
+		current = current.forward[0]
+	}
+
+	// 更新头节点的层数
+	for sl.level > 1 && sl.head.forward[sl.level-1] == nil {
+		sl.level--
+	}
+
+	// 更新长度
+	sl.length -= sl.RangeCount(start, end)
+}
