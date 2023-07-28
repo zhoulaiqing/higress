@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/alibaba/higress/plugins/wasm-go/pkg/wrapper"
+	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
+	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm/types"
 	"github.com/tidwall/gjson"
 	"net/http"
 )
@@ -85,6 +87,45 @@ func parseConfig(json gjson.Result, config *CCConfig, log wrapper.Log) error {
 	return nil
 }
 
+func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.Log) types.Action {
+
+	for headKey, headRule := range config.headerRulesMap {
+		head, err := proxywasm.GetHttpRequestHeader(headKey)
+		if err != nil {
+			continue
+		}
+
+		if !validateCC(head, headRule) {
+			proxywasm.SendHttpResponse(403, nil, []byte("denied by cc"), -1)
+			return types.ActionContinue
+		}
+	}
+
+	cookieStr, err := proxywasm.GetHttpRequestHeader("cookie")
+	if err != nil {
+		return types.ActionContinue
+	}
+
+	cookies, err := parseCookie(cookieStr)
+	if err != nil {
+		return types.ActionContinue
+	}
+
+	for cookieKey, cookieRule := range config.headerRulesMap {
+		cookie, ok := cookies[cookieKey]
+		if !ok {
+			continue
+		}
+
+		if !validateCC(cookie, cookieRule) {
+			proxywasm.SendHttpResponse(403, nil, []byte("denied by cc"), -1)
+			return types.ActionContinue
+		}
+	}
+
+	return types.ActionContinue
+}
+
 func parseCookie(cookieStr string) (map[string]string, error) {
 	cookies := make(map[string]string)
 
@@ -99,4 +140,9 @@ func parseCookie(cookieStr string) (map[string]string, error) {
 	}
 
 	return cookies, nil
+}
+
+func validateCC(key string, rule *CCRule) bool {
+	// todo: to be implemented
+	return false
 }
