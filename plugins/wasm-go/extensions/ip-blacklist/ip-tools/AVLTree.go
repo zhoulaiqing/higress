@@ -210,7 +210,7 @@ func (avl *AVLTree) searchSingleHelper(node *Node, ipInt *IPInt) *IPInterval {
 	return avl.searchSingleHelper(node.Right, ipInt)
 }
 
-// In-order traversal of the tree
+// InOrderTraversal In-order traversal of the tree
 func (avl *AVLTree) InOrderTraversal() []*IPInterval {
 	var result []*IPInterval
 	avl.inOrderHelper(avl.Root, &result)
