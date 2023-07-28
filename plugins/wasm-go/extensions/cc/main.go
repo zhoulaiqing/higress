@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/alibaba/higress/plugins/wasm-go/pkg/wrapper"
 	"github.com/tidwall/gjson"
+	"net/http"
 )
 
 func main() {
@@ -27,7 +28,6 @@ type CCSubRule struct {
 }
 
 func parseConfig(json gjson.Result, config *CCConfig, log wrapper.Log) error {
-
 	config.headerRulesMap = make(map[string]*CCRule)
 	config.cookieRulesMap = make(map[string]*CCRule)
 
@@ -83,4 +83,20 @@ func parseConfig(json gjson.Result, config *CCConfig, log wrapper.Log) error {
 	}
 
 	return nil
+}
+
+func parseCookie(cookieStr string) (map[string]string, error) {
+	cookies := make(map[string]string)
+
+	// Parse the cookie string using http.ParseCookie from Go standard library
+	cookieHeader := http.Header{}
+	cookieHeader.Add("Cookie", cookieStr)
+	request := http.Request{Header: cookieHeader}
+
+	parsedCookies := request.Cookies()
+	for _, cookie := range parsedCookies {
+		cookies[cookie.Name] = cookie.Value
+	}
+
+	return cookies, nil
 }
