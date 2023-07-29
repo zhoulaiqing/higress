@@ -1,4 +1,4 @@
-package main
+package cc_tools
 
 type ZSet struct {
 	capacity int

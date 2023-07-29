@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"cc_tools"
 	"github.com/alibaba/higress/plugins/wasm-go/pkg/wrapper"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm/types"
@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello world.")
+	//fmt.Println("Hello world.")
 
 	wrapper.SetCtx(
 		"cc_deny",
@@ -20,7 +20,7 @@ func main() {
 	)
 }
 
-var RULE_DATA map[string]*ZSet
+var RULE_DATA map[string]*cc_tools.ZSet
 var BLOCK_DATA map[string]int64
 
 type CCConfig struct {
@@ -42,7 +42,7 @@ type CCSubRule struct {
 func parseConfig(json gjson.Result, config *CCConfig, log wrapper.Log) error {
 	config.headerRulesMap = make(map[string]*CCRule)
 	config.cookieRulesMap = make(map[string]*CCRule)
-	RULE_DATA = make(map[string]*ZSet)
+	RULE_DATA = make(map[string]*cc_tools.ZSet)
 
 	rulesArray := json.Get("cc_rules").Array()
 	for _, rule := range rulesArray {
