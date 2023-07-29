@@ -7,11 +7,21 @@ import (
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm/types"
 	"github.com/tidwall/gjson"
 	"net/http"
+	"time"
 )
 
 func main() {
 	fmt.Println("Hello world.")
+
+	wrapper.SetCtx(
+		"cc_deny",
+		wrapper.ParseConfigBy(parseConfig),
+		wrapper.ProcessRequestHeadersBy(onHttpRequestHeaders),
+	)
 }
+
+var RULE_DATA map[string]*ZSet
+var BLOCK_DATA map[string]int64
 
 type CCConfig struct {
 	headerRulesMap map[string]*CCRule
@@ -32,6 +42,7 @@ type CCSubRule struct {
 func parseConfig(json gjson.Result, config *CCConfig, log wrapper.Log) error {
 	config.headerRulesMap = make(map[string]*CCRule)
 	config.cookieRulesMap = make(map[string]*CCRule)
+	RULE_DATA = make(map[string]*ZSet)
 
 	rulesArray := json.Get("cc_rules").Array()
 	for _, rule := range rulesArray {
@@ -89,13 +100,14 @@ func parseConfig(json gjson.Result, config *CCConfig, log wrapper.Log) error {
 
 func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.Log) types.Action {
 
+	timestamp := time.Now().UnixNano()
 	for headKey, headRule := range config.headerRulesMap {
 		head, err := proxywasm.GetHttpRequestHeader(headKey)
 		if err != nil {
 			continue
 		}
 
-		if !validateCC(head, headRule) {
+		if !validateCC(head, headRule, timestamp) {
 			proxywasm.SendHttpResponse(403, nil, []byte("denied by cc"), -1)
 			return types.ActionContinue
 		}
@@ -117,7 +129,7 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.
 			continue
 		}
 
-		if !validateCC(cookie, cookieRule) {
+		if !validateCC(cookie, cookieRule, timestamp) {
 			proxywasm.SendHttpResponse(403, nil, []byte("denied by cc"), -1)
 			return types.ActionContinue
 		}
@@ -142,7 +154,30 @@ func parseCookie(cookieStr string) (map[string]string, error) {
 	return cookies, nil
 }
 
-func validateCC(key string, rule *CCRule) bool {
-	// todo: to be implemented
-	return false
+func validateCC(key string, rule *CCRule, timestamp int64) bool {
+	blockHist, blocked := BLOCK_DATA[key]
+	if blocked && blockHist >= timestamp {
+		return false
+	}
+	delete(BLOCK_DATA, key)
+
+	hist, ok := RULE_DATA[key]
+
+	if ok {
+		// 1. Clear obsolete data
+		hist.ZRemByScore(key, 0, timestamp-int64(rule.maxPeriod))
+		// 2. Validate rules
+		for _, subRule := range rule.subRules {
+			histCount := hist.ZCount(key, timestamp-int64(subRule.limitPeriod), timestamp)
+			if histCount >= subRule.limitCount {
+				if subRule.blockSeconds > 0 {
+					BLOCK_DATA[key] = timestamp + int64(subRule.blockSeconds)
+				}
+				return false
+			}
+		}
+		// 3. Update data
+		hist.ZAdd(key, timestamp)
+	}
+	return true
 }
