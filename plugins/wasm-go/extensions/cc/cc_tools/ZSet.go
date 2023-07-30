@@ -1,5 +1,7 @@
 package cc_tools
 
+import "github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
+
 type ZSet struct {
 	capacity int
 	data     map[string]*SkipList
@@ -12,6 +14,7 @@ func (z *ZSet) ZAdd(key string, score int64) {
 
 	sl, found := z.data[key]
 	if !found {
+		proxywasm.LogInfo("sl not found")
 		sl = NewSkipList()
 		z.data[key] = sl
 		z.capacity++
@@ -45,4 +48,13 @@ func (z *ZSet) ZRemByScore(key string, min, max int64) {
 	}
 
 	sl.RangeDelete(min, max)
+}
+
+func (z *ZSet) ToString(key string) string {
+	sl, found := z.data[key]
+	if !found {
+		return "[EMPTY]"
+	}
+
+	return sl.ToString()
 }

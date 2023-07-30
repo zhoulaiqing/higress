@@ -1,34 +1,40 @@
 package cc_tools
 
 import (
-	"math"
+	"bytes"
+	"fmt"
 	"math/rand"
 )
 
-const maxLevel = 16 // SkipList 的最大层数
+const (
+	maxLevel    = 32   // SkipList最大层数
+	probability = 0.25 // 插入时节点层数增加的概率
+)
 
-type node struct {
-	content int64
-	forward []*node
+// Node 表示 SkipList 中的一个节点
+type Node struct {
+	key     int64
+	forward []*Node // 每层的下一个节点指针
 }
 
+// SkipList 表示 SkipList 的结构
 type SkipList struct {
-	head   *node
-	level  int
-	length int
+	head   *Node // 头节点
+	level  int   // 当前 SkipList 层数
+	length int   // SkipList 长度
 }
 
-// 创建一个新的节点
-func createNode(content int64, level int) *node {
-	return &node{
-		content: content,
-		forward: make([]*node, level),
+// NewNode 创建一个新的节点
+func NewNode(key int64, level int) *Node {
+	return &Node{
+		key:     key,
+		forward: make([]*Node, level),
 	}
 }
 
 // NewSkipList 创建一个新的 SkipList
 func NewSkipList() *SkipList {
-	head := createNode(math.MinInt64, maxLevel)
+	head := NewNode(0, maxLevel)
 	return &SkipList{
 		head:   head,
 		level:  1,
@@ -36,31 +42,31 @@ func NewSkipList() *SkipList {
 	}
 }
 
-// 获取一个随机的层数，用于插入节点时的决策
+// randomLevel 根据概率随机生成节点的层数
 func randomLevel() int {
 	level := 1
-	for rand.Float64() < 0.5 && level < maxLevel {
+	for rand.Float32() < probability && level < maxLevel {
 		level++
 	}
 	return level
 }
 
-// Insert 插入节点到 SkipList 中
-func (sl *SkipList) Insert(content int64) {
-	update := make([]*node, maxLevel)
-	current := sl.head
+// Insert 插入一个节点到 SkipList
+func (sl *SkipList) Insert(key int64) {
+	update := make([]*Node, maxLevel)
+	x := sl.head
 
-	// 寻找每层插入位置
+	// 找到每层的插入位置
 	for i := sl.level - 1; i >= 0; i-- {
-		for current.forward[i] != nil && current.forward[i].content < content {
-			current = current.forward[i]
+		for x.forward[i] != nil && x.forward[i].key < key {
+			x = x.forward[i]
 		}
-		update[i] = current
+		update[i] = x
 	}
 
 	level := randomLevel()
 
-	// 如果插入的层数大于当前 SkipList 层数，更新头节点的层数
+	// 如果新节点的层数大于当前 SkipList 的层数，更新当前层数
 	if level > sl.level {
 		for i := sl.level; i < level; i++ {
 			update[i] = sl.head
@@ -68,145 +74,196 @@ func (sl *SkipList) Insert(content int64) {
 		sl.level = level
 	}
 
-	// 创建新节点，并进行连接
-	newNode := createNode(content, level)
+	// 插入新节点
+	x = NewNode(key, level)
 	for i := 0; i < level; i++ {
-		newNode.forward[i] = update[i].forward[i]
-		update[i].forward[i] = newNode
+		x.forward[i] = update[i].forward[i]
+		update[i].forward[i] = x
 	}
 
 	sl.length++
 }
 
-// 查找指定 content 的节点
-func (sl *SkipList) searchNode(content int64) *node {
-	current := sl.head
+// Find 查找指定 key 是否存在于 SkipList 中
+func (sl *SkipList) Find(key int64) bool {
+	x := sl.head
 
 	for i := sl.level - 1; i >= 0; i-- {
-		for current.forward[i] != nil && current.forward[i].content < content {
-			current = current.forward[i]
+		for x.forward[i] != nil && x.forward[i].key < key {
+			x = x.forward[i]
 		}
 	}
 
-	// 找到 content 对应的节点或者该节点不存在
-	if current.forward[0] != nil && current.forward[0].content == content {
-		return current.forward[0]
-	}
+	x = x.forward[0]
 
-	return nil
+	return x != nil && x.key == key
 }
 
-// RangeSearch 查找在范围 [start, end] 内的节点，并返回它们的值
+// RangeSearch 返回指定范围内的所有 key
 func (sl *SkipList) RangeSearch(start, end int64) []int64 {
-	var result []int64
-	current := sl.head
+	result := []int64{}
+	x := sl.head
 
+	// 定位到 start 节点
 	for i := sl.level - 1; i >= 0; i-- {
-		for current.forward[i] != nil && current.forward[i].content < start {
-			current = current.forward[i]
+		for x.forward[i] != nil && x.forward[i].key < start {
+			x = x.forward[i]
 		}
 	}
 
-	current = current.forward[0]
+	x = x.forward[0]
 
-	for current != nil && current.content <= end {
-		result = append(result, current.content)
-		current = current.forward[0]
+	// 遍历节点，直到 end 节点
+	for x != nil && x.key <= end {
+		result = append(result, x.key)
+		x = x.forward[0]
 	}
 
 	return result
 }
 
-// RangeCount 计算在范围 [start, end] 内的节点个数
+// RangeCount 返回指定范围内的 key 的数量
 func (sl *SkipList) RangeCount(start, end int64) int {
 	count := 0
-	current := sl.head
+	x := sl.head
 
+	// 定位到 start 节点
 	for i := sl.level - 1; i >= 0; i-- {
-		for current.forward[i] != nil && current.forward[i].content < start {
-			current = current.forward[i]
+		for x.forward[i] != nil && x.forward[i].key < start {
+			x = x.forward[i]
 		}
 	}
 
-	current = current.forward[0]
+	x = x.forward[0]
 
-	for current != nil && current.content <= end {
+	// 遍历节点，直到 end 节点
+	for x != nil && x.key <= end {
 		count++
-		current = current.forward[0]
+		x = x.forward[0]
 	}
 
 	return count
 }
 
-// Delete 删除指定 content 的节点
-func (sl *SkipList) Delete(content int64) bool {
-	update := make([]*node, maxLevel)
-	current := sl.head
+// Delete 删除指定的 key 节点
+func (sl *SkipList) Delete(key int64) {
+	update := make([]*Node, maxLevel)
+	x := sl.head
 
-	// 寻找每层删除位置
+	// 找到每层的插入位置
 	for i := sl.level - 1; i >= 0; i-- {
-		for current.forward[i] != nil && current.forward[i].content < content {
-			current = current.forward[i]
+		for x.forward[i] != nil && x.forward[i].key < key {
+			x = x.forward[i]
 		}
-		update[i] = current
+		update[i] = x
 	}
 
-	current = current.forward[0]
+	x = x.forward[0]
 
-	if current != nil && current.content == content {
-		// 逐层删除
+	if x != nil && x.key == key {
+		// 从所有层级删除节点
 		for i := 0; i < sl.level; i++ {
-			if update[i].forward[i] != current {
-				break
+			if update[i].forward[i] == x {
+				update[i].forward[i] = x.forward[i]
 			}
-			update[i].forward[i] = current.forward[i]
 		}
 
-		// 更新头节点的层数
+		// 更新 SkipList 层数
 		for sl.level > 1 && sl.head.forward[sl.level-1] == nil {
 			sl.level--
 		}
 
 		sl.length--
-		return true
 	}
-
-	return false
 }
 
-// RangeDelete 删除范围 [start, end] 内的节点
-func (sl *SkipList) RangeDelete(start, end int64) {
-	update := make([]*node, maxLevel)
-	current := sl.head
-
-	// 寻找每层删除位置
+// Print 打印整个 SkipList
+func (sl *SkipList) Print() {
 	for i := sl.level - 1; i >= 0; i-- {
-		for current.forward[i] != nil && current.forward[i].content < start {
-			current = current.forward[i]
+		x := sl.head.forward[i]
+		fmt.Printf("Level %d: ", i)
+		for x != nil {
+			fmt.Printf("%d -> ", x.key)
+			x = x.forward[i]
 		}
-		update[i] = current
+		fmt.Println("nil")
+	}
+}
+
+func (sl *SkipList) ToString() string {
+	var buffer bytes.Buffer
+
+	for i := sl.level - 1; i >= 0; i-- {
+		x := sl.head.forward[i]
+		buffer.WriteString(fmt.Sprintf("Level %d: ", i))
+		for x != nil {
+			buffer.WriteString(fmt.Sprintf("%d -> ", x.key))
+			x = x.forward[i]
+		}
+		buffer.WriteString("nil\n")
 	}
 
-	current = current.forward[0]
+	return buffer.String()
+}
 
-	// 删除范围内的节点
-	for current != nil && current.content <= end {
-		// 逐层删除
-		for i := 0; i < sl.level; i++ {
-			if update[i].forward[i] != current {
-				break
+// RangeDelete 删除处于指定范围内的所有节点
+func (sl *SkipList) RangeDelete(start, end int64) {
+	update := make([]*Node, maxLevel)
+	x := sl.head
+
+	// 找到每层的插入位置
+	for i := sl.level - 1; i >= 0; i-- {
+		for x.forward[i] != nil && x.forward[i].key < start {
+			x = x.forward[i]
+		}
+		update[i] = x
+	}
+
+	x = x.forward[0]
+
+	// 删除范围内的所有节点
+	for x != nil && x.key <= end {
+		// 从所有层级删除节点
+		for i := 0; i < len(x.forward); i++ {
+			if update[i].forward[i] == x {
+				update[i].forward[i] = x.forward[i]
 			}
-			update[i].forward[i] = current.forward[i]
 		}
 
-		current = current.forward[0]
+		// 更新 SkipList 层数
+		for sl.level > 1 && sl.head.forward[sl.level-1] == nil {
+			sl.level--
+		}
+
+		sl.length--
+
+		x = x.forward[0]
+	}
+}
+
+func TestZSet() {
+	skipList := NewSkipList()
+
+	// 插入示例数据
+	for i := 1; i <= 20; i++ {
+		skipList.Insert(int64(i))
 	}
 
-	// 更新头节点的层数
-	for sl.level > 1 && sl.head.forward[sl.level-1] == nil {
-		sl.level--
-	}
+	fmt.Println("SkipList:")
+	skipList.Print()
 
-	// 更新长度
-	sl.length -= sl.RangeCount(start, end)
+	// 查找示例
+	fmt.Println("Find 10:", skipList.Find(10))
+	fmt.Println("Find 25:", skipList.Find(25))
+
+	// 范围查找示例
+	fmt.Println("RangeFind 5 to 15:", skipList.RangeSearch(5, 15))
+
+	// 范围计数示例
+	fmt.Println("RangeCount 5 to 15:", skipList.RangeCount(5, 15))
+
+	// 范围删除示例
+	skipList.RangeDelete(5, 6)
+	fmt.Println("SkipList after range deletion:")
+	skipList.Print()
 }

@@ -1,6 +1,6 @@
 module cc
 
-go 1.20
+go 1.19
 
 require (
 	github.com/alibaba/higress/plugins/wasm-go v0.0.0-20230708135159-28892cf3ae0f
