@@ -19,6 +19,7 @@ func main() {
 		"cc_deny",
 		wrapper.ParseConfigBy(parseConfig),
 		wrapper.ProcessRequestHeadersBy(onHttpRequestHeaders),
+		//wrapper.ProcessTickBy(onTick),
 	)
 }
 
@@ -52,16 +53,16 @@ func parseConfig(jsonData gjson.Result, config *CCConfig, log wrapper.Log) error
 	log.Info("Start parsing config......")
 	config.headerRulesMap = make(map[string]*CCRule)
 	config.cookieRulesMap = make(map[string]*CCRule)
-	blockMap := make(map[string]BlockData)
-	blockBytes, blockErr := json.Marshal(blockMap)
-	if blockErr != nil {
-		log.Error("Json Marshal Error: " + blockErr.Error())
-	}
-
-	setErr := proxywasm.SetSharedData("BLOCK_DATA", blockBytes, uint32(time.Now().UnixNano()/1000))
-	if setErr != nil {
-		log.Error("Set blocked data error: " + setErr.Error())
-	}
+	//blockMap := make(map[string]BlockData)
+	//blockBytes, blockErr := json.Marshal(blockMap)
+	//if blockErr != nil {
+	//	log.Error("Json Marshal Error: " + blockErr.Error())
+	//}
+	//
+	//setErr := proxywasm.SetSharedData("BLOCK_DATA", blockBytes, uint32(time.Now().UnixNano()/1000))
+	//if setErr != nil {
+	//	log.Error("Set blocked data error: " + setErr.Error())
+	//}
 	config.HIST_DATA = &cc_tools.ZSet{}
 	config.BLOCK_DATA = make(map[string]int64)
 

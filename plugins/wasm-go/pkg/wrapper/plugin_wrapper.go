@@ -41,6 +41,7 @@ type ParseConfigFunc[PluginConfig any] func(json gjson.Result, config *PluginCon
 type onHttpHeadersFunc[PluginConfig any] func(context HttpContext, config PluginConfig, log Log) types.Action
 type onHttpBodyFunc[PluginConfig any] func(context HttpContext, config PluginConfig, body []byte, log Log) types.Action
 type onHttpStreamDoneFunc[PluginConfig any] func(context HttpContext, config PluginConfig, log Log)
+type onTickFunc[PluginConfig any] func(context HttpContext, config PluginConfig, log Log)
 
 type CommonVmCtx[PluginConfig any] struct {
 	types.DefaultVMContext
@@ -53,6 +54,7 @@ type CommonVmCtx[PluginConfig any] struct {
 	onHttpResponseHeaders onHttpHeadersFunc[PluginConfig]
 	onHttpResponseBody    onHttpBodyFunc[PluginConfig]
 	onHttpStreamDone      onHttpStreamDoneFunc[PluginConfig]
+	onTick                onTickFunc[PluginConfig]
 }
 
 func SetCtx[PluginConfig any](pluginName string, setFuncs ...SetPluginFunc[PluginConfig]) {
@@ -94,6 +96,12 @@ func ProcessResponseBodyBy[PluginConfig any](f onHttpBodyFunc[PluginConfig]) Set
 func ProcessStreamDoneBy[PluginConfig any](f onHttpStreamDoneFunc[PluginConfig]) SetPluginFunc[PluginConfig] {
 	return func(ctx *CommonVmCtx[PluginConfig]) {
 		ctx.onHttpStreamDone = f
+	}
+}
+
+func ProcessTickBy[PluginConfig any](f onTickFunc[PluginConfig]) SetPluginFunc[PluginConfig] {
+	return func(ctx *CommonVmCtx[PluginConfig]) {
+		ctx.onTick = f
 	}
 }
 
@@ -306,4 +314,16 @@ func (ctx *CommonHttpCtx[PluginConfig]) OnHttpStreamDone() {
 		return
 	}
 	ctx.plugin.vm.onHttpStreamDone(ctx, *ctx.config, ctx.plugin.vm.log)
+}
+
+func (ctx *CommonHttpCtx[PluginConfig]) OnTick() {
+	if ctx.config == nil {
+		ctx.plugin.vm.log.Warnf("config nil")
+		return
+	}
+	if ctx.plugin.vm.onTick == nil {
+		ctx.plugin.vm.log.Warnf("onTick nil")
+		return
+	}
+	ctx.plugin.vm.onTick(ctx, *ctx.config, ctx.plugin.vm.log)
 }

@@ -3,7 +3,7 @@ module cc
 go 1.19
 
 require (
-	github.com/alibaba/higress/plugins/wasm-go v0.0.0-20230708135159-28892cf3ae0f
+	github.com/alibaba/higress/plugins/wasm-go v0.0.0
 	github.com/tetratelabs/proxy-wasm-go-sdk v0.22.0
 	github.com/tidwall/gjson v1.14.4
 )
@@ -17,3 +17,7 @@ require (
 require cc_tools v0.0.0
 
 replace cc_tools => ./cc_tools
+
+replace (
+	github.com/alibaba/higress/plugins/wasm-go => ../..
+)
