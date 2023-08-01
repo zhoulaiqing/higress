@@ -19,7 +19,7 @@ func main() {
 		"cc_deny",
 		wrapper.ParseConfigBy(parseConfig),
 		wrapper.ProcessRequestHeadersBy(onHttpRequestHeaders),
-		//wrapper.ProcessTickBy(onTick),
+		wrapper.ProcessTickBy(onTick),
 	)
 }
 
@@ -162,6 +162,10 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.
 	}
 
 	return types.ActionContinue
+}
+
+func onTick(config *CCConfig, log wrapper.Log) {
+	log.Info("tik tok")
 }
 
 func parseCookie(cookieStr string) (map[string]string, error) {

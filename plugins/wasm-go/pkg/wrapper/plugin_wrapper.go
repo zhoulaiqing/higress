@@ -15,6 +15,7 @@
 package wrapper
 
 import (
+	"reflect"
 	"unsafe"
 
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
@@ -41,7 +42,7 @@ type ParseConfigFunc[PluginConfig any] func(json gjson.Result, config *PluginCon
 type onHttpHeadersFunc[PluginConfig any] func(context HttpContext, config PluginConfig, log Log) types.Action
 type onHttpBodyFunc[PluginConfig any] func(context HttpContext, config PluginConfig, body []byte, log Log) types.Action
 type onHttpStreamDoneFunc[PluginConfig any] func(context HttpContext, config PluginConfig, log Log)
-type onTickFunc[PluginConfig any] func(context HttpContext, config PluginConfig, log Log)
+type onTickFunc[PluginConfig any] func(config *PluginConfig, log Log)
 
 type CommonVmCtx[PluginConfig any] struct {
 	types.DefaultVMContext
@@ -118,6 +119,7 @@ func NewCommonVmCtx[PluginConfig any](pluginName string, setFuncs ...SetPluginFu
 	for _, set := range setFuncs {
 		set(ctx)
 	}
+
 	if ctx.parseConfig == nil {
 		var config PluginConfig
 		if unsafe.Sizeof(config) != 0 {
@@ -132,6 +134,10 @@ func NewCommonVmCtx[PluginConfig any](pluginName string, setFuncs ...SetPluginFu
 }
 
 func (ctx *CommonVmCtx[PluginConfig]) NewPluginContext(uint32) types.PluginContext {
+	tickErr := proxywasm.SetTickPeriodMilliSeconds(1000)
+	if tickErr != nil {
+		ctx.log.Warnf("Set tick period failed: %s", tickErr.Error())
+	}
 	return &CommonPluginCtx[PluginConfig]{
 		vm: ctx,
 	}
@@ -140,7 +146,8 @@ func (ctx *CommonVmCtx[PluginConfig]) NewPluginContext(uint32) types.PluginConte
 type CommonPluginCtx[PluginConfig any] struct {
 	types.DefaultPluginContext
 	matcher.RuleMatcher[PluginConfig]
-	vm *CommonVmCtx[PluginConfig]
+	vm     *CommonVmCtx[PluginConfig]
+	config *PluginConfig
 }
 
 func (ctx *CommonPluginCtx[PluginConfig]) OnPluginStart(int) types.OnPluginStartStatus {
@@ -170,6 +177,7 @@ func (ctx *CommonPluginCtx[PluginConfig]) OnPluginStart(int) types.OnPluginStart
 		ctx.vm.log.Warnf("parse rule config failed: %v", err)
 		return types.OnPluginStartStatusFailed
 	}
+
 	return types.OnPluginStartStatusOK
 }
 
@@ -316,14 +324,16 @@ func (ctx *CommonHttpCtx[PluginConfig]) OnHttpStreamDone() {
 	ctx.plugin.vm.onHttpStreamDone(ctx, *ctx.config, ctx.plugin.vm.log)
 }
 
-func (ctx *CommonHttpCtx[PluginConfig]) OnTick() {
-	if ctx.config == nil {
-		ctx.plugin.vm.log.Warnf("config nil")
+func (ctx *CommonPluginCtx[PluginConfig]) OnTick() {
+	config, err := ctx.GetGlobalConfig()
+	if err != nil {
+		ctx.vm.log.Errorf("get global config failed, err:%v", err)
+	}
+	ctx.vm.log.Infof("config type: %s", reflect.TypeOf(config))
+	if ctx.vm.onTick == nil {
+		ctx.vm.log.Warnf("onTick nil")
 		return
 	}
-	if ctx.plugin.vm.onTick == nil {
-		ctx.plugin.vm.log.Warnf("onTick nil")
-		return
-	}
-	ctx.plugin.vm.onTick(ctx, *ctx.config, ctx.plugin.vm.log)
+	ctx.vm.log.Info("tiking toking")
+	ctx.vm.onTick(config, ctx.vm.log)
 }

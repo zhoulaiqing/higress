@@ -89,6 +89,13 @@ func (m RuleMatcher[PluginConfig]) GetMatchConfig() (*PluginConfig, error) {
 	return nil, nil
 }
 
+func (m RuleMatcher[PluginConfig]) GetGlobalConfig() (*PluginConfig, error) {
+	if m.hasGlobalConfig {
+		return &m.globalConfig, nil
+	}
+	return nil, nil
+}
+
 func (m *RuleMatcher[PluginConfig]) ParseRuleConfig(config gjson.Result,
 	parsePluginConfig func(gjson.Result, *PluginConfig) error) error {
 	var rules []gjson.Result
