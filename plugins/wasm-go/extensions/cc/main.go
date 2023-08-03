@@ -1,14 +1,13 @@
 package main
 
 import (
-	"cc_tools"
-	"encoding/json"
+	"encoding/binary"
+	"fmt"
 	"github.com/alibaba/higress/plugins/wasm-go/pkg/wrapper"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm/types"
 	"github.com/tidwall/gjson"
 	"net/http"
-	"strconv"
 	"time"
 )
 
@@ -19,29 +18,38 @@ func main() {
 		"cc_deny",
 		wrapper.ParseConfigBy(parseConfig),
 		wrapper.ProcessRequestHeadersBy(onHttpRequestHeaders),
-		wrapper.ProcessTickBy(onTick),
+		//wrapper.ProcessTickBy(onTick),
 	)
 }
 
-//var mu sync.Mutex
-//var HIST_DATA *cc_tools.ZSet
-//var BLOCK_DATA map[string]int64
+type Timestamps map[string]int64
+
+func getTimestamps(t time.Time) *Timestamps {
+	ts := Timestamps{}
+
+	ye, mo, da := t.Year(), t.Month(), t.Day()
+	ho, mi, se, lo := t.Hour(), t.Minute(), t.Second(), t.Location()
+
+	ts["now"] = t.Unix()
+	ts["second"] = time.Date(ye, mo, da, ho, mi, se, 0, lo).Unix()
+	ts["minute"] = time.Date(ye, mo, da, ho, mi, 0, 0, lo).Unix()
+	ts["day"] = time.Date(ye, mo, da, 0, 0, 0, 0, lo).Unix()
+
+	return &ts
+}
 
 type CCConfig struct {
 	headerRulesMap map[string]*CCRule
 	cookieRulesMap map[string]*CCRule
-	HIST_DATA      *cc_tools.ZSet
-	BLOCK_DATA     map[string]int64
 }
 
 type CCRule struct {
-	maxPeriod int64
-	subRules  []CCSubRule
+	subRules []CCSubRule
 }
 
 type CCSubRule struct {
-	limitCount   int
-	limitPeriod  int64
+	limitCount   int64
+	period       string
 	blockSeconds int
 }
 
@@ -49,22 +57,17 @@ type BlockData struct {
 	blockUntil int
 }
 
+type Usage struct {
+	limit     int64
+	remaining int64
+	usage     int64
+	cas       uint32
+}
+
 func parseConfig(jsonData gjson.Result, config *CCConfig, log wrapper.Log) error {
 	log.Info("Start parsing config......")
 	config.headerRulesMap = make(map[string]*CCRule)
 	config.cookieRulesMap = make(map[string]*CCRule)
-	//blockMap := make(map[string]BlockData)
-	//blockBytes, blockErr := json.Marshal(blockMap)
-	//if blockErr != nil {
-	//	log.Error("Json Marshal Error: " + blockErr.Error())
-	//}
-	//
-	//setErr := proxywasm.SetSharedData("BLOCK_DATA", blockBytes, uint32(time.Now().UnixNano()/1000))
-	//if setErr != nil {
-	//	log.Error("Set blocked data error: " + setErr.Error())
-	//}
-	config.HIST_DATA = &cc_tools.ZSet{}
-	config.BLOCK_DATA = make(map[string]int64)
 
 	rulesArray := jsonData.Get("cc_rules").Array()
 	for _, rule := range rulesArray {
@@ -87,7 +90,6 @@ func parseConfig(jsonData gjson.Result, config *CCConfig, log wrapper.Log) error
 		}
 
 		var ccSubRules []CCSubRule
-		var maxPeriod int64
 		blockSeconds := 0
 		blockSecondsConf := rule.Get("block_seconds")
 		if blockSecondsConf.Exists() {
@@ -100,22 +102,22 @@ func parseConfig(jsonData gjson.Result, config *CCConfig, log wrapper.Log) error
 
 		// 时间都按微妙级别
 		if qps.Exists() {
-			period := int64(1000 * 1000)
-			ccSubRules = append(ccSubRules, CCSubRule{int(qps.Int()), period, blockSeconds})
-			maxPeriod = period
+			//period := int64(1000 * 1000)
+			ccSubRules = append(ccSubRules, CCSubRule{qps.Int(), "second", blockSeconds})
+			//maxPeriod = period
 		}
 		if qpm.Exists() {
-			period := int64(60 * 1000 * 1000)
-			ccSubRules = append(ccSubRules, CCSubRule{int(qpm.Int()), period, blockSeconds})
-			maxPeriod = period
+			//period := int64(60 * 1000 * 1000)
+			ccSubRules = append(ccSubRules, CCSubRule{qpm.Int(), "minute", blockSeconds})
+			//maxPeriod = period
 		}
 		if qpd.Exists() {
-			period := int64(24 * 60 * 60 * 1000 * 1000)
-			ccSubRules = append(ccSubRules, CCSubRule{int(qpd.Int()), period, blockSeconds})
-			maxPeriod = period
+			//period := int64(24 * 60 * 60 * 1000 * 1000)
+			ccSubRules = append(ccSubRules, CCSubRule{qpd.Int(), "day", blockSeconds})
+			//maxPeriod = period
 		}
 
-		rulesMap[key] = &CCRule{maxPeriod, ccSubRules}
+		rulesMap[key] = &CCRule{ccSubRules}
 	}
 
 	return nil
@@ -164,8 +166,92 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.
 	return types.ActionContinue
 }
 
-func onTick(config *CCConfig, log wrapper.Log) {
-	log.Info("tik tok")
+//func onTick(config *CCConfig, log wrapper.Log) {
+//	log.Info("tik tok")
+//}
+
+type Identifier string
+
+func localPolicyUsage(id Identifier, period string, ts *Timestamps) (int64, uint32, error) {
+	cacheKey := getLocalKey(id, period, (*ts)[period])
+
+	value, cas, err := proxywasm.GetSharedData(cacheKey)
+	if err != nil {
+		if err == types.ErrorStatusNotFound {
+			return 0, 0, nil
+		}
+		return 0, 0, nil
+	}
+
+	ret := int64(binary.LittleEndian.Uint64(value))
+	return ret, cas, nil
+}
+
+func localPolicyIncrement(id Identifier, counters map[string]Usage, ts *Timestamps) {
+	for period, usage := range counters {
+		cacheKey := getLocalKey(id, period, (*ts)[period])
+
+		buf := make([]byte, 8)
+		value := usage.usage
+		cas := usage.cas
+
+		saved := false
+		var err error
+		// cas 保存，重试 10 次
+		for i := 0; i < 10; i++ {
+			binary.LittleEndian.PutUint64(buf, uint64(value+1))
+			err = proxywasm.SetSharedData(cacheKey, buf, cas)
+			if err == nil {
+				saved = true
+				break
+			} else if err == types.ErrorStatusCasMismatch {
+				// cas 不匹配，重试
+				buf, cas, err = proxywasm.GetSharedData(cacheKey)
+				value = int64(binary.LittleEndian.Uint64(buf))
+			} else {
+				break
+			}
+		}
+
+		if !saved {
+			proxywasm.LogErrorf("Could not increment counter for period '%v': %v", period, err)
+		}
+	}
+}
+
+func getUsage(subRules []CCSubRule, id Identifier, ts *Timestamps) (map[string]Usage, string, error) {
+	counters := make(map[string]Usage)
+	stop := ""
+
+	for _, subRule := range subRules {
+		if subRule.limitCount < 0 {
+			continue
+		}
+		period := subRule.period
+		curUsage, cas, err := localPolicyUsage(id, period, ts)
+		if err != nil {
+			return counters, period, err
+		}
+
+		remaining := subRule.limitCount - curUsage
+
+		counters[period] = Usage{
+			limit:     subRule.limitCount,
+			remaining: remaining,
+			usage:     curUsage,
+			cas:       cas,
+		}
+
+		if remaining <= 0 {
+			stop = period
+		}
+	}
+
+	return counters, stop, nil
+}
+
+func getLocalKey(id Identifier, period string, time int64) string {
+	return fmt.Sprintf("limit:%v:%v:%v", id, time, period)
 }
 
 func parseCookie(cookieStr string) (map[string]string, error) {
@@ -185,37 +271,6 @@ func parseCookie(cookieStr string) (map[string]string, error) {
 }
 
 func validateCC(key string, rule *CCRule, timestamp int64, config *CCConfig) bool {
-	blockValue, _, _ := proxywasm.GetSharedData("BLOCK_DATA")
-	var blockData map[string]BlockData
-	json.Unmarshal(blockValue, &blockData)
-	blockHist, blocked := blockData[key]
-	if blocked && int64(blockHist.blockUntil) >= timestamp {
-		return false
-	}
-	//delete(BLOCK_DATA, key)
-
-	// Update hist data
-	HIST_DATA := config.HIST_DATA
-	HIST_DATA.ZAdd(key, timestamp)
-	proxywasm.LogInfo("BEFORE REMOVE: " + HIST_DATA.ToString(key))
-	// Clear obsolete data
-	proxywasm.LogInfo("MaxPeriod: " + strconv.FormatInt(rule.maxPeriod, 10))
-	HIST_DATA.ZRemByScore(key, 0, timestamp-rule.maxPeriod)
-	proxywasm.LogInfo("AFTER REMOVE: " + HIST_DATA.ToString(key))
-	// Validate rules
-	for _, subRule := range rule.subRules {
-		histCount := HIST_DATA.ZCount(key, timestamp-subRule.limitPeriod, timestamp)
-		proxywasm.LogInfo("Hist count: key " + key + ", count " + strconv.Itoa(histCount))
-		if histCount >= subRule.limitCount {
-			if subRule.blockSeconds > 0 {
-				blockData[key] = BlockData{int(timestamp + int64(subRule.blockSeconds*1000*1000))}
-				blockJson, _ := json.Marshal(blockData)
-				proxywasm.SetSharedData("BLOCK_DATA", blockJson, uint32(timestamp))
-			}
-
-			return false
-		}
-	}
 
 	return true
 }
