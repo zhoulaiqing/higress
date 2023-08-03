@@ -125,7 +125,8 @@ func parseConfig(jsonData gjson.Result, config *CCConfig, log wrapper.Log) error
 
 func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.Log) types.Action {
 
-	timestamp := time.Now().UnixNano() / 1000
+	ts := getTimestamps(time.Now())
+
 	for headKey, headRule := range config.headerRulesMap {
 		head, err := proxywasm.GetHttpRequestHeader(headKey)
 		if err != nil {
@@ -133,7 +134,7 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.
 			continue
 		}
 
-		if !validateCC(head, headRule, timestamp, &config) {
+		if !validateCC(head, headRule, ts, &config) {
 			proxywasm.SendHttpResponse(403, nil, []byte("denied by cc"), -1)
 			return types.ActionContinue
 		}
@@ -157,7 +158,7 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.
 			continue
 		}
 
-		if !validateCC(cookie, cookieRule, timestamp, &config) {
+		if !validateCC(cookie, cookieRule, ts, &config) {
 			proxywasm.SendHttpResponse(403, nil, []byte("denied by cc"), -1)
 			return types.ActionContinue
 		}
@@ -270,7 +271,22 @@ func parseCookie(cookieStr string) (map[string]string, error) {
 	return cookies, nil
 }
 
-func validateCC(key string, rule *CCRule, timestamp int64, config *CCConfig) bool {
+func validateCC(key string, rule *CCRule, ts *Timestamps, config *CCConfig) bool {
+
+	id := Identifier(key)
+
+	counters, stop, err := getUsage(rule.subRules, id, ts)
+	if err != nil {
+		proxywasm.LogErrorf("Failed to get usage: %v", err)
+	}
+
+	if counters != nil {
+		if stop != "" {
+			return false
+		}
+
+		localPolicyIncrement(id, counters, ts)
+	}
 
 	return true
 }

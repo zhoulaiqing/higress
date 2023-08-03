@@ -15,7 +15,6 @@
 package wrapper
 
 import (
-	"reflect"
 	"unsafe"
 
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
@@ -324,16 +323,17 @@ func (ctx *CommonHttpCtx[PluginConfig]) OnHttpStreamDone() {
 	ctx.plugin.vm.onHttpStreamDone(ctx, *ctx.config, ctx.plugin.vm.log)
 }
 
-func (ctx *CommonPluginCtx[PluginConfig]) OnTick() {
-	config, err := ctx.GetGlobalConfig()
-	if err != nil {
-		ctx.vm.log.Errorf("get global config failed, err:%v", err)
-	}
-	ctx.vm.log.Infof("config type: %s", reflect.TypeOf(config))
-	if ctx.vm.onTick == nil {
-		ctx.vm.log.Warnf("onTick nil")
-		return
-	}
-	ctx.vm.log.Info("tiking toking")
-	ctx.vm.onTick(config, ctx.vm.log)
-}
+//
+//func (ctx *CommonPluginCtx[PluginConfig]) OnTick() {
+//	config, err := ctx.GetGlobalConfig()
+//	if err != nil {
+//		ctx.vm.log.Errorf("get global config failed, err:%v", err)
+//	}
+//	ctx.vm.log.Infof("config type: %s", reflect.TypeOf(config))
+//	if ctx.vm.onTick == nil {
+//		ctx.vm.log.Warnf("onTick nil")
+//		return
+//	}
+//	ctx.vm.log.Info("tiking toking")
+//	ctx.vm.onTick(config, ctx.vm.log)
+//}
