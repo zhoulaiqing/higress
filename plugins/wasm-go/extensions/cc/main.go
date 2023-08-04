@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/binary"
+	"cc_tools"
 	"fmt"
 	"github.com/alibaba/higress/plugins/wasm-go/pkg/wrapper"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
@@ -50,17 +50,14 @@ type CCRule struct {
 type CCSubRule struct {
 	limitCount   int64
 	period       string
-	blockSeconds int
-}
-
-type BlockData struct {
-	blockUntil int
+	blockSeconds int64
 }
 
 type Usage struct {
 	limit     int64
 	remaining int64
 	usage     int64
+	blockUtil int64
 	cas       uint32
 }
 
@@ -90,10 +87,10 @@ func parseConfig(jsonData gjson.Result, config *CCConfig, log wrapper.Log) error
 		}
 
 		var ccSubRules []CCSubRule
-		blockSeconds := 0
+		blockSeconds := int64(0)
 		blockSecondsConf := rule.Get("block_seconds")
 		if blockSecondsConf.Exists() {
-			blockSeconds = int(blockSecondsConf.Int())
+			blockSeconds = blockSecondsConf.Int()
 		}
 
 		qps := rule.Get("qps")
@@ -130,10 +127,11 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.
 	for headKey, headRule := range config.headerRulesMap {
 		head, err := proxywasm.GetHttpRequestHeader(headKey)
 		if err != nil {
-			log.Error("Get head Error: " + err.Error())
+			//log.Error("Get head Error: " + err.Error())
 			continue
 		}
 
+		//proxywasm.LogInfof("Headstr: %s", head)
 		if !validateCC(head, headRule, ts, &config) {
 			proxywasm.SendHttpResponse(403, nil, []byte("denied by cc"), -1)
 			return types.ActionContinue
@@ -142,10 +140,11 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.
 
 	cookieStr, err := proxywasm.GetHttpRequestHeader("cookie")
 	if err != nil {
-		log.Error("Get cookie str Error: " + err.Error())
+		//log.Error("Get cookie str Error: " + err.Error())
 		return types.ActionContinue
 	}
 
+	//proxywasm.LogInfof("Cookiestr: %s", cookieStr)
 	cookies, err := parseCookie(cookieStr)
 	if err != nil {
 		return types.ActionContinue
@@ -154,7 +153,7 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.
 	for cookieKey, cookieRule := range config.headerRulesMap {
 		cookie, ok := cookies[cookieKey]
 		if !ok {
-			log.Error("Get cookie Error: " + err.Error())
+			//log.Error("Get cookie Error: " + err.Error())
 			continue
 		}
 
@@ -173,34 +172,43 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.
 
 type Identifier string
 
-func localPolicyUsage(id Identifier, period string, ts *Timestamps) (int64, uint32, error) {
-	cacheKey := getLocalKey(id, period, (*ts)[period])
+// 返回 periodTime used, blockUntil, cas, err
+func localPolicyUsage(id Identifier, period string) (int64, int64, int64, uint32, error) {
+	cacheKey := getLocalKey(id, period)
 
 	value, cas, err := proxywasm.GetSharedData(cacheKey)
 	if err != nil {
 		if err == types.ErrorStatusNotFound {
-			return 0, 0, nil
+			return 0, 0, 0, 0, nil
 		}
-		return 0, 0, nil
+		return 0, 0, 0, 0, nil
 	}
 
-	ret := int64(binary.LittleEndian.Uint64(value))
-	return ret, cas, nil
+	ret := cc_tools.ByteArrayToInt64Array(value)
+	if len(ret) != 3 {
+		proxywasm.LogError("Shared data format error")
+	}
+
+	//proxywasm.LogInfof("Get shared data: %v:  %v, %v, %v", cacheKey, ret[0], ret[1], ret[2])
+
+	return ret[0], ret[1], ret[2], cas, nil
 }
 
 func localPolicyIncrement(id Identifier, counters map[string]Usage, ts *Timestamps) {
 	for period, usage := range counters {
-		cacheKey := getLocalKey(id, period, (*ts)[period])
+		cacheKey := getLocalKey(id, period)
 
-		buf := make([]byte, 8)
 		value := usage.usage
+		blockUntil := usage.blockUtil
 		cas := usage.cas
 
 		saved := false
 		var err error
 		// cas 保存，重试 10 次
 		for i := 0; i < 10; i++ {
-			binary.LittleEndian.PutUint64(buf, uint64(value+1))
+			// 保存顺序： time, usage, blockUntil
+			buf := cc_tools.Int64ArrayToByteArray([]int64{(*ts)[period], value + 1, blockUntil})
+
 			err = proxywasm.SetSharedData(cacheKey, buf, cas)
 			if err == nil {
 				saved = true
@@ -208,7 +216,8 @@ func localPolicyIncrement(id Identifier, counters map[string]Usage, ts *Timestam
 			} else if err == types.ErrorStatusCasMismatch {
 				// cas 不匹配，重试
 				buf, cas, err = proxywasm.GetSharedData(cacheKey)
-				value = int64(binary.LittleEndian.Uint64(buf))
+				ret := cc_tools.ByteArrayToInt64Array(buf)
+				value = ret[1]
 			} else {
 				break
 			}
@@ -229,30 +238,52 @@ func getUsage(subRules []CCSubRule, id Identifier, ts *Timestamps) (map[string]U
 			continue
 		}
 		period := subRule.period
-		curUsage, cas, err := localPolicyUsage(id, period, ts)
+		savedTime, curUsage, blockUntil, cas, err := localPolicyUsage(id, period)
 		if err != nil {
 			return counters, period, err
 		}
 
-		remaining := subRule.limitCount - curUsage
-
-		counters[period] = Usage{
-			limit:     subRule.limitCount,
-			remaining: remaining,
-			usage:     curUsage,
-			cas:       cas,
-		}
-
-		if remaining <= 0 {
+		if blockUntil >= (*ts)["now"] {
 			stop = period
 		}
+
+		curTime := (*ts)[period]
+		var usage Usage
+		if curTime != savedTime {
+			// 需要刷新
+			usage = Usage{
+				limit:     subRule.limitCount,
+				remaining: subRule.limitCount,
+				usage:     0,
+				cas:       cas,
+				blockUtil: 0,
+			}
+		} else {
+			remaining := subRule.limitCount - curUsage
+			usage = Usage{
+				limit:     subRule.limitCount,
+				remaining: remaining,
+				usage:     curUsage,
+				cas:       cas,
+				blockUtil: blockUntil,
+			}
+
+			if remaining <= 0 {
+				stop = period
+				if subRule.blockSeconds > 0 {
+					usage.blockUtil = (*ts)["now"] + subRule.blockSeconds
+				}
+			}
+		}
+
+		counters[period] = usage
 	}
 
 	return counters, stop, nil
 }
 
-func getLocalKey(id Identifier, period string, time int64) string {
-	return fmt.Sprintf("limit:%v:%v:%v", id, time, period)
+func getLocalKey(id Identifier, period string) string {
+	return fmt.Sprintf("limit:%v:%v", id, period)
 }
 
 func parseCookie(cookieStr string) (map[string]string, error) {
