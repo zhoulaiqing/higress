@@ -16,6 +16,13 @@ const (
 	Equals      int = 0
 )
 
+func (u *IPInt) ToUInt32() uint32 {
+	if len(u.integers) == 0 {
+		return 0
+	}
+	return u.integers[0]
+}
+
 func (u *IPInt) Cmp(other *IPInt) int {
 	if len(u.integers) < len(other.integers) {
 		return LessThan
