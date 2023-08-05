@@ -21,20 +21,23 @@ func main() {
 }
 
 type IpBlacklistConfig struct {
-	ipIntervalTreeV4 *ip_tools.AVLTree
+	//ipIntervalTreeV4 *ip_tools.AVLTree
+	bitmapV4         *ip_tools.Bitmap
 	ipIntervalTreeV6 *ip_tools.AVLTree
 }
 
 func parseConfig(json gjson.Result, config *IpBlacklistConfig, log wrapper.Log) error {
 
-	config.ipIntervalTreeV4 = ip_tools.NewAVLTree()
+	//config.ipIntervalTreeV4 = ip_tools.NewAVLTree()
+	config.bitmapV4 = ip_tools.NewBitmap()
 	config.ipIntervalTreeV6 = ip_tools.NewAVLTree()
 
 	ipBlackArray := json.Get("ip_blacklist").Array()
 	for _, blackIp := range ipBlackArray {
 		isV4, minIp, maxIp, _ := ip_tools.GetIPIntRange(blackIp.String())
 		if isV4 {
-			config.ipIntervalTreeV4.Insert(&ip_tools.IPInterval{Start: minIp, End: maxIp})
+			//config.ipIntervalTreeV4.Insert(&ip_tools.IPInterval{Start: minIp, End: maxIp})
+			config.bitmapV4.SetRange(minIp.ToUInt32(), maxIp.ToUInt32())
 		} else {
 			config.ipIntervalTreeV6.Insert(&ip_tools.IPInterval{Start: minIp, End: maxIp})
 		}
@@ -55,18 +58,17 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config IpBlacklistConfig, log
 
 	isV4, ipInt, _, _ := ip_tools.GetIPIntRange(ip)
 
-	var intervalRoot *ip_tools.AVLTree
 	if isV4 {
-		intervalRoot = config.ipIntervalTreeV4
+		bitmap := config.bitmapV4
+		if bitmap.GetBit(ipInt.ToUInt32()) {
+			proxywasm.SendHttpResponse(403, nil, []byte("denied by ip"), -1)
+		}
 	} else {
-		intervalRoot = config.ipIntervalTreeV6
-	}
-
-	if intervalRoot.SearchSingle(ipInt) != nil {
-		//log.Error("Hit ip blacklist rule")
-		proxywasm.SendHttpResponse(403, nil, []byte("denied by ip"), -1)
-
-		return types.ActionContinue
+		intervalRoot := config.ipIntervalTreeV6
+		if intervalRoot.SearchSingle(ipInt) != nil {
+			//log.Error("Hit ip blacklist rule")
+			proxywasm.SendHttpResponse(403, nil, []byte("denied by ip"), -1)
+		}
 	}
 
 	return types.ActionContinue

@@ -48,3 +48,43 @@ func TestIpDeny(t *testing.T) {
 	fmt.Println("Contains 2023:0db8:85a3:0000:0000:8a2e:0000:0000", res5)
 	assert.True(t, res5)
 }
+
+func TestBitmapDeny(t *testing.T) {
+	var bitmapV4 = ip_tools.NewBitmap()
+	_, minIp, maxIp, _ := ip_tools.GetIPIntRange("1.1.1.1")
+	bitmapV4.SetRange(minIp.ToUInt32(), maxIp.ToUInt32())
+
+	_, minIp2, maxIp2, _ := ip_tools.GetIPIntRange("2.2.2.2/16")
+	bitmapV4.SetRange(minIp2.ToUInt32(), maxIp2.ToUInt32())
+
+	// true
+	res1 := bitmapV4.GetBit(minIp.ToUInt32())
+	fmt.Println("Contains 1.1.1.1", res1)
+	assert.True(t, res1)
+	// false
+	_, otherIp, _, _ := ip_tools.GetIPIntRange("10.23.2.2")
+	res2 := bitmapV4.GetBit(otherIp.ToUInt32())
+	fmt.Println("Contains 10.23.2.2", res2)
+	assert.False(t, res2)
+	// true
+	_, ip3, _, _ := ip_tools.GetIPIntRange("2.2.1.1")
+	res3 := bitmapV4.GetBit(ip3.ToUInt32())
+	fmt.Println("Contains 2.2.1.1", res3)
+	assert.True(t, res3)
+	// true
+	_, ip4, _, _ := ip_tools.GetIPIntRange("2.2.0.0")
+	res4 := bitmapV4.GetBit(ip4.ToUInt32())
+	fmt.Println("Contains 2.2.0.0", res4)
+	assert.True(t, res4)
+	// true
+	_, ip5, _, _ := ip_tools.GetIPIntRange("2.2.255.255")
+	res5 := bitmapV4.GetBit(ip5.ToUInt32())
+	fmt.Println("Contains 2.2.255.255", res5)
+	assert.True(t, res5)
+
+	// false
+	_, ip6, _, _ := ip_tools.GetIPIntRange("2.1.255.255")
+	res6 := bitmapV4.GetBit(ip6.ToUInt32())
+	fmt.Println("Contains 2.1.255.255", res6)
+	assert.False(t, res6)
+}
