@@ -15,8 +15,12 @@ require (
 )
 
 require cc_tools v0.0.0
+require qps_limiter v0.0.0
+require sliding_hist_limiter v0.0.0
 
 replace cc_tools => ./cc_tools
+replace qps_limiter => ./qps_limiter
+replace sliding_hist_limiter => ./sliding_hist_limiter
 
 replace (
 	github.com/alibaba/higress/plugins/wasm-go => ../..

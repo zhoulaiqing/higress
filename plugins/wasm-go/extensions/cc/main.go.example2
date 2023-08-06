@@ -6,7 +6,7 @@ import (
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm/types"
 	"github.com/tidwall/gjson"
 	"net/http"
-	"sliding_hist_limiter"
+	"qps_limiter"
 	"time"
 )
 
@@ -27,7 +27,7 @@ type CCConfig struct {
 }
 
 type CCRule struct {
-	subRules []sliding_hist_limiter.CCSubRule
+	subRules []qps_limiter.CCSubRule
 }
 
 func parseConfig(jsonData gjson.Result, config *CCConfig, log wrapper.Log) error {
@@ -54,7 +54,7 @@ func parseConfig(jsonData gjson.Result, config *CCConfig, log wrapper.Log) error
 			key = cookie.String()
 		}
 
-		var ccSubRules []sliding_hist_limiter.CCSubRule
+		var ccSubRules []qps_limiter.CCSubRule
 		blockSeconds := int64(0)
 		blockSecondsConf := rule.Get("block_seconds")
 		if blockSecondsConf.Exists() {
@@ -68,17 +68,17 @@ func parseConfig(jsonData gjson.Result, config *CCConfig, log wrapper.Log) error
 		// 时间都按微妙级别
 		if qps.Exists() {
 			//period := int64(1000 * 1000)
-			ccSubRules = append(ccSubRules, sliding_hist_limiter.GetSubRule("second", qps.Int(), blockSeconds))
+			ccSubRules = append(ccSubRules, qps_limiter.CCSubRule{LimitCount: qps.Int(), Period: "second", BlockSeconds: blockSeconds})
 			//maxPeriod = period
 		}
 		if qpm.Exists() {
 			//period := int64(60 * 1000 * 1000)
-			ccSubRules = append(ccSubRules, sliding_hist_limiter.GetSubRule("minute", qpm.Int(), blockSeconds))
+			ccSubRules = append(ccSubRules, qps_limiter.CCSubRule{LimitCount: qpm.Int(), Period: "minute", BlockSeconds: blockSeconds})
 			//maxPeriod = period
 		}
 		if qpd.Exists() {
 			//period := int64(24 * 60 * 60 * 1000 * 1000)
-			ccSubRules = append(ccSubRules, sliding_hist_limiter.GetSubRule("day", qpd.Int(), blockSeconds))
+			ccSubRules = append(ccSubRules, qps_limiter.CCSubRule{LimitCount: qpd.Int(), Period: "day", BlockSeconds: blockSeconds})
 			//maxPeriod = period
 		}
 
@@ -90,8 +90,7 @@ func parseConfig(jsonData gjson.Result, config *CCConfig, log wrapper.Log) error
 
 func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.Log) types.Action {
 
-	//ts := qps_limiter.GetTimestamps(time.Now())
-	ts := time.Now().UnixMilli()
+	ts := qps_limiter.GetTimestamps(time.Now())
 
 	for headKey, headRule := range config.headerRulesMap {
 		head, err := proxywasm.GetHttpRequestHeader(headKey)
@@ -119,7 +118,7 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config CCConfig, log wrapper.
 		return types.ActionContinue
 	}
 
-	for cookieKey, cookieRule := range config.cookieRulesMap {
+	for cookieKey, cookieRule := range config.headerRulesMap {
 		cookie, ok := cookies[cookieKey]
 		if !ok {
 			//log.Error("Get cookie Error: " + err.Error())
@@ -155,38 +154,22 @@ func parseCookie(cookieStr string) (map[string]string, error) {
 	return cookies, nil
 }
 
-//func validateCC(key string, rule *CCRule, ts *qps_limiter.Timestamps, config *CCConfig) bool {
-//
-//	id := qps_limiter.Identifier(key)
-//
-//	counters, stop, err := qps_limiter.GetUsage(rule.subRules, id, ts)
-//	if err != nil {
-//		proxywasm.LogErrorf("Failed to get usage: %v", err)
-//	}
-//
-//	if counters != nil {
-//		if stop != "" {
-//			return false
-//		}
-//
-//		qps_limiter.LocalPolicyIncrement(id, counters, ts)
-//	}
-//
-//	return true
-//}
+func validateCC(key string, rule *CCRule, ts *qps_limiter.Timestamps, config *CCConfig) bool {
 
-func validateCC(key string, rule *CCRule, ts int64, config *CCConfig) bool {
-	id := sliding_hist_limiter.Identifier(key)
+	id := qps_limiter.Identifier(key)
 
-	rateLimitData, stop, err := sliding_hist_limiter.GetData(rule.subRules, id, ts)
+	counters, stop, err := qps_limiter.GetUsage(rule.subRules, id, ts)
 	if err != nil {
-		proxywasm.LogErrorf("Failed to get rate limit data: %v", err)
+		proxywasm.LogErrorf("Failed to get usage: %v", err)
 	}
 
-	if stop {
-		return false
+	if counters != nil {
+		if stop != "" {
+			return false
+		}
+
+		qps_limiter.LocalPolicyIncrement(id, counters, ts)
 	}
 
-	sliding_hist_limiter.SaveData(id, rateLimitData, ts)
 	return true
 }
