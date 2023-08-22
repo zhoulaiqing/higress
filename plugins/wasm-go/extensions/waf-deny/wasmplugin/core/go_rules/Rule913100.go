@@ -2,6 +2,7 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/flier/gohs/hyperscan"
 	ahocorasick "github.com/petar-dambovaliev/aho-corasick"
 )
 
@@ -99,7 +100,7 @@ var SCANNERS_USER_AGENTS = []string{
 	"zgrab",
 	"zmeu",
 }
-var matcher ahocorasick.AhoCorasick
+var rule913100Matcher ahocorasick.AhoCorasick
 
 type Rule913100 struct {
 }
@@ -109,21 +110,32 @@ func (r *Rule913100) Id() string {
 }
 
 func (r *Rule913100) Evaluate(tx core.Transaction) bool {
-	matched, matchedValues := core.PmEvaluate(matcher, tx.Variables.RequestHeaders["User-Agent"], true)
+	matched, matchedValues := core.PmEvaluate(rule913100Matcher, tx.Variables.RequestHeaders["User-Agent"], true)
 	if !matched {
-		return false
+		return true
 	}
 
-	return false
+	existMatched := false
+	for _, value := range matchedValues {
+		m, _ := hyperscan.MatchString(`^(?:urlgrabber/[0-9\.]+ yum/[0-9\.]+|mozilla/[0-9\.]+ ecairn-grabber/[0-9\.]+ \(\+http://ecairn.com/grabber\))$`, value)
+		if m {
+			existMatched = true
+			break
+		}
+	}
+	if existMatched {
+		tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+	}
+	return true
 }
 
 func init() {
-	builder := ahocorasick.NewAhoCorasickBuilder(ahocorasick.Opts{
-		AsciiCaseInsensitive: true,
-		MatchOnlyWholeWords:  false,
-		MatchKind:            ahocorasick.LeftMostLongestMatch,
-		DFA:                  true,
-	})
+	//builder := ahocorasick.NewAhoCorasickBuilder(ahocorasick.Opts{
+	//	AsciiCaseInsensitive: true,
+	//	MatchOnlyWholeWords:  false,
+	//	MatchKind:            ahocorasick.LeftMostLongestMatch,
+	//	DFA:                  true,
+	//})
 
-	matcher = builder.Build(SCANNERS_USER_AGENTS)
+	rule913100Matcher = core.AHO_CORASICK_BUILDER.Build(SCANNERS_USER_AGENTS)
 }

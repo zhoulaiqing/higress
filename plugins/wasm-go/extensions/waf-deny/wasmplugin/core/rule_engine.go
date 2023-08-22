@@ -1,5 +1,7 @@
 package core
 
+import ahocorasick "github.com/petar-dambovaliev/aho-corasick"
+
 const (
 	INBOUND_ANOMALY_SCORE_THRESHOLD  = 5
 	OUTBOUND_ANOMALY_SCORE_THRESHOLD = 4
@@ -44,6 +46,13 @@ var (
 	}
 	RESTRICTED_HEADERS = []string{"accept-charset", "content-encoding", "proxy", "lock-token", "content-range", "if",
 		"x-http-method-override", "x-http-method", "x-method-override"}
+
+	AHO_CORASICK_BUILDER = ahocorasick.NewAhoCorasickBuilder(ahocorasick.Opts{
+		AsciiCaseInsensitive: true,
+		MatchOnlyWholeWords:  false,
+		MatchKind:            ahocorasick.LeftMostLongestMatch,
+		DFA:                  true,
+	})
 )
 
 type RuleEngine struct {
