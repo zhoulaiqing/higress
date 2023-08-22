@@ -7,6 +7,7 @@ type Transaction struct {
 
 type TransactionVariables struct {
 	RequestMethod   string
+	RequestProtocol string
 	RequestFileName string
 	RequestLine     string
 	RequestHeaders  map[string]string
