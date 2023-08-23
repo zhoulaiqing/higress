@@ -8,13 +8,16 @@ type Transaction struct {
 type TransactionVariables struct {
 	RequestMethod   string
 	RequestProtocol string
+	RequestUri      string
 	RequestFileName string
 	RequestLine     string
 	RequestHeaders  map[string]string
+	RequestBody     string
 	ArgsGet         map[string]string
 	ArgsPost        map[string]string
 	ArgsPath        map[string]string
 	Args            []*map[string]string
+	ArgsNames       []*[]string
 	Files           map[string]map[string]string
 	FilesNames      map[string]map[string]string
 
