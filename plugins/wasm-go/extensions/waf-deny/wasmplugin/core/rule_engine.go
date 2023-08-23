@@ -9,13 +9,15 @@ const (
 	EARLY_BLOCKING                   = 0
 	BLOCKING_PARANONIA_LEVEL         = 1
 	CRITICAL_ANOMALY_SCORE           = 5
+	WARNING_ANOMALY_SCORE            = 3
+	NOTICE_ANOMALY_SCORE             = 2
 	ENFORCE_BODYPROC_URLENCODED      = 0
 	CRS_VALIDATE_UTF8_ENCODING       = 0
 )
 
 var (
 	ALLOWED_METHODS              = []string{"GET", "HEAD", "OPTIONS", "POST"}
-	ALLOWED_REQUEST_CONTENT_TYPE = [9]string{
+	ALLOWED_REQUEST_CONTENT_TYPE = []string{
 		"application/x-www-form-urlencoded",
 		"multipart/form-data",
 		"multipart/related",
@@ -26,9 +28,9 @@ var (
 		"application/cloudevents+json",
 		"application/cloudevents-batch+json",
 	}
-	ALLOWED_REQUEST_CONTENT_TYPE_CHARSET = [4]string{"utf-8", "iso-8859", "iso-8859-15", "windows-1252"}
-	ALLOWED_HTTP_VERSIONS                = [4]string{"HTTP/1.0", "HTTP/1.1", "HTTP/2", "HTTP/2.0"}
-	RESTRICTED_EXTENSIONS                = [51]string{
+	ALLOWED_REQUEST_CONTENT_TYPE_CHARSET = []string{"utf-8", "iso-8859", "iso-8859-15", "windows-1252"}
+	ALLOWED_HTTP_VERSIONS                = []string{"HTTP/1.0", "HTTP/1.1", "HTTP/2", "HTTP/2.0"}
+	RESTRICTED_EXTENSIONS                = []string{
 		".asa", ".asax", ".ascx",
 		".backup", ".bak", ".bat",
 		".cdx", ".cer", ".cfg", ".cmd", ".com", ".config", ".conf", ".cs", ".csproj", ".csr",

@@ -17,13 +17,13 @@ func (r *Rule920260) Id() string {
 func (r *Rule920260) Evaluate(tx core.Transaction) bool {
 	m1, _ := hyperscan.MatchString(PTN_920260, tx.Variables.RequestUri)
 	if m1 {
-		tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += core.WARNING_ANOMALY_SCORE
 		return true
 	}
 
 	m2, _ := hyperscan.MatchString(PTN_920260, tx.Variables.RequestBody)
 	if m2 {
-		tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += core.WARNING_ANOMALY_SCORE
 	}
 
 	return true

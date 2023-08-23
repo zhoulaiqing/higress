@@ -19,7 +19,7 @@ func (r *Rule920240) Evaluate(tx core.Transaction) bool {
 
 	requestBody := tx.Variables.RequestBody
 	if strings.Contains(requestBody, "%") && core.ValidateURLEncoding(requestBody) {
-		tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += core.WARNING_ANOMALY_SCORE
 	}
 
 	return true

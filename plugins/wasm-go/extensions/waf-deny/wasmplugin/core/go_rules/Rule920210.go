@@ -16,7 +16,7 @@ func (r *Rule920210) Evaluate(tx core.Transaction) bool {
 
 	matched, _ := hyperscan.MatchString(`\b(?:keep-alive|close),\s?(?:keep-alive|close)\b`, tx.Variables.RequestHeaders["Connection"])
 	if matched {
-		tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += core.WARNING_ANOMALY_SCORE
 	}
 	return true
 }

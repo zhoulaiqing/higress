@@ -14,12 +14,43 @@ func (r *Rule920270) Id() string {
 }
 
 func (r *Rule920270) Evaluate(tx core.Transaction) bool {
-	if !validateByteRange920270.Validate(tx.Variables.RequestUri) {
+
+	decodeUri, _, _ := core.UrlDecodeUni(tx.Variables.RequestUri)
+	if !validateByteRange920270.Validate(decodeUri) {
 		tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
 		return true
 	}
 
-	// todo
+	for k, v := range tx.Variables.RequestHeaders {
+		decodeK, _, _ := core.UrlDecodeUni(k)
+		if !validateByteRange920270.Validate(decodeK) {
+			tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+			return true
+		}
+
+		decodeV, _, _ := core.UrlDecodeUni(v)
+		if !validateByteRange920270.Validate(decodeV) {
+			tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+			return true
+		}
+	}
+
+	for _, argMap := range tx.Variables.Args {
+		for k, v := range *argMap {
+			decodeK, _, _ := core.UrlDecodeUni(k)
+			if !validateByteRange920270.Validate(decodeK) {
+				tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+				return true
+			}
+
+			decodeV, _, _ := core.UrlDecodeUni(v)
+			if !validateByteRange920270.Validate(decodeV) {
+				tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+				return true
+			}
+		}
+	}
+
 	return true
 }
 

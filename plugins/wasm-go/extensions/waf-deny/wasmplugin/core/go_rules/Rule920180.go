@@ -16,7 +16,7 @@ func (r *Rule920180) Evaluate(tx core.Transaction) bool {
 
 	if tx.Variables.RequestMethod == "POST" && len(tx.Variables.RequestHeaders["Content-Length"]) == 0 &&
 		len(tx.Variables.RequestHeaders["Transfer-Encoding"]) == 0 {
-		tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += core.WARNING_ANOMALY_SCORE
 	}
 
 	return true

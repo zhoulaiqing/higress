@@ -18,19 +18,19 @@ func (r *Rule920250) Evaluate(tx core.Transaction) bool {
 	}
 
 	if !utf8.ValidString(tx.Variables.RequestFileName) {
-		tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += core.WARNING_ANOMALY_SCORE
 		return true
 	}
 
 	for _, argMap := range tx.Variables.Args {
 		for ak, av := range *argMap {
 			if !utf8.ValidString(ak) {
-				tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+				tx.Variables.InboundAnomalyScorePl1 += core.WARNING_ANOMALY_SCORE
 				return true
 			}
 
 			if !utf8.ValidString(av) {
-				tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+				tx.Variables.InboundAnomalyScorePl1 += core.WARNING_ANOMALY_SCORE
 				return true
 			}
 		}
