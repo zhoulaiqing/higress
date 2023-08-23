@@ -10,6 +10,7 @@ require (
 	github.com/stretchr/testify v1.8.0
 	github.com/tetratelabs/proxy-wasm-go-sdk v0.22.0
 	github.com/tidwall/gjson v1.14.4
+	github.com/wasilibs/go-re2 v1.2.0
 	github.com/wasilibs/nottinygc v0.4.0
 	golang.org/x/exp v0.0.0-20230817173708-d852ddb80c63
 )
@@ -25,7 +26,6 @@ require (
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/wasilibs/go-aho-corasick v0.5.0 // indirect
 	github.com/wasilibs/go-libinjection v0.4.0 // indirect
-	github.com/wasilibs/go-re2 v1.2.0 // indirect
 	golang.org/x/net v0.11.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
