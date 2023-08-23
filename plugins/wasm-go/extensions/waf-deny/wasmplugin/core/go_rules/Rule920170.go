@@ -19,7 +19,7 @@ func (r *Rule920170) Evaluate(tx core.Transaction) bool {
 
 	contentLength := tx.Variables.RequestHeaders["Content-Length"]
 
-	if len(contentLength) > 0 && strings.Trim(contentLength, " ") != "0" {
+	if len(contentLength) > 0 && strings.TrimSpace(contentLength) != "0" {
 		tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
 	}
 	if len(tx.Variables.RequestHeaders["Transfer-Encoding"]) > 0 {

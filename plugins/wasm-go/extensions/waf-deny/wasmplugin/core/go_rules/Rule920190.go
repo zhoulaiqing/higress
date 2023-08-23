@@ -20,7 +20,7 @@ func (r *Rule920190) Evaluate(tx core.Transaction) bool {
 		requestRange := tx.Variables.RequestHeaders[rangeHead]
 		b, num1, num2 := splitNumber(requestRange)
 		if b && num2 < num1 {
-			tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE
+			tx.Variables.InboundAnomalyScorePl1 += core.WARNING_ANOMALY_SCORE
 			return true
 		}
 	}
