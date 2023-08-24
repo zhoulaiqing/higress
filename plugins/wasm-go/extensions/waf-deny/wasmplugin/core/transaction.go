@@ -21,8 +21,8 @@ type TransactionVariables struct {
 	ArgsPath             map[string]string
 	Args                 []*map[string]string
 	ArgsNames            []*[]string
-	Files                map[string]map[string]string
-	FilesNames           map[string]map[string]string
+	Files                map[string][]string
+	FilesNames           map[string][]string
 	XML                  map[string][]string
 	MultipartPartHeaders map[string][]string
 

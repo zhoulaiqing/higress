@@ -17,7 +17,7 @@ func (r *Rule921120) Id() string {
 
 func (r *Rule921120) Evaluate(tx core.Transaction) bool {
 	for k, v := range tx.Variables.RequestCookies {
-		if k == "__utm" {
+		if strings.Contains(k, "__utm") {
 			continue
 		}
 

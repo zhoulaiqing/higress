@@ -3,6 +3,7 @@ package go_rules
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/flier/gohs/hyperscan"
+	"strings"
 )
 
 const PTN_921200 = `^[^:\(\)\&\|\!\<\>\~]*\)\s*(?:\((?:[^,\(\)\=\&\|\!\<\>\~]+[><~]?=|\s*[&!|]\s*(?:\)|\()?\s*)|\)\s*\(\s*[\&\|\!]\s*|[&!|]\s*\([^\(\)\=\&\|\!\<\>\~]+[><~]?=[^:\(\)\&\|\!\<\>\~]*)`
@@ -16,7 +17,7 @@ func (r *Rule921200) Id() string {
 
 func (r *Rule921200) Evaluate(tx core.Transaction) bool {
 	for k, v := range tx.Variables.RequestCookies {
-		if k == "__utm" {
+		if strings.Contains(k, "__utm") {
 			continue
 		}
 
