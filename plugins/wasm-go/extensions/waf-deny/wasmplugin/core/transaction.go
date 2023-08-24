@@ -13,6 +13,7 @@ type TransactionVariables struct {
 	RequestFileName  string
 	RequestLine      string
 	RequestHeaders   map[string]string
+	RequestCookies   map[string]string
 	RequestBody      string
 	ReqBodyProcessor string
 	ArgsGet          map[string]string
@@ -22,6 +23,7 @@ type TransactionVariables struct {
 	ArgsNames        []*[]string
 	Files            map[string]map[string]string
 	FilesNames       map[string]map[string]string
+	XML              map[string][]string
 
 	BlockingInboundAnomalyScore  int
 	InboundAnomalyScorePl1       int
