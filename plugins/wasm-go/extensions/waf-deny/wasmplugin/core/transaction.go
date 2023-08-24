@@ -6,24 +6,25 @@ type Transaction struct {
 }
 
 type TransactionVariables struct {
-	RequestMethod    string
-	RequestProtocol  string
-	RequestUri       string
-	RequestBaseName  string
-	RequestFileName  string
-	RequestLine      string
-	RequestHeaders   map[string]string
-	RequestCookies   map[string]string
-	RequestBody      string
-	ReqBodyProcessor string
-	ArgsGet          map[string]string
-	ArgsPost         map[string]string
-	ArgsPath         map[string]string
-	Args             []*map[string]string
-	ArgsNames        []*[]string
-	Files            map[string]map[string]string
-	FilesNames       map[string]map[string]string
-	XML              map[string][]string
+	RequestMethod        string
+	RequestProtocol      string
+	RequestUri           string
+	RequestBaseName      string
+	RequestFileName      string
+	RequestLine          string
+	RequestHeaders       map[string]string
+	RequestCookies       map[string]string
+	RequestBody          string
+	ReqBodyProcessor     string
+	ArgsGet              map[string]string
+	ArgsPost             map[string]string
+	ArgsPath             map[string]string
+	Args                 []*map[string]string
+	ArgsNames            []*[]string
+	Files                map[string]map[string]string
+	FilesNames           map[string]map[string]string
+	XML                  map[string][]string
+	MultipartPartHeaders map[string][]string
 
 	BlockingInboundAnomalyScore  int
 	InboundAnomalyScorePl1       int
