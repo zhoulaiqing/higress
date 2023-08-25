@@ -14,6 +14,7 @@ type TransactionVariables struct {
 	RequestLine          string
 	RequestHeaders       map[string]string
 	RequestCookies       map[string]string
+	QueryString          string
 	RequestBody          string
 	ReqBodyProcessor     string
 	ArgsGet              map[string]string
