@@ -1,3 +1,3 @@
-package go_rules
+package core
 
 // todo

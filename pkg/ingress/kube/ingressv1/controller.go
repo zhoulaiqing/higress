@@ -24,7 +24,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/hashicorp/go-multierror"
 	networking "istio.io/api/networking/v1alpha3"
 	"istio.io/istio/pilot/pkg/model"
 	"istio.io/istio/pilot/pkg/model/credentials"
@@ -1183,7 +1182,7 @@ func setDefaultMSEIngressOptionalField(ing *ingress.Ingress) {
 		}
 
 		for innerIdx := range rule.IngressRuleValue.HTTP.Paths {
-			p := &rule.IngressRuleValue.HTTP.Paths[innerIdx]
+			p := &core.Rule.IngressRuleValue.HTTP.Paths[innerIdx]
 
 			if p.Path == "" {
 				p.Path = common.DefaultPath

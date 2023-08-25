@@ -86,7 +86,7 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config WafConfig, log wrapper
 	// proxy-wasm.
 
 	if tx.IsRuleEngineOff() {
-		// log.Infof("[rinfx log] OnHttpRequestHeaders, RuleEngine Off, url = %s", uri)
+		// log.Infof("[rinfx log] OnHttpRequestHeaders, RuleEngine Off, url_util = %s", uri)
 		return types.ActionContinue
 	}
 	// OnHttpRequestHeaders does not terminate if IP/Port retrieve goes wrong
@@ -95,7 +95,7 @@ func onHttpRequestHeaders(ctx wrapper.HttpContext, config WafConfig, log wrapper
 
 	tx.ProcessConnection(srcIP, srcPort, dstIP, dstPort)
 
-	// proxywasm.LogInfof("[rinfx log] OnHttpRequestHeaders, RuleEngine On, url = %s", uri)
+	// proxywasm.LogInfof("[rinfx log] OnHttpRequestHeaders, RuleEngine On, url_util = %s", uri)
 
 	method, err := proxywasm.GetHttpRequestHeader(":method")
 	if err != nil {

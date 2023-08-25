@@ -1,4 +1,4 @@
-package go_rules
+package core
 
 import "github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 

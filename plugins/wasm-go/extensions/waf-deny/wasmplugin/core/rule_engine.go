@@ -1,6 +1,9 @@
 package core
 
-import ahocorasick "github.com/petar-dambovaliev/aho-corasick"
+import (
+	core "github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/go_rules"
+	ahocorasick "github.com/petar-dambovaliev/aho-corasick"
+)
 
 const (
 	INBOUND_ANOMALY_SCORE_THRESHOLD  = 5
@@ -55,7 +58,21 @@ var (
 		MatchKind:            ahocorasick.LeftMostLongestMatch,
 		DFA:                  true,
 	})
-)
 
-type RuleEngine struct {
-}
+	RULES = []Rule{
+		&core.Rule911100{},
+		&core.Rule913100{}, &core.Rule913120{},
+		&core.Rule920100{}, &core.Rule920120{}, &core.Rule920160{}, &core.Rule920170{}, &core.Rule920180{},
+		&core.Rule920181{}, &core.Rule920190{}, &core.Rule920210{}, &core.Rule920220{}, &core.Rule920240{},
+		&core.Rule920250{}, &core.Rule920260{}, &core.Rule920270{}, &core.Rule920280{}, &core.Rule920310{},
+		&core.Rule920330{}, &core.Rule920340{}, &core.Rule920350{}, &core.Rule920420{}, &core.Rule920430{},
+		&core.Rule920440{}, &core.Rule920450{}, &core.Rule920470{}, &core.Rule920480{}, &core.Rule920500{},
+		&core.Rule920520{}, &core.Rule920530{}, &core.Rule920540{}, &core.Rule920600{}, &core.Rule920610{},
+		&core.Rule921110{}, &core.Rule921120{}, &core.Rule921130{}, &core.Rule921140{}, &core.Rule921150{},
+		&core.Rule921160{}, &core.Rule921190{}, &core.Rule921200{}, &core.Rule921240{}, &core.Rule921421{},
+		&core.Rule922100{}, &core.Rule922110_120{},
+		&core.Rule930100{}, &core.Rule930110{}, &core.Rule930120{}, &core.Rule930130{},
+		&core.Rule931100{}, &core.Rule931110{}, &core.Rule931120{},
+		&core.Rule932230{}, &core.RuleFinal{},
+	}
+)

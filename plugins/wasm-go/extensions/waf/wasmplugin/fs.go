@@ -15,7 +15,7 @@ var (
 
 func init() {
 	rules, _ := fs.Sub(crs, "rules")
-	root = &rulesFS{
+	root = &core.RulesFS{
 		rules,
 		map[string]string{
 			"@recommended-conf":    "coraza.conf-recommended.conf",

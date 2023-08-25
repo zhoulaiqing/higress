@@ -1,4 +1,4 @@
-package go_rules
+package core
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
@@ -19,8 +19,7 @@ func (r *Rule930100) Phase() int {
 }
 
 func (r *Rule930100) Evaluate(tx core.Transaction) bool {
-	// todo: use requestUriRaw
-	if r.doEvaluate(tx, tx.Variables.RequestUri) {
+	if r.doEvaluate(tx, tx.Variables.RequestUriRaw) {
 		return true
 	}
 

@@ -75,12 +75,12 @@ func (m RuleMatcher[PluginConfig]) GetMatchConfig() (*PluginConfig, error) {
 	for _, rule := range m.ruleConfig {
 		if rule.category == Host {
 			if m.hostMatch(rule, host) {
-				return &rule.config, nil
+				return &core.Rule.config, nil
 			}
 		}
 		// category == Route
 		if _, ok := rule.routes[string(routeName)]; ok {
-			return &rule.config, nil
+			return &core.Rule.config, nil
 		}
 	}
 	if m.hasGlobalConfig {
@@ -130,7 +130,7 @@ func (m *RuleMatcher[PluginConfig]) ParseRuleConfig(config gjson.Result,
 	}
 	for _, ruleJson := range rules {
 		var rule RuleConfig[PluginConfig]
-		err := parsePluginConfig(ruleJson, &rule.config)
+		err := parsePluginConfig(ruleJson, &core.Rule.config)
 		if err != nil {
 			return err
 		}

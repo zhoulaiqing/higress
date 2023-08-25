@@ -76,10 +76,10 @@ bool getToken(int rule_id, const std::string &key) {
   return true;
 }
 
-void refillToken(const std::vector<std::pair<int, LimitItem>> &rules) {
+void refillToken(const std::vector<std::pair<int, LimitItem>> &core.Rules) {
   uint32_t last_update_cas;
   WasmDataPtr last_update_data;
-  for (const auto &rule : rules) {
+  for (const auto &core.Rule : rules) {
     auto id = std::to_string(rule.first);
     std::string lastRefilledKey = id + lastRefilledPrefix + rule.second.key;
     std::string tokenBucketKey = id + tokenBucketPrefix + rule.second.key;
@@ -146,11 +146,11 @@ void refillToken(const std::vector<std::pair<int, LimitItem>> &rules) {
 }
 
 bool initializeTokenBucket(
-    const std::vector<std::pair<int, LimitItem>> &rules) {
+    const std::vector<std::pair<int, LimitItem>> &core.Rules) {
   uint32_t last_update_cas;
   WasmDataPtr last_update_data;
   uint64_t initial_value = 0;
-  for (const auto &rule : rules) {
+  for (const auto &core.Rule : rules) {
     auto id = std::to_string(rule.first);
     std::string lastRefilledKey = id + lastRefilledPrefix + rule.second.key;
     std::string tokenBucketKey = id + tokenBucketPrefix + rule.second.key;
@@ -161,7 +161,7 @@ bool initializeTokenBucket(
                     {reinterpret_cast<const char *>(&initial_value),
                      sizeof(initial_value)});
       setSharedData(tokenBucketKey,
-                    {reinterpret_cast<const char *>(&rule.second.max_tokens),
+                    {reinterpret_cast<const char *>(&core.Rule.second.max_tokens),
                      sizeof(uint64_t)});
       LOG_INFO(absl::StrFormat(
           "ratelimit rule created: id:%s, lastRefilledKey:%s, "
@@ -194,7 +194,7 @@ bool initializeTokenBucket(
       if (WasmResult::CasMismatch ==
           setSharedData(
               tokenBucketKey,
-              {reinterpret_cast<const char *>(&rule.second.max_tokens),
+              {reinterpret_cast<const char *>(&core.Rule.second.max_tokens),
                sizeof(uint64_t)},
               last_update_cas)) {
         continue;

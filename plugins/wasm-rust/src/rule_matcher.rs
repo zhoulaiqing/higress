@@ -145,7 +145,7 @@ where
             match rule.category {
                 Category::Host => {
                     if self.host_match(rule, host.as_str()) {
-                        return Some(&rule.config);
+                        return Some(&core.Rule.config);
                     }
                 }
                 Category::Route => {
@@ -154,7 +154,7 @@ where
                             .unwrap_or_else(|_| "".to_string())
                             .as_str(),
                     ) {
-                        return Some(&rule.config);
+                        return Some(&core.Rule.config);
                     }
                 }
             }
@@ -201,8 +201,8 @@ where
         host_matchers
     }
 
-    fn host_match(&self, rule: &RuleConfig<PluginConfig>, request_host: &str) -> bool {
-        for host in &rule.hosts {
+    fn host_match(&self, rule: &core.RuleConfig<PluginConfig>, request_host: &str) -> bool {
+        for host in &core.Rule.hosts {
             let matched = match host.match_type {
                 MatchType::Prefix => request_host.starts_with(host.host.as_str()),
                 MatchType::Suffix => request_host.ends_with(host.host.as_str()),
