@@ -15,6 +15,10 @@ func (r *Rule920420) Id() string {
 	return "920420"
 }
 
+func (r *Rule920420) Phase() int {
+	return 1
+}
+
 func (r *Rule920420) Evaluate(tx core.Transaction) bool {
 	m, _ := hyperscan.MatchString(PTN_920420, tx.Variables.RequestHeaders["Content-Type"])
 	if !m {

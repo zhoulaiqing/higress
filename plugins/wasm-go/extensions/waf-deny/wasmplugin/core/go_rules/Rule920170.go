@@ -12,6 +12,10 @@ func (r *Rule920170) Id() string {
 	return "920170"
 }
 
+func (r *Rule920170) Phase() int {
+	return 1
+}
+
 func (r *Rule920170) Evaluate(tx core.Transaction) bool {
 	if tx.Variables.RequestMethod != "GET" && tx.Variables.RequestMethod != "HEAD" {
 		return true

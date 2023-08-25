@@ -14,6 +14,10 @@ func (r *Rule921421) Id() string {
 	return "921421"
 }
 
+func (r *Rule921421) Phase() int {
+	return 1
+}
+
 func (r *Rule921421) Evaluate(tx core.Transaction) bool {
 	if m, _ := hyperscan.MatchString(PTN_921421, tx.Variables.RequestHeaders["Content-Type"]); m {
 		tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE

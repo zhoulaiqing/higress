@@ -13,6 +13,10 @@ func (r *Rule922100) Id() string {
 	return "922100"
 }
 
+func (r *Rule922100) Phase() int {
+	return 2
+}
+
 func (r *Rule922100) Evaluate(tx core.Transaction) bool {
 	if len(tx.Variables.MultipartPartHeaders["_charset_"]) == 0 {
 		return true

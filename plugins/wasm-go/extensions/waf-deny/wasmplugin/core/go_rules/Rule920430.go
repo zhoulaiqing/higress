@@ -12,6 +12,10 @@ func (r *Rule920430) Id() string {
 	return "920430"
 }
 
+func (r *Rule920430) Phase() int {
+	return 1
+}
+
 func (r *Rule920430) Evaluate(tx core.Transaction) bool {
 	if !slices.Contains(core.ALLOWED_HTTP_VERSIONS, tx.Variables.RequestProtocol) {
 		tx.Variables.InboundAnomalyScorePl1 += core.CRITICAL_ANOMALY_SCORE

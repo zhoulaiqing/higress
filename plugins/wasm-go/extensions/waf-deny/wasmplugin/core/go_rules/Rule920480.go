@@ -17,6 +17,10 @@ func (r *Rule920480) Id() string {
 	return "920480"
 }
 
+func (r *Rule920480) Phase() int {
+	return 1
+}
+
 func (r *Rule920480) Evaluate(tx core.Transaction) bool {
 	match := re920480.FindStringSubmatch(tx.Variables.RequestHeaders["Content-Type"])
 	if len(match) < 2 {

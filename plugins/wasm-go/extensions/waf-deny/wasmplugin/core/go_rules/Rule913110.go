@@ -25,6 +25,10 @@ func (r *Rule913110) Id() string {
 	return "913110"
 }
 
+func (r *Rule913110) Phase() int {
+	return 1
+}
+
 func (r *Rule913110) Evaluate(tx core.Transaction) bool {
 	matched := false
 

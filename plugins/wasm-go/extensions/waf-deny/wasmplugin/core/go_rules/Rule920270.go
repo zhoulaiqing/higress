@@ -13,6 +13,10 @@ func (r *Rule920270) Id() string {
 	return "920270"
 }
 
+func (r *Rule920270) Phase() int {
+	return 2
+}
+
 func (r *Rule920270) Evaluate(tx core.Transaction) bool {
 
 	decodeUri, _, _ := core.UrlDecodeUni(tx.Variables.RequestUri)

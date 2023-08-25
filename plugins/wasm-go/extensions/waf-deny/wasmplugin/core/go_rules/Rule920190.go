@@ -15,6 +15,10 @@ func (r *Rule920190) Id() string {
 	return "920190"
 }
 
+func (r *Rule920190) Phase() int {
+	return 1
+}
+
 func (r *Rule920190) Evaluate(tx core.Transaction) bool {
 	for _, rangeHead := range RangeHeaders {
 		requestRange := tx.Variables.RequestHeaders[rangeHead]

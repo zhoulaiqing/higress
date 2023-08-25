@@ -14,6 +14,10 @@ func (r *Rule921140) Id() string {
 	return "921140"
 }
 
+func (r *Rule921140) Phase() int {
+	return 1
+}
+
 func (r *Rule921140) Evaluate(tx core.Transaction) bool {
 	for k, v := range tx.Variables.RequestHeaders {
 		if r.doEvaluate(tx, k) {

@@ -12,6 +12,10 @@ func (r *Rule911100) Id() string {
 	return "911100"
 }
 
+func (r *Rule911100) Phase() int {
+	return 1
+}
+
 func (r *Rule911100) Evaluate(tx core.Transaction) bool {
 	found := sort.SearchStrings(core.ALLOWED_METHODS, tx.Variables.RequestMethod)
 	if found < 0 {

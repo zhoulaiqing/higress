@@ -245,6 +245,10 @@ func (r *Rule930130) Id() string {
 	return "930130"
 }
 
+func (r *Rule930130) Phase() int {
+	return 1
+}
+
 func (r *Rule930130) Evaluate(tx core.Transaction) bool {
 	v, _, _ := core.Utf8ToUnicode(tx.Variables.RequestFileName)
 	v, _, _ = core.UrlDecodeUni(v)

@@ -12,6 +12,10 @@ func (r *Rule920220) Id() string {
 	return "920220"
 }
 
+func (r *Rule920220) Phase() int {
+	return 1
+}
+
 func (r *Rule920220) Evaluate(tx core.Transaction) bool {
 	requestUri := tx.Variables.RequestUri
 

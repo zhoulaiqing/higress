@@ -15,6 +15,10 @@ func (r *Rule921160) Id() string {
 	return "921160"
 }
 
+func (r *Rule921160) Phase() int {
+	return 1
+}
+
 func (r *Rule921160) Evaluate(tx core.Transaction) bool {
 	for k, v := range tx.Variables.ArgsGet {
 		if r.doEvaluate(tx, k) {

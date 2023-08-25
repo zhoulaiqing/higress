@@ -14,6 +14,10 @@ func (r *Rule920500) Id() string {
 	return "920500"
 }
 
+func (r *Rule920500) Phase() int {
+	return 1
+}
+
 func (r *Rule920500) Evaluate(tx core.Transaction) bool {
 
 	fileName, _, _ := core.UrlDecodeUni(tx.Variables.RequestFileName)

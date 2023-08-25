@@ -19,6 +19,10 @@ func (r *Rule922110_120) Id() string {
 	return "922110_120"
 }
 
+func (r *Rule922110_120) Phase() int {
+	return 2
+}
+
 func (r *Rule922110_120) Evaluate(tx core.Transaction) bool {
 
 	for k, values := range tx.Variables.MultipartPartHeaders {

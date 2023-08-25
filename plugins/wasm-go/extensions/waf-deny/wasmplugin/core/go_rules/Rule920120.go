@@ -14,6 +14,10 @@ func (r *Rule920120) Id() string {
 	return "920120"
 }
 
+func (r *Rule920120) Phase() int {
+	return 2
+}
+
 func (r *Rule920120) Evaluate(tx core.Transaction) bool {
 
 	for fk, _ := range tx.Variables.Files {

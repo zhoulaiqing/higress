@@ -2,6 +2,7 @@ package core
 
 type Rule interface {
 	Id() string
+	Phase() int
 	Evaluate(tx Transaction) bool
 }
 

@@ -33,6 +33,10 @@ func (r *Rule913120) Id() string {
 	return "913120"
 }
 
+func (r *Rule913120) Phase() int {
+	return 2
+}
+
 func (r *Rule913120) Evaluate(tx core.Transaction) bool {
 	matched, _ := core.PmEvaluate(rule913120Matcher, tx.Variables.RequestFileName, false)
 	if matched {

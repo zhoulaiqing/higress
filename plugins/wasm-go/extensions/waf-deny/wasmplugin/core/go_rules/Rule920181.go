@@ -9,6 +9,10 @@ func (r *Rule920181) Id() string {
 	return "920181"
 }
 
+func (r *Rule920181) Phase() int {
+	return 1
+}
+
 func (r *Rule920181) Evaluate(tx core.Transaction) bool {
 	if len(tx.Variables.RequestHeaders["Transfer-Encoding"]) > 0 && len(tx.Variables.RequestHeaders["Content-Length"]) > 0 {
 		tx.Variables.InboundAnomalyScorePl1 += core.WARNING_ANOMALY_SCORE

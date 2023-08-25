@@ -14,6 +14,10 @@ func (r *Rule930100) Id() string {
 	return "930100"
 }
 
+func (r *Rule930100) Phase() int {
+	return 2
+}
+
 func (r *Rule930100) Evaluate(tx core.Transaction) bool {
 	// todo: use requestUriRaw
 	if r.doEvaluate(tx, tx.Variables.RequestUri) {

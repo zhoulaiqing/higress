@@ -15,6 +15,10 @@ func (r *Rule920470) Id() string {
 	return "920470"
 }
 
+func (r *Rule920470) Phase() int {
+	return 1
+}
+
 func (r *Rule920470) Evaluate(tx core.Transaction) bool {
 	contentType := strings.ToLower(tx.Variables.RequestHeaders["Content-Type"])
 

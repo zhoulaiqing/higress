@@ -713,6 +713,10 @@ func (r *Rule930120) Id() string {
 	return "930120"
 }
 
+func (r *Rule930120) Phase() int {
+	return 2
+}
+
 func (r *Rule930120) Evaluate(tx core.Transaction) bool {
 	for k, v := range tx.Variables.RequestCookies {
 		if strings.Contains(k, "__utm") {

@@ -13,6 +13,10 @@ func (r *Rule920440) Id() string {
 	return "920440"
 }
 
+func (r *Rule920440) Phase() int {
+	return 1
+}
+
 func (r *Rule920440) Evaluate(tx core.Transaction) bool {
 
 	requestBaseName := strings.TrimSpace(tx.Variables.RequestBaseName)

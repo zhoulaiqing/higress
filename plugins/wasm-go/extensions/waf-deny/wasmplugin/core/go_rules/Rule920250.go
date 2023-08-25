@@ -12,6 +12,10 @@ func (r *Rule920250) Id() string {
 	return "920250"
 }
 
+func (r *Rule920250) Phase() int {
+	return 2
+}
+
 func (r *Rule920250) Evaluate(tx core.Transaction) bool {
 	if core.CRS_VALIDATE_UTF8_ENCODING != 1 {
 		return true

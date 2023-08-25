@@ -12,6 +12,10 @@ func (r *Rule920210) Id() string {
 	return "920210"
 }
 
+func (r *Rule920210) Phase() int {
+	return 1
+}
+
 func (r *Rule920210) Evaluate(tx core.Transaction) bool {
 
 	matched, _ := hyperscan.MatchString(`\b(?:keep-alive|close),\s?(?:keep-alive|close)\b`, tx.Variables.RequestHeaders["Connection"])

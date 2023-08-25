@@ -14,6 +14,10 @@ func (r *Rule931110) Id() string {
 	return "931110"
 }
 
+func (r *Rule931110) Phase() int {
+	return 2
+}
+
 func (r *Rule931110) Evaluate(tx core.Transaction) bool {
 	if r.doEvaluate(tx, tx.Variables.QueryString) {
 		return true

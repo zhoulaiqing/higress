@@ -14,6 +14,10 @@ func (r *Rule920540) Id() string {
 	return "920540"
 }
 
+func (r *Rule920540) Phase() int {
+	return 2
+}
+
 func (r *Rule920540) Evaluate(tx core.Transaction) bool {
 	if tx.Variables.ReqBodyProcessor == "JSON" {
 		return true

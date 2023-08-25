@@ -12,6 +12,10 @@ func (r *Rule920160) Id() string {
 	return "920160"
 }
 
+func (r *Rule920160) Phase() int {
+	return 1
+}
+
 func (r *Rule920160) Evaluate(tx core.Transaction) bool {
 
 	contentLength := tx.Variables.RequestHeaders["Content-Length"]

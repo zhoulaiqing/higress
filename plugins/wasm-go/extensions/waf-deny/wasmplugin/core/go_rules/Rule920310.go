@@ -18,6 +18,10 @@ func (r *Rule920310) Id() string {
 	return "920310"
 }
 
+func (r *Rule920310) Phase() int {
+	return 1
+}
+
 func (r *Rule920310) Evaluate(tx core.Transaction) bool {
 	accept, ok := tx.Variables.RequestHeaders["Accept"]
 	if !ok || len(accept) > 0 {

@@ -15,6 +15,10 @@ func (r *Rule921110) Id() string {
 	return "921110"
 }
 
+func (r *Rule921110) Phase() int {
+	return 2
+}
+
 func (r *Rule921110) Evaluate(tx core.Transaction) bool {
 	for _, argMap := range tx.Variables.Args {
 		for k, v := range *argMap {
