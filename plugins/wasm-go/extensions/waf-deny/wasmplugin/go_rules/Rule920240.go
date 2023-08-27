@@ -17,7 +17,7 @@ func (r *Rule920240) Phase() int {
 }
 
 func (r *Rule920240) Evaluate(tx *core.Transaction) bool {
-	if !strings.HasPrefix(tx.Variables.RequestHeaders["Content-Type"], "application/x-www-form-urlencoded") {
+	if !strings.HasPrefix(tx.Variables.RequestHeaders["content-type"], "application/x-www-form-urlencoded") {
 		return true
 	}
 

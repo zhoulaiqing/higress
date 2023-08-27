@@ -16,7 +16,7 @@ func (r *Rule920280) Phase() int {
 }
 
 func (r *Rule920280) Evaluate(tx *core.Transaction) bool {
-	if len(tx.Variables.RequestHeaders["Host"]) == 0 {
+	if len(tx.Variables.RequestHeaders["host"]) == 0 {
 		tx.Variables.InboundAnomalyScorePl1 += WARNING_ANOMALY_SCORE
 	}
 

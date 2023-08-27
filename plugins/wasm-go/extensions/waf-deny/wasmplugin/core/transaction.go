@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/url_util"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
@@ -29,6 +30,10 @@ func NewTransaction() Transaction {
 }
 
 type TransactionVariables struct {
+	RemoteAddr           string
+	RemotePort           string
+	ServerAddr           string
+	ServerPort           string
 	RequestMethod        string
 	RequestProtocol      string
 	RequestUriRaw        string
@@ -145,6 +150,16 @@ func (tx *Transaction) ProcessURI(uri string, method string, httpVersion string)
 
 	tx.Variables.RequestFileName = path
 	tx.Variables.QueryString = query
+}
+
+func (tx *Transaction) ProcessConnection(client string, cPort int, server string, sPort int) {
+	p := strconv.Itoa(cPort)
+	p2 := strconv.Itoa(sPort)
+
+	tx.Variables.RemoteAddr = client
+	tx.Variables.RemotePort = p
+	tx.Variables.ServerAddr = server
+	tx.Variables.ServerPort = p2
 }
 
 func (tx *Transaction) ProcessRequestHeaders() bool {

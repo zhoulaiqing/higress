@@ -21,7 +21,7 @@ func (r *Rule920530) Phase() int {
 }
 
 func (r *Rule920530) Evaluate(tx *core.Transaction) bool {
-	if m := re920530.MatchString(tx.Variables.RequestHeaders["Content-Type"]); m {
+	if m := re920530.MatchString(tx.Variables.RequestHeaders["content-type"]); m {
 		tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
 	}
 

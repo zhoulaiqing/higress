@@ -19,6 +19,7 @@ func (r *RuleFinal) Phase() int {
 
 // Evaluate 一个极其简单的评估逻辑
 func (r *RuleFinal) Evaluate(tx *core.Transaction) bool {
+
 	if tx.Variables.InboundAnomalyScorePl1 >= INBOUND_ANOMALY_SCORE_THRESHOLD {
 		return false
 	}

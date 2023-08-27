@@ -3,6 +3,7 @@ package go_rules
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	ahocorasick "github.com/petar-dambovaliev/aho-corasick"
+	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 )
 
 const (
@@ -84,6 +85,7 @@ func ProcessRequestHeaderRules(tx *core.Transaction) bool {
 	for _, rule := range RULES {
 		if rule.Phase() == 1 || rule.Phase() == 100 {
 			r := rule.Evaluate(tx)
+			proxywasm.LogInfof("Rule %q, InboundScore %d .", rule.Id(), tx.Variables.InboundAnomalyScorePl1)
 			if !r {
 				return false
 			}

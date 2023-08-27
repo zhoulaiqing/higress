@@ -14,7 +14,7 @@ func (r *Rule920330) Phase() int {
 }
 
 func (r *Rule920330) Evaluate(tx *core.Transaction) bool {
-	if len(tx.Variables.RequestHeaders["User-Agent"]) == 0 {
+	if len(tx.Variables.RequestHeaders["user-agent"]) == 0 {
 		tx.Variables.InboundAnomalyScorePl1 += NOTICE_ANOMALY_SCORE
 	}
 

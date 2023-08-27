@@ -18,7 +18,7 @@ func (r *Rule920160) Phase() int {
 
 func (r *Rule920160) Evaluate(tx *core.Transaction) bool {
 
-	contentLength := tx.Variables.RequestHeaders["Content-Length"]
+	contentLength := tx.Variables.RequestHeaders["content-length"]
 	if len(contentLength) == 0 {
 		return true
 	}

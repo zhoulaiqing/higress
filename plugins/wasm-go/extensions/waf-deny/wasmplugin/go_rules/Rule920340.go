@@ -14,11 +14,11 @@ func (r *Rule920340) Phase() int {
 }
 
 func (r *Rule920340) Evaluate(tx *core.Transaction) bool {
-	if tx.Variables.RequestHeaders["Content-Length"] == "0" {
+	if tx.Variables.RequestHeaders["content-length"] == "0" {
 		return true
 	}
 
-	if len(tx.Variables.RequestHeaders["Content-Type"]) == 0 {
+	if len(tx.Variables.RequestHeaders["content-type"]) == 0 {
 		tx.Variables.InboundAnomalyScorePl1 += NOTICE_ANOMALY_SCORE
 	}
 

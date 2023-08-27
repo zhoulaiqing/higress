@@ -22,7 +22,7 @@ func (r *Rule920470) Phase() int {
 }
 
 func (r *Rule920470) Evaluate(tx *core.Transaction) bool {
-	contentType := strings.ToLower(tx.Variables.RequestHeaders["Content-Type"])
+	contentType := strings.ToLower(tx.Variables.RequestHeaders["content-type"])
 
 	if m := re920470.MatchString(contentType); !m {
 		tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE

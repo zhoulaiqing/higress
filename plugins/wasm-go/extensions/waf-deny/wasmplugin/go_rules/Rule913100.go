@@ -118,7 +118,7 @@ func (r *Rule913100) Phase() int {
 }
 
 func (r *Rule913100) Evaluate(tx *core.Transaction) bool {
-	matched, matchedValues := core.PmEvaluate(rule913100Matcher, tx.Variables.RequestHeaders["User-Agent"], true)
+	matched, matchedValues := core.PmEvaluate(rule913100Matcher, tx.Variables.RequestHeaders["user-agent"], true)
 	if !matched {
 		return true
 	}

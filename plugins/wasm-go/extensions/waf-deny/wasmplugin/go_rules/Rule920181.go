@@ -14,7 +14,7 @@ func (r *Rule920181) Phase() int {
 }
 
 func (r *Rule920181) Evaluate(tx *core.Transaction) bool {
-	if len(tx.Variables.RequestHeaders["Transfer-Encoding"]) > 0 && len(tx.Variables.RequestHeaders["Content-Length"]) > 0 {
+	if len(tx.Variables.RequestHeaders["transfer-encoding"]) > 0 && len(tx.Variables.RequestHeaders["content-length"]) > 0 {
 		tx.Variables.InboundAnomalyScorePl1 += WARNING_ANOMALY_SCORE
 	}
 

@@ -23,7 +23,7 @@ func (r *Rule920100) Phase() int {
 func (r *Rule920100) Evaluate(tx *core.Transaction) bool {
 	matched := re920100.MatchString(tx.Variables.RequestLine)
 
-	if matched {
+	if !matched {
 		tx.Variables.InboundAnomalyScorePl1 += WARNING_ANOMALY_SCORE
 	}
 

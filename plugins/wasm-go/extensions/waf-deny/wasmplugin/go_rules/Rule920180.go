@@ -18,8 +18,8 @@ func (r *Rule920180) Evaluate(tx *core.Transaction) bool {
 		return true
 	}
 
-	if tx.Variables.RequestMethod == "POST" && len(tx.Variables.RequestHeaders["Content-Length"]) == 0 &&
-		len(tx.Variables.RequestHeaders["Transfer-Encoding"]) == 0 {
+	if tx.Variables.RequestMethod == "POST" && len(tx.Variables.RequestHeaders["content-length"]) == 0 &&
+		len(tx.Variables.RequestHeaders["transfer-encoding"]) == 0 {
 		tx.Variables.InboundAnomalyScorePl1 += WARNING_ANOMALY_SCORE
 	}
 

@@ -23,7 +23,7 @@ func (r *Rule920310) Phase() int {
 }
 
 func (r *Rule920310) Evaluate(tx *core.Transaction) bool {
-	accept, ok := tx.Variables.RequestHeaders["Accept"]
+	accept, ok := tx.Variables.RequestHeaders["accept"]
 	if !ok || len(accept) > 0 {
 		return true
 	}
@@ -32,7 +32,7 @@ func (r *Rule920310) Evaluate(tx *core.Transaction) bool {
 		return true
 	}
 
-	if m, _ := core.PmEvaluate(rule920310Matcher, tx.Variables.RequestHeaders["User-Agent"], false); !m {
+	if m, _ := core.PmEvaluate(rule920310Matcher, tx.Variables.RequestHeaders["user-agent"], false); !m {
 		tx.Variables.InboundAnomalyScorePl1 += NOTICE_ANOMALY_SCORE
 	}
 

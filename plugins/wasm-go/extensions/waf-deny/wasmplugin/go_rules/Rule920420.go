@@ -23,7 +23,7 @@ func (r *Rule920420) Phase() int {
 
 func (r *Rule920420) Evaluate(tx *core.Transaction) bool {
 
-	matches := re920420.FindStringSubmatch(tx.Variables.RequestHeaders["Content-Type"])
+	matches := re920420.FindStringSubmatch(tx.Variables.RequestHeaders["content-type"])
 	if len(matches) == 0 {
 		return true
 	}

@@ -22,7 +22,7 @@ func (r *Rule920210) Phase() int {
 
 func (r *Rule920210) Evaluate(tx *core.Transaction) bool {
 
-	matched := re920210.MatchString(tx.Variables.RequestHeaders["Connection"])
+	matched := re920210.MatchString(tx.Variables.RequestHeaders["connection"])
 	if matched {
 		tx.Variables.InboundAnomalyScorePl1 += WARNING_ANOMALY_SCORE
 	}

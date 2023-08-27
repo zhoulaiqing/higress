@@ -21,7 +21,7 @@ func (r *Rule920600) Phase() int {
 }
 
 func (r *Rule920600) Evaluate(tx *core.Transaction) bool {
-	if matched := re920600.MatchString(tx.Variables.RequestHeaders["Accept"]); matched {
+	if matched := re920600.MatchString(tx.Variables.RequestHeaders["accept"]); matched {
 		tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
 	}
 
