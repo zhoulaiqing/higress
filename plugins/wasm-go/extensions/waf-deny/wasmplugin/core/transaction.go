@@ -15,6 +15,14 @@ type Transaction struct {
 func NewTransaction() Transaction {
 	id := RandomString(16)
 	variables := TransactionVariables{}
+	variables.RequestHeaders = make(map[string]string)
+	variables.RequestCookies = make(map[string]string)
+	variables.ArgsGet = make(map[string]string)
+	variables.ArgsPost = make(map[string]string)
+	variables.ArgsPath = make(map[string]string)
+	variables.Files = make(map[string][]string)
+	variables.XML = make(map[string][]string)
+	variables.MultipartPartHeaders = make(map[string][]string)
 	variables.Args = append(variables.Args, &variables.ArgsGet, &variables.ArgsPost, &variables.ArgsPath)
 
 	return Transaction{id: id, Variables: variables}
@@ -37,9 +45,7 @@ type TransactionVariables struct {
 	ArgsPost             map[string]string
 	ArgsPath             map[string]string
 	Args                 []*map[string]string
-	ArgsNames            []*[]string
 	Files                map[string][]string
-	FilesNames           map[string][]string
 	XML                  map[string][]string
 	MultipartPartHeaders map[string][]string
 
@@ -142,16 +148,6 @@ func (tx *Transaction) ProcessURI(uri string, method string, httpVersion string)
 }
 
 func (tx *Transaction) ProcessRequestHeaders() bool {
-
-	for _, rule := range RULES {
-		if rule.Phase() == 1 || rule.Phase() == 100 {
-			r := rule.Evaluate(*tx)
-			if !r {
-				return false
-			}
-		}
-	}
-
 	return true
 }
 

@@ -7,7 +7,7 @@ import (
 func PmEvaluate(matcher ahocorasick.AhoCorasick, value string, isCapture bool) (bool, []string) {
 	iter := matcher.Iter(value)
 
-	if isCapture {
+	if !isCapture {
 		// Not capturing so just one match is enough.
 		return iter.Next() != nil, nil
 	}

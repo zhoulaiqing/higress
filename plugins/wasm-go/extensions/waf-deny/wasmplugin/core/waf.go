@@ -7,8 +7,6 @@ import (
 
 type WAF struct {
 	txPool sync.Pool
-
-	RuleEngine RuleEngine
 }
 
 func (w *WAF) NewTransaction() *Transaction {

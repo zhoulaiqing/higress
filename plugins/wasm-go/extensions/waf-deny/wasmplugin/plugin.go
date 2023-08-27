@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules"
 	"github.com/corazawaf/coraza/v3/debuglog"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm/types"
@@ -127,6 +128,11 @@ func (ctx *httpContext) OnHttpRequestHeaders(numHeaders int, endOfStream bool) t
 
 	for _, h := range hs {
 		ctx.tx.AddRequestHeader(h[0], h[1])
+	}
+
+	res := go_rules.ProcessRequestHeaderRules(&ctx.tx)
+	if !res {
+		proxywasm.SendHttpResponse(403, nil, []byte("denied by waf"), -1)
 	}
 
 	return types.ActionContinue
