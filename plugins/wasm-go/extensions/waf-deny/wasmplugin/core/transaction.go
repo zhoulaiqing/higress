@@ -25,6 +25,7 @@ func NewTransaction() Transaction {
 	variables.XML = make(map[string][]string)
 	variables.MultipartPartHeaders = make(map[string][]string)
 	variables.Args = append(variables.Args, &variables.ArgsGet, &variables.ArgsPost, &variables.ArgsPath)
+	variables.TransMap = make(map[string][]string)
 
 	return Transaction{id: id, Variables: variables}
 }
@@ -53,6 +54,9 @@ type TransactionVariables struct {
 	Files                map[string][]string
 	XML                  map[string][]string
 	MultipartPartHeaders map[string][]string
+
+	Skip941ForFileName bool
+	TransMap           map[string][]string
 
 	BlockingInboundAnomalyScore  int
 	InboundAnomalyScorePl1       int
