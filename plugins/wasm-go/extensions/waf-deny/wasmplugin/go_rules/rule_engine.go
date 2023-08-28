@@ -82,10 +82,14 @@ type RuleEngine struct {
 }
 
 func ProcessRequestHeaderRules(tx *core.Transaction) bool {
+	lastInboundScore := 0
 	for _, rule := range RULES {
 		if rule.Phase() == 1 || rule.Phase() == 100 {
 			r := rule.Evaluate(tx)
-			proxywasm.LogInfof("Rule %q, InboundScore %d .", rule.Id(), tx.Variables.InboundAnomalyScorePl1)
+			if tx.Variables.InboundAnomalyScorePl1 != lastInboundScore {
+				proxywasm.LogInfof("Rule %q, InboundScore diff %d .", rule.Id(), tx.Variables.InboundAnomalyScorePl1-lastInboundScore)
+				lastInboundScore = tx.Variables.InboundAnomalyScorePl1
+			}
 			if !r {
 				return false
 			}

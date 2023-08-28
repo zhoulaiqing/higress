@@ -6,7 +6,7 @@ type Rule920340 struct {
 }
 
 func (r *Rule920340) Id() string {
-	return "932340"
+	return "920340"
 }
 
 func (r *Rule920340) Phase() int {
@@ -14,7 +14,11 @@ func (r *Rule920340) Phase() int {
 }
 
 func (r *Rule920340) Evaluate(tx *core.Transaction) bool {
-	if tx.Variables.RequestHeaders["content-length"] == "0" {
+	contentLength, ok := tx.Variables.RequestHeaders["content-length"]
+	if !ok {
+		return true
+	}
+	if contentLength == "0" {
 		return true
 	}
 
