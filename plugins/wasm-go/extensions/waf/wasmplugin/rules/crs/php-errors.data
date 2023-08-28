@@ -2140,7 +2140,7 @@ void type is not allowed at line
 write() failed -
 zend_signal: handler was replaced for signal (
 zend_signal: shutdown with non-zero blocking depth (
-zlib >= 1.2.4 required for BLOCK deflate; current version:
+zlib >= 1.2.4 required for rule_tasks.BLOCK deflate; current version:
 # |int,
 # |int|null,
 # |string,

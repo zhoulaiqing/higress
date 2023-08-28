@@ -2,6 +2,7 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"sort"
 )
 
@@ -16,11 +17,12 @@ func (r *Rule911100) Phase() int {
 	return 1
 }
 
-func (r *Rule911100) Evaluate(tx *core.Transaction) bool {
-	found := sort.SearchStrings(ALLOWED_METHODS, tx.Variables.RequestMethod)
+func (r *Rule911100) Evaluate(tx *core.Transaction) int {
+	found := sort.SearchStrings(rule_tasks.ALLOWED_METHODS, tx.Variables.RequestMethod)
 	if found < 0 {
-		tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+		return rule_tasks.BLOCK
 	}
 
-	return true
+	return rule_tasks.PASS
 }

@@ -2,6 +2,7 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 )
 
@@ -20,24 +21,24 @@ func (r *Rule931120) Phase() int {
 	return 2
 }
 
-func (r *Rule931120) Evaluate(tx *core.Transaction) bool {
+func (r *Rule931120) Evaluate(tx *core.Transaction) int {
 	for _, argMap := range tx.Variables.Args {
 		for k, v := range *argMap {
 			if m := re931120.MatchString(k); m {
-				tx.Variables.RfiScore += CRITICAL_ANOMALY_SCORE
-				tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
-				return true
+				tx.Variables.RfiScore += rule_tasks.CRITICAL_ANOMALY_SCORE
+				tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+				return rule_tasks.BLOCK
 			}
 
 			if m := re931120.MatchString(v); m {
-				tx.Variables.RfiScore += CRITICAL_ANOMALY_SCORE
-				tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
-				return true
+				tx.Variables.RfiScore += rule_tasks.CRITICAL_ANOMALY_SCORE
+				tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+				return rule_tasks.BLOCK
 			}
 		}
 	}
 
-	return true
+	return rule_tasks.PASS
 }
 
 func init() {
