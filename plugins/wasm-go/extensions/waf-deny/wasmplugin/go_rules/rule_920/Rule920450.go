@@ -2,6 +2,7 @@ package rule_920
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"golang.org/x/exp/slices"
 )
 
@@ -16,13 +17,13 @@ func (r *Rule920450) Phase() int {
 	return 1
 }
 
-func (r *Rule920450) Evaluate(tx *core.Transaction) bool {
+func (r *Rule920450) Evaluate(tx *core.Transaction) int {
 	for hk, _ := range tx.Variables.RequestHeaders {
-		if slices.Contains(RESTRICTED_HEADERS, hk) {
-			tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-			return true
+		if slices.Contains(rule_tasks.RESTRICTED_HEADERS, hk) {
+			tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+			return rule_tasks.BLOCK
 		}
 	}
 
-	return true
+	return rule_tasks.PASS
 }

@@ -2,7 +2,7 @@ package rule_920
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 )
 
@@ -21,17 +21,17 @@ func (r *Rule920120) Phase() int {
 	return 2
 }
 
-func (r *Rule920120) Evaluate(tx *core.Transaction) bool {
+func (r *Rule920120) Evaluate(tx *core.Transaction) int {
 
 	for fk, _ := range tx.Variables.Files {
 		m := re920120.MatchString(fk)
 		if m {
-			return true
+			return rule_tasks.PASS
 		}
 	}
 
-	tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-	return true
+	tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+	return rule_tasks.BLOCK
 }
 
 func init() {

@@ -2,7 +2,7 @@ package rule_920
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"golang.org/x/exp/slices"
 	"strings"
 )
@@ -18,19 +18,20 @@ func (r *Rule920440) Phase() int {
 	return 1
 }
 
-func (r *Rule920440) Evaluate(tx *core.Transaction) bool {
+func (r *Rule920440) Evaluate(tx *core.Transaction) int {
 
 	requestBaseName := strings.TrimSpace(tx.Variables.RequestBaseName)
 
 	dotIndex := strings.LastIndex(requestBaseName, ".")
 	if dotIndex < 0 || dotIndex == len(requestBaseName)-1 {
-		return true
+		return rule_tasks.PASS
 	}
 
 	extension := strings.ToLower(requestBaseName[dotIndex:])
-	if slices.Contains(go_rules.RESTRICTED_EXTENSIONS, extension) {
-		tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
+	if slices.Contains(rule_tasks.RESTRICTED_EXTENSIONS, extension) {
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+		return rule_tasks.BLOCK
 	}
 
-	return true
+	return rule_tasks.PASS
 }

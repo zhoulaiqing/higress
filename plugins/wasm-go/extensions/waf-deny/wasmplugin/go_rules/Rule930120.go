@@ -2,6 +2,7 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	ahocorasick "github.com/petar-dambovaliev/aho-corasick"
 	"strings"
 )
@@ -717,53 +718,53 @@ func (r *Rule930120) Phase() int {
 	return 2
 }
 
-func (r *Rule930120) Evaluate(tx *core.Transaction) bool {
+func (r *Rule930120) Evaluate(tx *core.Transaction) int {
 	for k, v := range tx.Variables.RequestCookies {
 		if strings.Contains(k, "__utm") {
 			continue
 		}
 		if r.doEvaluate(tx, k) {
-			return true
+			return rule_tasks.BLOCK
 		}
 		if r.doEvaluate(tx, v) {
-			return true
+			return rule_tasks.BLOCK
 		}
 	}
 
 	for _, argMap := range tx.Variables.Args {
 		for k, v := range *argMap {
 			if r.doEvaluate(tx, k) {
-				return true
+				return rule_tasks.BLOCK
 			}
 
 			if r.doEvaluate(tx, v) {
-				return true
+				return rule_tasks.BLOCK
 			}
 		}
 	}
 	for _, v := range tx.Variables.XML["/*"] {
 		if r.doEvaluate(tx, v) {
-			return true
+			return rule_tasks.BLOCK
 		}
 	}
 
-	return true
+	return rule_tasks.PASS
 }
 
 func (r *Rule930120) doEvaluate(tx *core.Transaction, value string) bool {
-v, _, _ := core.Utf8ToUnicode(value)
-v, _, _ = core.UrlDecodeUni(v)
-v, _, _ = core.NormalisePathWin(v)
+	v, _, _ := core.Utf8ToUnicode(value)
+	v, _, _ = core.UrlDecodeUni(v)
+	v, _, _ = core.NormalisePathWin(v)
 
-m, _ := core.PmEvaluate(rule930120Matcher, v, false)
-if m {
-tx.Variables.LfiScore += CRITICAL_ANOMALY_SCORE
-tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
-}
+	m, _ := core.PmEvaluate(rule930120Matcher, v, false)
+	if m {
+		tx.Variables.LfiScore += rule_tasks.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+	}
 
-return m
+	return m
 }
 
 func init() {
-	rule930120Matcher = AHO_CORASICK_BUILDER.Build(LFI_OS_FILES)
+	rule930120Matcher = rule_tasks.AHO_CORASICK_BUILDER.Build(LFI_OS_FILES)
 }

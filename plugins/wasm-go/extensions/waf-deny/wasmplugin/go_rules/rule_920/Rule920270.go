@@ -2,7 +2,7 @@ package rule_920
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 )
 
 const BYTE_RANGE_920270 = "1-255"
@@ -20,25 +20,25 @@ func (r *Rule920270) Phase() int {
 	return 2
 }
 
-func (r *Rule920270) Evaluate(tx *core.Transaction) bool {
+func (r *Rule920270) Evaluate(tx *core.Transaction) int {
 
 	decodeUri, _, _ := core.UrlDecodeUni(tx.Variables.RequestUri)
 	if !validateByteRange920270.Validate(decodeUri) {
-		tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-		return true
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+		return rule_tasks.BLOCK
 	}
 
 	for k, v := range tx.Variables.RequestHeaders {
 		decodeK, _, _ := core.UrlDecodeUni(k)
 		if !validateByteRange920270.Validate(decodeK) {
-			tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-			return true
+			tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+			return rule_tasks.BLOCK
 		}
 
 		decodeV, _, _ := core.UrlDecodeUni(v)
 		if !validateByteRange920270.Validate(decodeV) {
-			tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-			return true
+			tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+			return rule_tasks.BLOCK
 		}
 	}
 
@@ -46,19 +46,19 @@ func (r *Rule920270) Evaluate(tx *core.Transaction) bool {
 		for k, v := range *argMap {
 			decodeK, _, _ := core.UrlDecodeUni(k)
 			if !validateByteRange920270.Validate(decodeK) {
-				tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-				return true
+				tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+				return rule_tasks.BLOCK
 			}
 
 			decodeV, _, _ := core.UrlDecodeUni(v)
 			if !validateByteRange920270.Validate(decodeV) {
-				tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-				return true
+				tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+				return rule_tasks.BLOCK
 			}
 		}
 	}
 
-	return true
+	return rule_tasks.PASS
 }
 
 func init() {

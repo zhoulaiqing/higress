@@ -2,6 +2,7 @@ package rule_920
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 )
 
@@ -20,13 +21,14 @@ func (r *Rule920210) Phase() int {
 	return 1
 }
 
-func (r *Rule920210) Evaluate(tx *core.Transaction) bool {
+func (r *Rule920210) Evaluate(tx *core.Transaction) int {
 
 	matched := re920210.MatchString(tx.Variables.RequestHeaders["connection"])
 	if matched {
-		tx.Variables.InboundAnomalyScorePl1 += go_rules.WARNING_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.WARNING_ANOMALY_SCORE
+		return rule_tasks.BLOCK
 	}
-	return true
+	return rule_tasks.PASS
 }
 
 func init() {

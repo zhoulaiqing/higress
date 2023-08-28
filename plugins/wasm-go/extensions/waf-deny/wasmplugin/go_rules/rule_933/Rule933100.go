@@ -2,7 +2,6 @@ package rule_933
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"strings"
 )
@@ -19,8 +18,8 @@ func (r *Rule933100) doEvaluate(tx *core.Transaction, value string) bool {
 
 	m := rule_tasks.Re933100.MatchString(strings.ToLower(value))
 	if m {
-		tx.Variables.PhpInjectionScore += go_rules.CRITICAL_ANOMALY_SCORE
-		tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
+		tx.Variables.PhpInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 	}
 
 	return m

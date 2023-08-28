@@ -2,6 +2,7 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 )
 
@@ -20,16 +21,17 @@ func (r *Rule921190) Phase() int {
 	return 1
 }
 
-func (r *Rule921190) Evaluate(tx *core.Transaction) bool {
+func (r *Rule921190) Evaluate(tx *core.Transaction) int {
 	requestFileName := tx.Variables.RequestFileName
 	requestFileName, _, _ = core.UrlDecodeUni(requestFileName)
 
 	if m := re921190.MatchString(requestFileName); m {
-		tx.Variables.HttpViolationScore += CRITICAL_ANOMALY_SCORE
-		tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
+		tx.Variables.HttpViolationScore += rule_tasks.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+		return rule_tasks.BLOCK
 	}
 
-	return true
+	return rule_tasks.PASS
 }
 
 func init() {

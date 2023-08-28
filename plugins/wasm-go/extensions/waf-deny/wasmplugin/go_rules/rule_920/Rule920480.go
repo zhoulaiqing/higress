@@ -2,6 +2,7 @@ package rule_920
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 	"golang.org/x/exp/slices"
 )
@@ -21,18 +22,19 @@ func (r *Rule920480) Phase() int {
 	return 1
 }
 
-func (r *Rule920480) Evaluate(tx *core.Transaction) bool {
+func (r *Rule920480) Evaluate(tx *core.Transaction) int {
 	match := re920480.FindStringSubmatch(tx.Variables.RequestHeaders["content-type"])
 	if len(match) < 2 {
-		return true
+		return rule_tasks.PASS
 	}
 
 	charset := match[1]
-	if !slices.Contains(ALLOWED_REQUEST_CONTENT_TYPE_CHARSET, charset) {
-		tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
+	if !slices.Contains(rule_tasks.ALLOWED_REQUEST_CONTENT_TYPE_CHARSET, charset) {
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+		return rule_tasks.BLOCK
 	}
 
-	return true
+	return rule_tasks.PASS
 }
 
 func init() {

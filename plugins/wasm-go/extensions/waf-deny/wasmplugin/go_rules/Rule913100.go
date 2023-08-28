@@ -2,6 +2,7 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	ahocorasick "github.com/petar-dambovaliev/aho-corasick"
 	"github.com/wasilibs/go-re2"
 )
@@ -117,10 +118,10 @@ func (r *Rule913100) Phase() int {
 	return 1
 }
 
-func (r *Rule913100) Evaluate(tx *core.Transaction) bool {
+func (r *Rule913100) Evaluate(tx *core.Transaction) int {
 	matched, matchedValues := core.PmEvaluate(rule913100Matcher, tx.Variables.RequestHeaders["user-agent"], true)
 	if !matched {
-		return true
+		return rule_tasks.PASS
 	}
 
 	existMatched := false
@@ -132,9 +133,10 @@ func (r *Rule913100) Evaluate(tx *core.Transaction) bool {
 		}
 	}
 	if !existMatched {
-		tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+		return rule_tasks.BLOCK
 	}
-	return true
+	return rule_tasks.PASS
 }
 
 func init() {
@@ -145,6 +147,6 @@ func init() {
 	//	DFA:                  true,
 	//})
 
-	rule913100Matcher = AHO_CORASICK_BUILDER.Build(SCANNERS_USER_AGENTS)
+	rule913100Matcher = rule_tasks.AHO_CORASICK_BUILDER.Build(SCANNERS_USER_AGENTS)
 	re913100, _ = re2.Compile(PTN_913100)
 }

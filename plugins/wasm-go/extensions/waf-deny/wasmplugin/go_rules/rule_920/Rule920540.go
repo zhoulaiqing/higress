@@ -2,6 +2,7 @@ package rule_920
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 )
 
@@ -20,41 +21,41 @@ func (r *Rule920540) Phase() int {
 	return 2
 }
 
-func (r *Rule920540) Evaluate(tx *core.Transaction) bool {
+func (r *Rule920540) Evaluate(tx *core.Transaction) int {
 	if tx.Variables.ReqBodyProcessor == "JSON" {
-		return true
+		return rule_tasks.PASS
 	}
 
 	if m := re920540.MatchString(tx.Variables.RequestUri); m {
-		tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-		return true
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+		return rule_tasks.BLOCK
 	}
 
 	for k, v := range tx.Variables.RequestHeaders {
 		if m := re920540.MatchString(k); m {
-			tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-			return true
+			tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+			return rule_tasks.BLOCK
 		}
 		if m := re920540.MatchString(v); m {
-			tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-			return true
+			tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+			return rule_tasks.BLOCK
 		}
 	}
 
 	for _, argMap := range tx.Variables.Args {
 		for k, v := range *argMap {
 			if m := re920540.MatchString(k); m {
-				tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-				return true
+				tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+				return rule_tasks.BLOCK
 			}
 			if m := re920540.MatchString(v); m {
-				tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
-				return true
+				tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+				return rule_tasks.BLOCK
 			}
 		}
 	}
 
-	return true
+	return rule_tasks.PASS
 }
 
 func init() {

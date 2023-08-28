@@ -2,7 +2,6 @@ package rule_933
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"strings"
 )
@@ -24,8 +23,8 @@ func (r *Rule933120) doEvaluate(tx *core.Transaction, value string) bool {
 
 	for _, v := range values {
 		if strings.Contains(v, "=") {
-			tx.Variables.PhpInjectionScore += go_rules.CRITICAL_ANOMALY_SCORE
-			tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
+			tx.Variables.PhpInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
+			tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 			return true
 		}
 	}

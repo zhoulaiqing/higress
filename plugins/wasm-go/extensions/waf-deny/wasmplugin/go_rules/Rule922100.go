@@ -2,6 +2,7 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"golang.org/x/exp/slices"
 	"strings"
 )
@@ -17,18 +18,18 @@ func (r *Rule922100) Phase() int {
 	return 2
 }
 
-func (r *Rule922100) Evaluate(tx *core.Transaction) bool {
+func (r *Rule922100) Evaluate(tx *core.Transaction) int {
 	if len(tx.Variables.MultipartPartHeaders["_charset_"]) == 0 {
-		return true
+		return rule_tasks.PASS
 	}
 
 	for _, argMap := range tx.Variables.Args {
 		value, ok := (*argMap)["_charset_"]
-		if ok && !slices.Contains(ALLOWED_REQUEST_CONTENT_TYPE_CHARSET, strings.ToLower(value)) {
-			tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
-			return true
+		if ok && !slices.Contains(rule_tasks.ALLOWED_REQUEST_CONTENT_TYPE_CHARSET, strings.ToLower(value)) {
+			tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+			return rule_tasks.BLOCK
 		}
 	}
 
-	return true
+	return rule_tasks.PASS
 }

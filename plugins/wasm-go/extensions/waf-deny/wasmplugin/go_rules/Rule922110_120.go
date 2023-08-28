@@ -2,6 +2,7 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 	"strings"
 )
@@ -23,19 +24,19 @@ func (r *Rule922110_120) Phase() int {
 	return 2
 }
 
-func (r *Rule922110_120) Evaluate(tx *core.Transaction) bool {
+func (r *Rule922110_120) Evaluate(tx *core.Transaction) int {
 
 	for k, values := range tx.Variables.MultipartPartHeaders {
 		k = strings.ToLower(k)
 		if strings.Contains(k, "content-transfer-encoding:") {
-			tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
-			return true
+			tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+			return rule_tasks.BLOCK
 		}
 		matchKey := re922110_1.FindStringSubmatch(k)
 		if len(matchKey) >= 2 {
 			if m := re922110_2.MatchString(matchKey[1]); m {
-				tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
-				return true
+				tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+				return rule_tasks.BLOCK
 			}
 
 		}
@@ -43,21 +44,21 @@ func (r *Rule922110_120) Evaluate(tx *core.Transaction) bool {
 		for _, value := range values {
 			value = strings.ToLower(value)
 			if strings.Contains(value, "content-transfer-encoding:") {
-				tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
-				return true
+				tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+				return rule_tasks.BLOCK
 			}
 
 			match := re922110_1.FindStringSubmatch(value)
 			if len(match) >= 2 {
 				if m := re922110_2.MatchString(match[1]); m {
-					tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
-					return true
+					tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+					return rule_tasks.BLOCK
 				}
 			}
 		}
 	}
 
-	return true
+	return rule_tasks.PASS
 }
 
 func init() {

@@ -2,6 +2,7 @@ package rule_920
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"strings"
 )
 
@@ -16,11 +17,12 @@ func (r *Rule920610) Phase() int {
 	return 1
 }
 
-func (r *Rule920610) Evaluate(tx *core.Transaction) bool {
+func (r *Rule920610) Evaluate(tx *core.Transaction) int {
 
 	if strings.Contains(tx.Variables.RequestUriRaw, "#") {
-		tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+		return rule_tasks.BLOCK
 	}
 
-	return true
+	return rule_tasks.PASS
 }

@@ -1,6 +1,9 @@
 package go_rules
 
-import "github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+import (
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+)
 
 /**
 临时使用
@@ -18,11 +21,11 @@ func (r *RuleFinal) Phase() int {
 }
 
 // Evaluate 一个极其简单的评估逻辑
-func (r *RuleFinal) Evaluate(tx *core.Transaction) bool {
+func (r *RuleFinal) Evaluate(tx *core.Transaction) int {
 
-	if tx.Variables.InboundAnomalyScorePl1 >= INBOUND_ANOMALY_SCORE_THRESHOLD {
-		return false
+	if tx.Variables.InboundAnomalyScorePl1 >= rule_tasks.INBOUND_ANOMALY_SCORE_THRESHOLD {
+		return rule_tasks.DENY
 	}
 
-	return true
+	return rule_tasks.PASS
 }

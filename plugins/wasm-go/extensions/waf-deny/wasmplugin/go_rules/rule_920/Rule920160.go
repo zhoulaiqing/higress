@@ -2,6 +2,7 @@ package rule_920
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"strconv"
 )
 
@@ -16,15 +17,17 @@ func (r *Rule920160) Phase() int {
 	return 1
 }
 
-func (r *Rule920160) Evaluate(tx *core.Transaction) bool {
+func (r *Rule920160) Evaluate(tx *core.Transaction) int {
 
 	contentLength := tx.Variables.RequestHeaders["content-length"]
 	if len(contentLength) == 0 {
-		return true
-	}
-	if _, err := strconv.Atoi(contentLength); err != nil {
-		tx.Variables.InboundAnomalyScorePl1 += go_rules.CRITICAL_ANOMALY_SCORE
+		return rule_tasks.PASS
 	}
 
-	return true
+	if _, err := strconv.Atoi(contentLength); err != nil {
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+		return rule_tasks.BLOCK
+	}
+
+	return rule_tasks.PASS
 }

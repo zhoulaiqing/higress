@@ -2,6 +2,7 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 )
 
@@ -20,28 +21,28 @@ func (r *Rule931110) Phase() int {
 	return 2
 }
 
-func (r *Rule931110) Evaluate(tx *core.Transaction) bool {
+func (r *Rule931110) Evaluate(tx *core.Transaction) int {
 	if r.doEvaluate(tx, tx.Variables.QueryString) {
-		return true
+		return rule_tasks.BLOCK
 	}
 
 	if r.doEvaluate(tx, tx.Variables.RequestBody) {
-		return true
+		return rule_tasks.BLOCK
 	}
 
-	return true
+	return rule_tasks.PASS
 }
 
 func (r *Rule931110) doEvaluate(tx *core.Transaction, value string) bool {
-v, _, _ := core.UrlDecodeUni(value)
+	v, _, _ := core.UrlDecodeUni(value)
 
-m := re931110.MatchString(v)
-if m {
-tx.Variables.RfiScore += CRITICAL_ANOMALY_SCORE
-tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
-}
+	m := re931110.MatchString(v)
+	if m {
+		tx.Variables.RfiScore += rule_tasks.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+	}
 
-return m
+	return m
 }
 
 func init() {

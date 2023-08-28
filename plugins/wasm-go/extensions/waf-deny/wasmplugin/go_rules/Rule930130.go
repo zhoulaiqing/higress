@@ -2,6 +2,7 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	ahocorasick "github.com/petar-dambovaliev/aho-corasick"
 )
 
@@ -249,19 +250,20 @@ func (r *Rule930130) Phase() int {
 	return 1
 }
 
-func (r *Rule930130) Evaluate(tx *core.Transaction) bool {
+func (r *Rule930130) Evaluate(tx *core.Transaction) int {
 	v, _, _ := core.Utf8ToUnicode(tx.Variables.RequestFileName)
 	v, _, _ = core.UrlDecodeUni(v)
 	v, _, _ = core.NormalisePathWin(v)
 
 	if m, _ := core.PmEvaluate(rule930130Matcher, v, false); m {
-		tx.Variables.LfiScore += CRITICAL_ANOMALY_SCORE
-		tx.Variables.InboundAnomalyScorePl1 += CRITICAL_ANOMALY_SCORE
+		tx.Variables.LfiScore += rule_tasks.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+		return rule_tasks.BLOCK
 	}
 
-	return true
+	return rule_tasks.PASS
 }
 
 func init() {
-	rule930130Matcher = AHO_CORASICK_BUILDER.Build(RESTRICTED_FILES)
+	rule930130Matcher = rule_tasks.AHO_CORASICK_BUILDER.Build(RESTRICTED_FILES)
 }

@@ -2,6 +2,7 @@ package rule_920
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"strings"
 )
 
@@ -16,12 +17,13 @@ func (r *Rule920220) Phase() int {
 	return 1
 }
 
-func (r *Rule920220) Evaluate(tx *core.Transaction) bool {
+func (r *Rule920220) Evaluate(tx *core.Transaction) int {
 	requestUri := tx.Variables.RequestUri
 
 	if strings.Contains(requestUri, "%") && core.ValidateURLEncoding(requestUri) {
-		tx.Variables.InboundAnomalyScorePl1 += go_rules.WARNING_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.WARNING_ANOMALY_SCORE
+		return rule_tasks.BLOCK
 	}
 
-	return true
+	return rule_tasks.PASS
 }
