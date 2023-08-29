@@ -13,6 +13,10 @@ func (r *Rule943110_120) Id() string {
 	return "943110_120"
 }
 
+func (r *Rule943110_120) Phase() int {
+	return 2
+}
+
 func (r *Rule943110_120) Evaluate(tx *core.Transaction) int {
 
 	match1 := false

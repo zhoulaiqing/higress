@@ -18,8 +18,7 @@ func (r *Rule932230) doEvaluate(tx *core.Transaction, value string) bool {
 	if m {
 		tx.Variables.RceScore += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
-		return false
 	}
 
-	return true
+	return m
 }

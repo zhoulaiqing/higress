@@ -29,7 +29,7 @@ func (r *Rule942100) doEvaluate(tx *core.Transaction, value *string) bool {
 	if m {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.SqlInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
-		return false
+		return true
 	}
 
 	v, _, _ := core.Utf8ToUnicode(*value)
@@ -37,7 +37,7 @@ func (r *Rule942100) doEvaluate(tx *core.Transaction, value *string) bool {
 	if m {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.SqlInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
-		return false
+		return true
 	}
 
 	v, _, _ = core.UrlDecodeUni(v)
@@ -45,7 +45,7 @@ func (r *Rule942100) doEvaluate(tx *core.Transaction, value *string) bool {
 	if m {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.SqlInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
-		return false
+		return true
 	}
 
 	v, _, _ = core.RemoveNulls(v)
@@ -53,8 +53,8 @@ func (r *Rule942100) doEvaluate(tx *core.Transaction, value *string) bool {
 	if m {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.SqlInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
-		return false
+		return true
 	}
 
-	return true
+	return false
 }

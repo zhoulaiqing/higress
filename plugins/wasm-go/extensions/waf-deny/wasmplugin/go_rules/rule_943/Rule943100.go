@@ -12,6 +12,10 @@ func (r *Rule943100) Id() string {
 	return "943100"
 }
 
+func (r *Rule943100) Phase() int {
+	return 2
+}
+
 func (r *Rule943100) Evaluate(tx *core.Transaction) int {
 	// todo 由于这里的缓存和 942 规则中一致，故在这里复用 942 的缓存，后续可以考虑更换缓存名称
 
