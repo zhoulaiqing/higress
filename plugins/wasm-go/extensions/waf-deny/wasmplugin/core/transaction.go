@@ -57,6 +57,7 @@ type TransactionVariables struct {
 
 	Skip941ForFileName bool
 	TransMap           map[string][]string
+	Interrupted        bool
 
 	BlockingInboundAnomalyScore  int
 	InboundAnomalyScorePl1       int
@@ -164,6 +165,11 @@ func (tx *Transaction) ProcessConnection(client string, cPort int, server string
 	tx.Variables.RemotePort = p
 	tx.Variables.ServerAddr = server
 	tx.Variables.ServerPort = p2
+}
+
+func (tx *Transaction) WriteRequestBody(b []byte) (bool, int, error) {
+	// todo
+	return false, 0, nil
 }
 
 func (tx *Transaction) ProcessRequestHeaders() bool {

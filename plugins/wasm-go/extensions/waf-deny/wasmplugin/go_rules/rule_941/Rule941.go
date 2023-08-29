@@ -146,7 +146,7 @@ func (r *Rule941) evaluateRawValue(tx *core.Transaction) int {
 	}
 
 	addition := r.GetAddition()
-	if addition.validateFileName {
+	if addition.validateFileName && !tx.Variables.Skip941ForFileName {
 		if r.doEvaluate(tx, &tx.Variables.RequestFileName) {
 			return rule_tasks.BLOCK
 		}

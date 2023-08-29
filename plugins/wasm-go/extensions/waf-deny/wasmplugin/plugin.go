@@ -146,6 +146,23 @@ func (ctx *httpContext) OnHttpRequestHeaders(numHeaders int, endOfStream bool) t
 	return types.ActionContinue
 }
 
+func (ctx *httpContext) OnHttpRequestBody(bodySize int, endOfStream bool) types.Action {
+	if ctx.tx.Variables.Interrupted {
+		return types.ActionContinue
+	}
+
+	tx := ctx.tx
+
+	if bodySize > 0 {
+		b, err := proxywasm.GetHttpRequestBody(ctx.bodyReadIndex, bodySize)
+		if err == nil {
+
+		} else {
+
+		}
+	}
+}
+
 // retrieveAddressInfo retrieves address properties from the proxy
 // Expected targets are "source" or "destination"
 // Envoy ref: https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/advanced/attributes#connection-attributes
