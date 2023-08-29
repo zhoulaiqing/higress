@@ -25,7 +25,7 @@ func (r *Rule941390) doEvaluate(tx *core.Transaction, value *string) bool {
 	v, _, _ := core.HtmlEntityDecode(*value)
 	v, _, _ = core.JsDecode(v)
 
-	m := rule_tasks.Re941390.MatchString(*value)
+	m := rule_tasks.Re941390.MatchString(v)
 
 	if m {
 		tx.Variables.XssScore += rule_tasks.CRITICAL_ANOMALY_SCORE
