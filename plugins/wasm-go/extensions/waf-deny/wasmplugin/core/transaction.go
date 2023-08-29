@@ -64,7 +64,7 @@ type TransactionVariables struct {
 	InboundAnomalyScorePl3       int
 	InboundAnomalyScorePl4       int
 	SqlInjectionScore            int
-	SssScore                     int
+	XssScore                     int
 	RfiScore                     int
 	LfiScore                     int
 	RceScore                     int
