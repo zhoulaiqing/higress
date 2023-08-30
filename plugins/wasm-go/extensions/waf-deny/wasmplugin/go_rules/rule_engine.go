@@ -58,11 +58,23 @@ type RuleEngine struct {
 }
 
 func ProcessRequestHeaderRules(tx *core.Transaction) bool {
+	return ProcessRulesByPhase(tx, 1)
+}
+
+func ProcessRequestBodyRules(tx *core.Transaction) bool {
+	return ProcessRulesByPhase(tx, 2)
+}
+
+func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
+
+	finalRule := RULES[len(RULES)-1]
+
 	for _, rule := range RULES {
-		if rule.Phase() == 1 || rule.Phase() == 100 {
+		if rule.Phase() == phase {
 			r := rule.Evaluate(tx)
 			if r == rule_tasks.BLOCK {
 				proxywasm.LogInfof("Blocked at Rule %q ", rule.Id())
+				r = finalRule.Evaluate(tx)
 			}
 			if r == rule_tasks.DENY {
 				tx.Variables.Interrupted = true

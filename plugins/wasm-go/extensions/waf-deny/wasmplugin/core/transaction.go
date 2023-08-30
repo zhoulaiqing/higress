@@ -1,16 +1,20 @@
 package core
 
 import (
+	"errors"
 	"fmt"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/bodyprocessors"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/url_util"
+	"math"
 	"net/url"
 	"strconv"
 	"strings"
 )
 
 type Transaction struct {
-	id        string
-	Variables TransactionVariables
+	id                string
+	RequestBodyBuffer *BodyBuffer
+	Variables         TransactionVariables
 }
 
 func NewTransaction() Transaction {
@@ -27,7 +31,7 @@ func NewTransaction() Transaction {
 	variables.Args = append(variables.Args, &variables.ArgsGet, &variables.ArgsPost, &variables.ArgsPath)
 	variables.TransMap = make(map[string][]string)
 
-	return Transaction{id: id, Variables: variables}
+	return Transaction{id: id, Variables: variables, RequestBodyBuffer: NewBodyBuffer()}
 }
 
 type TransactionVariables struct {
@@ -192,17 +196,53 @@ func (tx *Transaction) ProcessConnection(client string, cPort int, server string
 	tx.Variables.ServerPort = p2
 }
 
+// WriteRequestBody /*
 func (tx *Transaction) WriteRequestBody(b []byte) (bool, int, error) {
-	// todo
-	return false, 0, nil
+	writingBytes := int64(len(b))
+	if tx.RequestBodyBuffer.length >= (math.MaxInt64 - writingBytes) {
+		return false, 0, errors.New("overflow reached while writing request body")
+	}
+
+	w, err := tx.RequestBodyBuffer.Write(b[:writingBytes])
+	if err != nil {
+		return false, 0, err
+	}
+
+	return true, int(w), err
 }
 
 func (tx *Transaction) ProcessRequestHeaders() bool {
 	return true
 }
 
-func (tx *Transaction) ProcessRequestBody() bool {
-	return false
+func (tx *Transaction) ProcessRequestBody() (bool, error) {
+
+	if tx.RequestBodyBuffer.length == 0 {
+		return true, nil
+	}
+
+	mime := tx.Variables.RequestHeaders["content-type"]
+	reader, err := tx.RequestBodyBuffer.Reader()
+	if err != nil {
+		return false, err
+	}
+
+	// todo 注意这里暂时没有启用 XML 和 JSON 的解析逻辑，后续可以根据需要使用。参考 coraza.conf-recommended.conf
+	rbp := strings.ToLower(tx.Variables.ReqBodyProcessor)
+	if len(rbp) == 0 {
+		return true, nil
+	}
+
+	bodyprocessor, err := bodyprocessors.GetBodyProcessor(rbp)
+	if err != nil {
+		return false, errors.New("invalid body processor")
+	}
+
+	if err := bodyprocessor.ProcessRequest(reader, tx, mime); err != nil {
+		return false, errors.New("failed to process request body")
+	}
+
+	return true, nil
 }
 
 func (tx *Transaction) ProcessResponseHeader() bool {

@@ -90,6 +90,8 @@ func (ctx *corazaPlugin) OnPluginStart(pluginConfigurationSize int) types.OnPlug
 		WithRootFS(root)
 
 	var secRules []string
+
+	secRules = append(secRules, "Include @recommended-conf")
 	secRules = append(secRules, "Include @demo-conf")
 	secRules = append(secRules, "Include @crs-setup-demo-conf")
 	//secRules = append(secRules, "Include @ftw-conf")
