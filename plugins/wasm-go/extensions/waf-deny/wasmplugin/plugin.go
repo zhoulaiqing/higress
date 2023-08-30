@@ -182,6 +182,10 @@ func (ctx *httpContext) OnHttpRequestBody(bodySize int, endOfStream bool) types.
 	return types.ActionPause
 }
 
+func (ctx *httpContext) OnHttpStreamDone() {
+	_ = ctx.tx.Close()
+}
+
 // retrieveAddressInfo retrieves address properties from the proxy
 // Expected targets are "source" or "destination"
 // Envoy ref: https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/advanced/attributes#connection-attributes

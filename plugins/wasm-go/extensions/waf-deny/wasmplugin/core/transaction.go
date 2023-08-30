@@ -255,3 +255,13 @@ func (tx *Transaction) ProcessResponseBody() bool {
 func (tx *Transaction) CaptureField(idx int, value string) {
 
 }
+
+func (tx *Transaction) Close() error {
+
+	err := tx.RequestBodyBuffer.Reset()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
