@@ -1,16 +1,19 @@
 package core
 
 import (
+	"errors"
 	"fmt"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/url_util"
+	"math"
 	"net/url"
 	"strconv"
 	"strings"
 )
 
 type Transaction struct {
-	id        string
-	Variables TransactionVariables
+	id                string
+	RequestBodyBuffer *BodyBuffer
+	Variables         TransactionVariables
 }
 
 func NewTransaction() Transaction {
@@ -27,7 +30,7 @@ func NewTransaction() Transaction {
 	variables.Args = append(variables.Args, &variables.ArgsGet, &variables.ArgsPost, &variables.ArgsPath)
 	variables.TransMap = make(map[string][]string)
 
-	return Transaction{id: id, Variables: variables}
+	return Transaction{id: id, Variables: variables, RequestBodyBuffer: NewBodyBuffer()}
 }
 
 type TransactionVariables struct {
@@ -54,6 +57,8 @@ type TransactionVariables struct {
 	Files                map[string][]string
 	XML                  map[string][]string
 	MultipartPartHeaders map[string][]string
+	ResponseArgs         map[string]string
+	FilesCombinedSize    string
 
 	Skip941ForFileName bool
 	TransMap           map[string][]string
@@ -83,7 +88,30 @@ type TransactionVariables struct {
 const ARG_LIMIT = 1000
 
 func (tx *Transaction) AddRequestHeader(key string, value string) {
-	tx.Variables.RequestHeaders[key] = value
+	if len(key) == 0 {
+		return
+	}
+
+	keyl := strings.ToLower(key)
+	tx.Variables.RequestHeaders[keyl] = value
+
+	switch keyl {
+	case "content-type":
+		val := strings.ToLower(value)
+		if val == "application/x-www-form-urlencoded" {
+			tx.Variables.ReqBodyProcessor = "URLENCODED"
+		} else if strings.HasPrefix(val, "multipart/form-data") {
+			tx.Variables.ReqBodyProcessor = "MULTIPART"
+		}
+	case "cookie":
+		values := url_util.ParseQuery(value, ';')
+		for k, vr := range values {
+			for _, v := range vr {
+				tx.Variables.RequestCookies[k] = v
+			}
+		}
+	}
+
 }
 
 func (tx *Transaction) ExtractGetArguments(uri string) {
@@ -167,17 +195,53 @@ func (tx *Transaction) ProcessConnection(client string, cPort int, server string
 	tx.Variables.ServerPort = p2
 }
 
+// WriteRequestBody /*
 func (tx *Transaction) WriteRequestBody(b []byte) (bool, int, error) {
-	// todo
-	return false, 0, nil
+	writingBytes := int64(len(b))
+	if tx.RequestBodyBuffer.length >= (math.MaxInt64 - writingBytes) {
+		return false, 0, errors.New("overflow reached while writing request body")
+	}
+
+	w, err := tx.RequestBodyBuffer.Write(b[:writingBytes])
+	if err != nil {
+		return false, 0, err
+	}
+
+	return true, int(w), err
 }
 
 func (tx *Transaction) ProcessRequestHeaders() bool {
 	return true
 }
 
-func (tx *Transaction) ProcessRequestBody() bool {
-	return false
+func (tx *Transaction) ProcessRequestBody() (bool, error) {
+
+	if tx.RequestBodyBuffer.length == 0 {
+		return true, nil
+	}
+
+	mime := tx.Variables.RequestHeaders["content-type"]
+	reader, err := tx.RequestBodyBuffer.Reader()
+	if err != nil {
+		return false, err
+	}
+
+	// todo 注意这里暂时没有启用 XML 和 JSON 的解析逻辑，后续可以根据需要使用。参考 coraza.conf-recommended.conf
+	rbp := strings.ToLower(tx.Variables.ReqBodyProcessor)
+	if len(rbp) == 0 {
+		return true, nil
+	}
+
+	bodyprocessor, err := GetBodyProcessor(rbp)
+	if err != nil {
+		return false, errors.New("invalid body processor")
+	}
+
+	if err := bodyprocessor.ProcessRequest(reader, tx, mime); err != nil {
+		return false, errors.New("failed to process request body")
+	}
+
+	return true, nil
 }
 
 func (tx *Transaction) ProcessResponseHeader() bool {
@@ -190,4 +254,14 @@ func (tx *Transaction) ProcessResponseBody() bool {
 
 func (tx *Transaction) CaptureField(idx int, value string) {
 
+}
+
+func (tx *Transaction) Close() error {
+
+	err := tx.RequestBodyBuffer.Reset()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

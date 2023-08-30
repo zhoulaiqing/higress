@@ -140,7 +140,7 @@ func (ctx *httpContext) OnHttpRequestHeaders(numHeaders int, endOfStream bool) t
 
 	res := go_rules.ProcessRequestHeaderRules(&ctx.tx)
 	if !res {
-		proxywasm.SendHttpResponse(403, nil, []byte("denied by waf"), -1)
+		_ = proxywasm.SendHttpResponse(403, nil, []byte("denied by waf"), -1)
 	}
 
 	return types.ActionContinue
@@ -156,11 +156,34 @@ func (ctx *httpContext) OnHttpRequestBody(bodySize int, endOfStream bool) types.
 	if bodySize > 0 {
 		b, err := proxywasm.GetHttpRequestBody(ctx.bodyReadIndex, bodySize)
 		if err == nil {
-
-		} else {
-
+			r, _, _ := tx.WriteRequestBody(b)
+			if !r {
+				ctx.logger.Error().Err(err).Msg("Failed to write response body")
+				return types.ActionContinue
+			}
+			ctx.bodyReadIndex += bodySize
 		}
 	}
+
+	if endOfStream {
+		ctx.bodyReadIndex = 0
+		r, err := tx.ProcessRequestBody()
+		if !r {
+			ctx.logger.Error().Err(err).Msg("Failed to write process body")
+		}
+		res := go_rules.ProcessRequestBodyRules(&ctx.tx)
+		if !res {
+			_ = proxywasm.SendHttpResponse(403, nil, []byte("denied by waf"), -1)
+		}
+
+		return types.ActionContinue
+	}
+
+	return types.ActionPause
+}
+
+func (ctx *httpContext) OnHttpStreamDone() {
+	_ = ctx.tx.Close()
 }
 
 // retrieveAddressInfo retrieves address properties from the proxy
