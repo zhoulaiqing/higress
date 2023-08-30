@@ -83,7 +83,30 @@ type TransactionVariables struct {
 const ARG_LIMIT = 1000
 
 func (tx *Transaction) AddRequestHeader(key string, value string) {
-	tx.Variables.RequestHeaders[key] = value
+	if len(key) == 0 {
+		return
+	}
+
+	keyl := strings.ToLower(key)
+	tx.Variables.RequestHeaders[keyl] = value
+
+	switch keyl {
+	case "content-type":
+		val := strings.ToLower(value)
+		if val == "application/x-www-form-urlencoded" {
+			tx.Variables.ReqBodyProcessor = "URLENCODED"
+		} else if strings.HasPrefix(val, "multipart/form-data") {
+			tx.Variables.ReqBodyProcessor = "MULTIPART"
+		}
+	case "cookie":
+		values := url_util.ParseQuery(value, ';')
+		for k, vr := range values {
+			for _, v := range vr {
+				tx.Variables.RequestCookies[k] = v
+			}
+		}
+	}
+
 }
 
 func (tx *Transaction) ExtractGetArguments(uri string) {
