@@ -1,8 +1,7 @@
-package bodyprocessors
+package core
 
 import (
 	"encoding/xml"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"io"
 	"strings"
 )
@@ -10,7 +9,7 @@ import (
 type xmlBodyProcessor struct {
 }
 
-func (*xmlBodyProcessor) ProcessRequest(reader io.Reader, tx *core.Transaction, _ string) error {
+func (*xmlBodyProcessor) ProcessRequest(reader io.Reader, tx *Transaction, _ string) error {
 	values, contents, err := readXML(reader)
 	if err != nil {
 		return err
@@ -20,7 +19,7 @@ func (*xmlBodyProcessor) ProcessRequest(reader io.Reader, tx *core.Transaction, 
 	return nil
 }
 
-func (*xmlBodyProcessor) ProcessResponse(reader io.Reader, tx *core.Transaction, _ string) error {
+func (*xmlBodyProcessor) ProcessResponse(reader io.Reader, tx *Transaction, _ string) error {
 	return nil
 }
 
@@ -54,11 +53,11 @@ func readXML(reader io.Reader) ([]string, []string, error) {
 }
 
 var (
-	_ core.BodyProcessor = &xmlBodyProcessor{}
+	_ BodyProcessor = &xmlBodyProcessor{}
 )
 
 func init() {
-	RegisterBodyProcessor("xml", func() core.BodyProcessor {
+	RegisterBodyProcessor("xml", func() BodyProcessor {
 		return &xmlBodyProcessor{}
 	})
 }

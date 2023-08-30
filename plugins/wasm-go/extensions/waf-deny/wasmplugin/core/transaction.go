@@ -3,7 +3,6 @@ package core
 import (
 	"errors"
 	"fmt"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/bodyprocessors"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/url_util"
 	"math"
 	"net/url"
@@ -233,7 +232,7 @@ func (tx *Transaction) ProcessRequestBody() (bool, error) {
 		return true, nil
 	}
 
-	bodyprocessor, err := bodyprocessors.GetBodyProcessor(rbp)
+	bodyprocessor, err := GetBodyProcessor(rbp)
 	if err != nil {
 		return false, errors.New("invalid body processor")
 	}

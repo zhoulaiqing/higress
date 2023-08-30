@@ -1,7 +1,6 @@
-package bodyprocessors
+package core
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/tidwall/gjson"
 	"io"
 	"strconv"
@@ -10,9 +9,9 @@ import (
 
 type jsonBodyProcessor struct{}
 
-var _ core.BodyProcessor = &jsonBodyProcessor{}
+var _ BodyProcessor = &jsonBodyProcessor{}
 
-func (js *jsonBodyProcessor) ProcessRequest(reader io.Reader, tx *core.Transaction, _ string) error {
+func (js *jsonBodyProcessor) ProcessRequest(reader io.Reader, tx *Transaction, _ string) error {
 	data, err := readJSON(reader)
 	if err != nil {
 		return err
@@ -22,7 +21,7 @@ func (js *jsonBodyProcessor) ProcessRequest(reader io.Reader, tx *core.Transacti
 	return nil
 }
 
-func (js *jsonBodyProcessor) ProcessResponse(reader io.Reader, tx *core.Transaction, _ string) error {
+func (js *jsonBodyProcessor) ProcessResponse(reader io.Reader, tx *Transaction, _ string) error {
 	data, err := readJSON(reader)
 	if err != nil {
 		return err
@@ -90,7 +89,7 @@ func readItems(json gjson.Result, objKey []byte, res map[string]string) {
 }
 
 func init() {
-	RegisterBodyProcessor("json", func() core.BodyProcessor {
+	RegisterBodyProcessor("json", func() BodyProcessor {
 		return &jsonBodyProcessor{}
 	})
 }

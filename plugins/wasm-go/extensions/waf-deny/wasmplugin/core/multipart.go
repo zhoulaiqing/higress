@@ -1,9 +1,8 @@
-package bodyprocessors
+package core
 
 import (
 	"errors"
 	"fmt"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"io"
 	"mime"
 	"mime/multipart"
@@ -12,7 +11,7 @@ import (
 
 type multipartBodyProcessor struct{}
 
-func (mbp *multipartBodyProcessor) ProcessRequest(reader io.Reader, tx *core.Transaction, mimeType string) error {
+func (mbp *multipartBodyProcessor) ProcessRequest(reader io.Reader, tx *Transaction, mimeType string) error {
 	mediaType, params, err := mime.ParseMediaType(mimeType)
 	if err != nil {
 		return err
@@ -64,12 +63,12 @@ func (mbp *multipartBodyProcessor) ProcessRequest(reader io.Reader, tx *core.Tra
 	return nil
 }
 
-func (mbp *multipartBodyProcessor) ProcessResponse(_ io.Reader, _ *core.Transaction, _ string) error {
+func (mbp *multipartBodyProcessor) ProcessResponse(_ io.Reader, _ *Transaction, _ string) error {
 	return nil
 }
 
 var (
-	_ core.BodyProcessor = (*multipartBodyProcessor)(nil)
+	_ BodyProcessor = (*multipartBodyProcessor)(nil)
 )
 
 // OriginFileName returns the filename parameter of the Part's Content-Disposition header.
@@ -88,7 +87,7 @@ func originFileName(p *multipart.Part) string {
 }
 
 func init() {
-	RegisterBodyProcessor("multipart", func() core.BodyProcessor {
+	RegisterBodyProcessor("multipart", func() BodyProcessor {
 		return &multipartBodyProcessor{}
 	})
 }

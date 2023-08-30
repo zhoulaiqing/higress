@@ -1,7 +1,6 @@
-package bodyprocessors
+package core
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/url_util"
 	"io"
 	"strings"
@@ -10,7 +9,7 @@ import (
 type urlencodedBodyProcessor struct {
 }
 
-func (*urlencodedBodyProcessor) ProcessRequest(reader io.Reader, tx *core.Transaction, _ string) error {
+func (*urlencodedBodyProcessor) ProcessRequest(reader io.Reader, tx *Transaction, _ string) error {
 	buf := new(strings.Builder)
 	if _, err := io.Copy(buf, reader); err != nil {
 		return err
@@ -29,16 +28,16 @@ func (*urlencodedBodyProcessor) ProcessRequest(reader io.Reader, tx *core.Transa
 	return nil
 }
 
-func (*urlencodedBodyProcessor) ProcessResponse(_ io.Reader, _ *core.Transaction, _ string) error {
+func (*urlencodedBodyProcessor) ProcessResponse(_ io.Reader, _ *Transaction, _ string) error {
 	return nil
 }
 
 var (
-	_ core.BodyProcessor = &urlencodedBodyProcessor{}
+	_ BodyProcessor = &urlencodedBodyProcessor{}
 )
 
 func init() {
-	RegisterBodyProcessor("urlencoded", func() core.BodyProcessor {
+	RegisterBodyProcessor("urlencoded", func() BodyProcessor {
 		return &urlencodedBodyProcessor{}
 	})
 }
