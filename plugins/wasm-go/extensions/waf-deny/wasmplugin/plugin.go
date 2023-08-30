@@ -7,7 +7,6 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
-	"fmt"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules"
 	"github.com/corazawaf/coraza/v3/debuglog"
@@ -88,10 +87,6 @@ type httpContext struct {
 	processedRequestBody  bool
 	processedResponseBody bool
 	bodyReadIndex         int
-	metrics               *wafMetrics
-	interruptedAt         interruptionPhase
-	logger                debuglog.Logger
-	metricLabelsKV        []string
 }
 
 func (ctx *httpContext) OnHttpRequestHeaders(numHeaders int, endOfStream bool) types.Action {
@@ -104,8 +99,8 @@ func (ctx *httpContext) OnHttpRequestHeaders(numHeaders int, endOfStream bool) t
 
 	ctx.tx.AddRequestHeader("host", authority)
 
-	srcIP, srcPort := retrieveAddressInfo(ctx.logger, "source")
-	dstIP, dstPort := retrieveAddressInfo(ctx.logger, "destination")
+	srcIP, srcPort := retrieveAddressInfo("source")
+	dstIP, dstPort := retrieveAddressInfo("destination")
 
 	ctx.tx.ProcessConnection(srcIP, srcPort, dstIP, dstPort)
 
@@ -129,7 +124,7 @@ func (ctx *httpContext) OnHttpRequestHeaders(numHeaders int, endOfStream bool) t
 
 	hs, err := proxywasm.GetHttpRequestHeaders()
 	if err != nil {
-		ctx.logger.Error().Err(err).Msg("Failed to get request headers")
+		proxywasm.LogErrorf("Failed to get request headers: %q ", err)
 		return types.ActionContinue
 	}
 
@@ -158,7 +153,7 @@ func (ctx *httpContext) OnHttpRequestBody(bodySize int, endOfStream bool) types.
 		if err == nil {
 			r, _, _ := tx.WriteRequestBody(b)
 			if !r {
-				ctx.logger.Error().Err(err).Msg("Failed to write response body")
+				proxywasm.LogError("Failed to write response body")
 				return types.ActionContinue
 			}
 			ctx.bodyReadIndex += bodySize
@@ -167,9 +162,9 @@ func (ctx *httpContext) OnHttpRequestBody(bodySize int, endOfStream bool) types.
 
 	if endOfStream {
 		ctx.bodyReadIndex = 0
-		r, err := tx.ProcessRequestBody()
+		r, _ := tx.ProcessRequestBody()
 		if !r {
-			ctx.logger.Error().Err(err).Msg("Failed to write process body")
+			proxywasm.LogError("Failed to write process body")
 		}
 		res := go_rules.ProcessRequestBodyRules(&ctx.tx)
 		if !res {
@@ -189,38 +184,30 @@ func (ctx *httpContext) OnHttpStreamDone() {
 // retrieveAddressInfo retrieves address properties from the proxy
 // Expected targets are "source" or "destination"
 // Envoy ref: https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/advanced/attributes#connection-attributes
-func retrieveAddressInfo(logger debuglog.Logger, target string) (string, int) {
+func retrieveAddressInfo(target string) (string, int) {
 	var targetIP, targetPortStr string
 	var targetPort int
 	targetAddressRaw, err := proxywasm.GetProperty([]string{target, "address"})
 	if err != nil {
-		logger.Debug().
-			Err(err).
-			Msg(fmt.Sprintf("Failed to get %s address", target))
+		proxywasm.LogErrorf("Failed to get %s address", target)
 	} else {
 		targetIP, targetPortStr, err = net.SplitHostPort(string(targetAddressRaw))
 		if err != nil {
-			logger.Debug().
-				Err(err).
-				Msg(fmt.Sprintf("Failed to parse %s address", target))
+			proxywasm.LogErrorf("Failed to parse %s address", target)
 		}
 	}
 	targetPortRaw, err := proxywasm.GetProperty([]string{target, "port"})
 	if err == nil {
 		targetPort, err = parsePort(targetPortRaw)
 		if err != nil {
-			logger.Debug().
-				Err(err).
-				Msg(fmt.Sprintf("Failed to parse %s port", target))
+			proxywasm.LogErrorf("Failed to parse %s port", target)
 		}
 	} else if targetPortStr != "" {
 		// If GetProperty fails we rely on the port inside the Address property
 		// Mostly useful for proxies other than Envoy
 		targetPort, err = strconv.Atoi(targetPortStr)
 		if err != nil {
-			logger.Debug().
-				Err(err).
-				Msg(fmt.Sprintf("Failed to get %s port", target))
+			proxywasm.LogErrorf("Failed to get %s port", target)
 
 		}
 	}
@@ -260,13 +247,11 @@ func replaceResponseBodyWhenInterrupted(logger debuglog.Logger, bodySize int) ty
 
 // parseServerName parses :authority pseudo-header in order to retrieve the
 // virtual host.
-func parseServerName(logger debuglog.Logger, authority string) string {
+func parseServerName(authority string) string {
 	host, _, err := net.SplitHostPort(authority)
 	if err != nil {
 		// missing port or bad format
-		logger.Debug().
-			Err(err).
-			Msg("Failed to parse server name from authority")
+		proxywasm.LogError("Failed to parse server name from authority")
 		host = authority
 	}
 	return host
