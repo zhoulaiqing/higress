@@ -23,10 +23,21 @@ func (r *Rule920120) Phase() int {
 
 func (r *Rule920120) Evaluate(tx *core.Transaction) int {
 
-	for fk, _ := range tx.Variables.Files {
+	if len(tx.Variables.Files) == 0 {
+		return rule_tasks.PASS
+	}
+
+	for fk, values := range tx.Variables.Files {
 		m := re920120.MatchString(fk)
 		if m {
 			return rule_tasks.PASS
+		}
+
+		for _, v := range values {
+			m = re920120.MatchString(v)
+			if m {
+				return rule_tasks.PASS
+			}
 		}
 	}
 

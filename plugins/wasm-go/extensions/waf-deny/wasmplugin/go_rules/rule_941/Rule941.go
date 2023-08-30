@@ -3,6 +3,7 @@ package rule_941
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 	"strings"
 )
 
@@ -113,15 +114,16 @@ func (r *Rule941) evaluateByCache(tx *core.Transaction) int {
 }
 
 func (r *Rule941) evaluateRawValue(tx *core.Transaction) int {
+	proxywasm.LogInfo(r.Id())
 	for k, v := range tx.Variables.RequestCookies {
 		if strings.Contains(k, "__utm") {
 			continue
 		}
-
+		proxywasm.LogInfof("cookie key: %s", k)
 		if r.doEvaluate(tx, &k) {
 			return rule_tasks.BLOCK
 		}
-
+		proxywasm.LogInfof("cookie value: %s", v)
 		if r.doEvaluate(tx, &v) {
 			return rule_tasks.BLOCK
 		}
@@ -129,10 +131,12 @@ func (r *Rule941) evaluateRawValue(tx *core.Transaction) int {
 
 	for _, argMap := range tx.Variables.Args {
 		for k, v := range *argMap {
+			proxywasm.LogInfof("arg key: %s", k)
 			if r.doEvaluate(tx, &k) {
 				return rule_tasks.BLOCK
 			}
 
+			proxywasm.LogInfof("arg value: %s", v)
 			if r.doEvaluate(tx, &v) {
 				return rule_tasks.BLOCK
 			}
@@ -140,6 +144,7 @@ func (r *Rule941) evaluateRawValue(tx *core.Transaction) int {
 	}
 
 	for _, v := range tx.Variables.XML["/*"] {
+		proxywasm.LogInfof("xml v: %s", v)
 		if r.doEvaluate(tx, &v) {
 			return rule_tasks.BLOCK
 		}
@@ -147,6 +152,7 @@ func (r *Rule941) evaluateRawValue(tx *core.Transaction) int {
 
 	addition := r.GetAddition()
 	if addition.validateFileName && !tx.Variables.Skip941ForFileName {
+		proxywasm.LogInfof("file name v: %s", tx.Variables.RequestFileName)
 		if r.doEvaluate(tx, &tx.Variables.RequestFileName) {
 			return rule_tasks.BLOCK
 		}
@@ -170,6 +176,8 @@ func (r *Rule941) evaluateRawValue(tx *core.Transaction) int {
 }
 
 func (r *Rule941) doEvaluate(tx *core.Transaction, value *string) bool {
+
+	proxywasm.LogInfof("Rule941 do evaluate")
 
 	// 一次加载全部，因此拿一个key来判断即可（这里以 cookie_key_941 为判断依据）
 	_, ok := tx.Variables.TransMap["cookie_key_941"]
@@ -205,7 +213,7 @@ func (r *Rule941) doEvaluate(tx *core.Transaction, value *string) bool {
 		tx.Variables.TransMap["referer_941"] = append(tx.Variables.TransMap["referer_941"], r.transform(&referer))
 	}
 
-	return true
+	return false
 }
 
 func (r *Rule941) transform(value *string) string {
