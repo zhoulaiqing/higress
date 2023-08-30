@@ -151,16 +151,21 @@ func (ctx *httpContext) OnHttpRequestBody(bodySize int, endOfStream bool) types.
 		return types.ActionContinue
 	}
 
-	tx := ctx.tx
+	//tx := ctx.tx
+	//
+	//if bodySize > 0 {
+	//	b, err := proxywasm.GetHttpRequestBody(ctx.bodyReadIndex, bodySize)
+	//	if err == nil {
+	//
+	//		ctx.bodyReadIndex += bodySize
+	//	}
+	//}
 
-	if bodySize > 0 {
-		b, err := proxywasm.GetHttpRequestBody(ctx.bodyReadIndex, bodySize)
-		if err == nil {
-
-		} else {
-
-		}
+	if endOfStream {
+		ctx.bodyReadIndex = 0
 	}
+
+	return types.ActionPause
 }
 
 // retrieveAddressInfo retrieves address properties from the proxy
