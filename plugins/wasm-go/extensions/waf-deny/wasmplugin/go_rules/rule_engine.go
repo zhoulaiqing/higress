@@ -1,6 +1,8 @@
 package go_rules
 
 import (
+	"context"
+	"fmt"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_920"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_932"
@@ -12,6 +14,7 @@ import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_944"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
+	"sync"
 )
 
 var (
@@ -52,6 +55,8 @@ var (
 		&rule_944.Rule944150{},
 		&RuleFinal{},
 	}
+	rule941 = &rule_941.Rule941{}
+	rule942 = &rule_942.Rule942{}
 )
 
 type RuleEngine struct {
@@ -62,7 +67,19 @@ func ProcessRequestHeaderRules(tx *core.Transaction) bool {
 }
 
 func ProcessRequestBodyRules(tx *core.Transaction) bool {
-	return ProcessRulesByPhase(tx, 2)
+
+	rule941.Evaluate(tx)
+	rule942.Evaluate(tx)
+
+	var phase2Rules []Rule
+
+	for _, rule := range RULES {
+		if rule.Phase() == 2 {
+			phase2Rules = append(phase2Rules, rule)
+		}
+	}
+
+	return processRulesPhase2(tx, phase2Rules)
 }
 
 func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
@@ -84,4 +101,54 @@ func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
 	}
 
 	return true
+}
+
+func worker(ctx context.Context, wg *sync.WaitGroup, tx *core.Transaction, rule Rule) int {
+	defer wg.Done()
+
+	result := rule.Evaluate(tx)
+
+	select {
+	case <-ctx.Done():
+		return rule_tasks.PASS
+	default:
+		return result
+	}
+}
+
+func processRulesPhase2(tx *core.Transaction, rules []Rule) bool {
+	// 创建一个取消的上下文
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	var wg sync.WaitGroup
+	numWorkers := 5
+
+	results := make(chan int, numWorkers)
+
+	for _, rule := range rules {
+		wg.Add(1)
+		go func(r Rule) {
+			defer wg.Done()
+			results <- worker(ctx, &wg, tx, r)
+		}(rule)
+	}
+
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
+
+	res := true
+	// 检查每个结果，如果有一个为 false，则取消所有 goroutine
+	for result := range results {
+		if result == rule_tasks.BLOCK {
+			cancel()
+			res = false
+			break
+		}
+	}
+
+	fmt.Println("All workers finished")
+	return res
 }

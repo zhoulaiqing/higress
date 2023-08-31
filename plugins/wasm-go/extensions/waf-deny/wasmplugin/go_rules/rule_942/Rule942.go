@@ -48,6 +48,9 @@ func (r *Rule942) Phase() int {
 }
 
 func (r *Rule942) Evaluate(tx *core.Transaction) int {
+	emptyString := ""
+	r.doEvaluate(tx, &emptyString)
+
 	return rule_tasks.PASS
 }
 
