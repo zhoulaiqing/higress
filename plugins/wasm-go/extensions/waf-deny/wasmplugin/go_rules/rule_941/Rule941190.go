@@ -13,8 +13,8 @@ func (r *Rule941190) Id() string {
 	return "941190"
 }
 
-func (r *Rule941190) GetAddition() *Rule941Addition {
-	return fileNameAddition
+func (r *Rule941190) Evaluate(tx *core.Transaction) int {
+	return r.evaluateByCache(tx, r.doEvaluate, fileNameAddition)
 }
 
 func (r *Rule941190) doEvaluate(tx *core.Transaction, value *string) bool {

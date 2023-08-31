@@ -48,22 +48,24 @@ func (r *Rule942) Phase() int {
 }
 
 func (r *Rule942) Evaluate(tx *core.Transaction) int {
-	return r.evaluateByCache(tx)
+	return rule_tasks.PASS
 }
 
 func (r *Rule942) GetAddition() *Rule942Addition {
 	return noAddition942
 }
 
-func (r *Rule942) evaluateByCache(tx *core.Transaction) int {
+type doEvaluateFunc func(*core.Transaction, *string) bool
+
+func (r *Rule942) evaluateByCache(tx *core.Transaction, evaluateFunc doEvaluateFunc, addition *Rule942Addition) int {
 	cookieKeyCache := tx.Variables.TransMap["cookie_key_942"]
 	cookieValueCache := tx.Variables.TransMap["cookie_value_942"]
 	for i, _ := range cookieKeyCache {
-		if r.doEvaluate(tx, &cookieKeyCache[i]) {
+		if evaluateFunc(tx, &cookieKeyCache[i]) {
 			return rule_tasks.BLOCK
 		}
 
-		if r.doEvaluate(tx, &cookieValueCache[i]) {
+		if evaluateFunc(tx, &cookieValueCache[i]) {
 			return rule_tasks.BLOCK
 		}
 	}
@@ -71,47 +73,46 @@ func (r *Rule942) evaluateByCache(tx *core.Transaction) int {
 	argsKeyCache := tx.Variables.TransMap["arg_key_942"]
 	argsValueCache := tx.Variables.TransMap["arg_value_942"]
 	for i, _ := range argsKeyCache {
-		if r.doEvaluate(tx, &argsKeyCache[i]) {
+		if evaluateFunc(tx, &argsKeyCache[i]) {
 			return rule_tasks.BLOCK
 		}
 
-		if r.doEvaluate(tx, &argsValueCache[i]) {
+		if evaluateFunc(tx, &argsValueCache[i]) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	xmlCache := tx.Variables.TransMap["xml_942"]
 	for i, _ := range xmlCache {
-		if r.doEvaluate(tx, &xmlCache[i]) {
+		if evaluateFunc(tx, &xmlCache[i]) {
 			return rule_tasks.BLOCK
 		}
 	}
 
-	addition := r.GetAddition()
 	if addition.validateFileName {
 		fileNameCache := tx.Variables.TransMap["file_name_942"]
-		if len(fileNameCache) > 0 && r.doEvaluate(tx, &fileNameCache[0]) {
+		if len(fileNameCache) > 0 && evaluateFunc(tx, &fileNameCache[0]) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	if addition.validateReferer {
 		refererCache := tx.Variables.TransMap["referer_942"]
-		if len(refererCache) > 0 && r.doEvaluate(tx, &refererCache[0]) {
+		if len(refererCache) > 0 && evaluateFunc(tx, &refererCache[0]) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	if addition.validateUserAgent {
 		uaCache := tx.Variables.TransMap["ua_942"]
-		if len(uaCache) > 0 && r.doEvaluate(tx, &uaCache[0]) {
+		if len(uaCache) > 0 && evaluateFunc(tx, &uaCache[0]) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	if addition.validateBaseName {
 		bnCache := tx.Variables.TransMap["base_name_942"]
-		if len(bnCache) > 0 && r.doEvaluate(tx, &bnCache[0]) {
+		if len(bnCache) > 0 && evaluateFunc(tx, &bnCache[0]) {
 			return rule_tasks.BLOCK
 		}
 	}
@@ -119,62 +120,61 @@ func (r *Rule942) evaluateByCache(tx *core.Transaction) int {
 	return rule_tasks.PASS
 }
 
-func (r *Rule942) evaluateRawValue(tx *core.Transaction) int {
+func (r *Rule942) evaluateRawValue(tx *core.Transaction, evaluateFunc doEvaluateFunc, addition *Rule942Addition) int {
 	for k, v := range tx.Variables.RequestCookies {
 		if strings.Contains(k, "__utm") {
 			continue
 		}
 
-		if r.doEvaluate(tx, &k) {
+		if evaluateFunc(tx, &k) {
 			return rule_tasks.BLOCK
 		}
 
-		if r.doEvaluate(tx, &v) {
+		if evaluateFunc(tx, &v) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	for _, argMap := range tx.Variables.Args {
 		for k, v := range *argMap {
-			if r.doEvaluate(tx, &k) {
+			if evaluateFunc(tx, &k) {
 				return rule_tasks.BLOCK
 			}
 
-			if r.doEvaluate(tx, &v) {
+			if evaluateFunc(tx, &v) {
 				return rule_tasks.BLOCK
 			}
 		}
 	}
 
 	for _, v := range tx.Variables.XML["/*"] {
-		if r.doEvaluate(tx, &v) {
+		if evaluateFunc(tx, &v) {
 			return rule_tasks.BLOCK
 		}
 	}
 
-	addition := r.GetAddition()
 	if addition.validateFileName {
-		if r.doEvaluate(tx, &tx.Variables.RequestFileName) {
+		if evaluateFunc(tx, &tx.Variables.RequestFileName) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	if addition.validateReferer {
 		referer := tx.Variables.RequestHeaders["referer"]
-		if r.doEvaluate(tx, &referer) {
+		if evaluateFunc(tx, &referer) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	if addition.validateUserAgent {
 		ua := tx.Variables.RequestHeaders["user-agent"]
-		if r.doEvaluate(tx, &ua) {
+		if evaluateFunc(tx, &ua) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	if addition.validateBaseName {
-		if r.doEvaluate(tx, &tx.Variables.RequestBaseName) {
+		if evaluateFunc(tx, &tx.Variables.RequestBaseName) {
 			return rule_tasks.BLOCK
 		}
 	}

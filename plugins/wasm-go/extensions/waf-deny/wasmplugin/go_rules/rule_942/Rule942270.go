@@ -13,6 +13,10 @@ func (r *Rule942270) Id() string {
 	return "942270"
 }
 
+func (r *Rule942270) Evaluate(tx *core.Transaction) int {
+	return r.evaluateRawValue(tx, r.doEvaluate, noAddition942)
+}
+
 func (r *Rule942270) doEvaluate(tx *core.Transaction, value *string) bool {
 	m := rule_tasks.Re942270.MatchString(*value)
 

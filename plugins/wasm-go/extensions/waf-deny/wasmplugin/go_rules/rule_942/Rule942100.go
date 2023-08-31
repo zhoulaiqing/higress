@@ -15,15 +15,14 @@ func (r *Rule942100) Id() string {
 }
 
 func (r *Rule942100) Evaluate(tx *core.Transaction) int {
-	return r.evaluateRawValue(tx)
-}
-
-func (r *Rule942100) GetAddition() *Rule942Addition {
-	return additionWithHeader
+	return r.evaluateRawValue(tx, r.doEvaluate, additionWithHeader)
 }
 
 // This is multiMatch
 func (r *Rule942100) doEvaluate(tx *core.Transaction, value *string) bool {
+	// 初始化缓存
+	emptyString := ""
+	r.Rule942.doEvaluate(tx, &emptyString)
 
 	m, _ := libinjection.IsSQLi(*value)
 	if m {

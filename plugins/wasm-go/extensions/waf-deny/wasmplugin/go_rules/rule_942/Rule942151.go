@@ -14,8 +14,8 @@ func (r *Rule942151) Id() string {
 	return "942151"
 }
 
-func (r *Rule942151) GetAddition() *Rule942Addition {
-	return noAddition942
+func (r *Rule942151) Evaluate(tx *core.Transaction) int {
+	return r.evaluateRawValue(tx, r.doEvaluate, noAddition942)
 }
 
 func (r *Rule942151) doEvaluate(tx *core.Transaction, value *string) bool {

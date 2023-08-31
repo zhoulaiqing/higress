@@ -49,22 +49,22 @@ func (r *Rule941) Phase() int {
 }
 
 func (r *Rule941) Evaluate(tx *core.Transaction) int {
-	return r.evaluateByCache(tx)
+	val := ""
+	_ = r.doEvaluate(tx, &val)
+	return rule_tasks.PASS
 }
 
-func (r *Rule941) GetAddition() *Rule941Addition {
-	return noAddition941
-}
+type doEvaluateFunc func(*core.Transaction, *string) bool
 
-func (r *Rule941) evaluateByCache(tx *core.Transaction) int {
+func (r *Rule941) evaluateByCache(tx *core.Transaction, evaluateFunc doEvaluateFunc, addition *Rule941Addition) int {
 	cookieKeyCache := tx.Variables.TransMap["cookie_key_941"]
 	cookieValueCache := tx.Variables.TransMap["cookie_value_941"]
 	for i, _ := range cookieKeyCache {
-		if r.doEvaluate(tx, &cookieKeyCache[i]) {
+		if evaluateFunc(tx, &cookieKeyCache[i]) {
 			return rule_tasks.BLOCK
 		}
 
-		if r.doEvaluate(tx, &cookieValueCache[i]) {
+		if evaluateFunc(tx, &cookieValueCache[i]) {
 			return rule_tasks.BLOCK
 		}
 	}
@@ -72,40 +72,39 @@ func (r *Rule941) evaluateByCache(tx *core.Transaction) int {
 	argsKeyCache := tx.Variables.TransMap["arg_key_941"]
 	argsValueCache := tx.Variables.TransMap["arg_value_941"]
 	for i, _ := range argsKeyCache {
-		if r.doEvaluate(tx, &argsKeyCache[i]) {
+		if evaluateFunc(tx, &argsKeyCache[i]) {
 			return rule_tasks.BLOCK
 		}
 
-		if r.doEvaluate(tx, &argsValueCache[i]) {
+		if evaluateFunc(tx, &argsValueCache[i]) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	xmlCache := tx.Variables.TransMap["xml_941"]
 	for i, _ := range xmlCache {
-		if r.doEvaluate(tx, &xmlCache[i]) {
+		if evaluateFunc(tx, &xmlCache[i]) {
 			return rule_tasks.BLOCK
 		}
 	}
 
-	addition := r.GetAddition()
 	if addition.validateFileName {
 		fileNameCache := tx.Variables.TransMap["file_name_941"]
-		if len(fileNameCache) > 0 && r.doEvaluate(tx, &fileNameCache[0]) {
+		if len(fileNameCache) > 0 && evaluateFunc(tx, &fileNameCache[0]) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	if addition.validateReferer {
 		refererCache := tx.Variables.TransMap["referer_941"]
-		if len(refererCache) > 0 && r.doEvaluate(tx, &refererCache[0]) {
+		if len(refererCache) > 0 && evaluateFunc(tx, &refererCache[0]) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	if addition.validateUserAgent {
 		uaCache := tx.Variables.TransMap["ua_941"]
-		if len(uaCache) > 0 && r.doEvaluate(tx, &uaCache[0]) {
+		if len(uaCache) > 0 && evaluateFunc(tx, &uaCache[0]) {
 			return rule_tasks.BLOCK
 		}
 	}
@@ -113,18 +112,18 @@ func (r *Rule941) evaluateByCache(tx *core.Transaction) int {
 	return rule_tasks.PASS
 }
 
-func (r *Rule941) evaluateRawValue(tx *core.Transaction) int {
+func (r *Rule941) evaluateRawValue(tx *core.Transaction, evaluateFunc doEvaluateFunc, addition *Rule941Addition) int {
 	proxywasm.LogInfo(r.Id())
 	for k, v := range tx.Variables.RequestCookies {
 		if strings.Contains(k, "__utm") {
 			continue
 		}
 		proxywasm.LogInfof("cookie key: %s", k)
-		if r.doEvaluate(tx, &k) {
+		if evaluateFunc(tx, &k) {
 			return rule_tasks.BLOCK
 		}
 		proxywasm.LogInfof("cookie value: %s", v)
-		if r.doEvaluate(tx, &v) {
+		if evaluateFunc(tx, &v) {
 			return rule_tasks.BLOCK
 		}
 	}
@@ -132,12 +131,12 @@ func (r *Rule941) evaluateRawValue(tx *core.Transaction) int {
 	for _, argMap := range tx.Variables.Args {
 		for k, v := range *argMap {
 			proxywasm.LogInfof("arg key: %s", k)
-			if r.doEvaluate(tx, &k) {
+			if evaluateFunc(tx, &k) {
 				return rule_tasks.BLOCK
 			}
 
 			proxywasm.LogInfof("arg value: %s", v)
-			if r.doEvaluate(tx, &v) {
+			if evaluateFunc(tx, &v) {
 				return rule_tasks.BLOCK
 			}
 		}
@@ -145,29 +144,28 @@ func (r *Rule941) evaluateRawValue(tx *core.Transaction) int {
 
 	for _, v := range tx.Variables.XML["/*"] {
 		proxywasm.LogInfof("xml v: %s", v)
-		if r.doEvaluate(tx, &v) {
+		if evaluateFunc(tx, &v) {
 			return rule_tasks.BLOCK
 		}
 	}
 
-	addition := r.GetAddition()
 	if addition.validateFileName && !tx.Variables.Skip941ForFileName {
 		proxywasm.LogInfof("file name v: %s", tx.Variables.RequestFileName)
-		if r.doEvaluate(tx, &tx.Variables.RequestFileName) {
+		if evaluateFunc(tx, &tx.Variables.RequestFileName) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	if addition.validateReferer {
 		referer := tx.Variables.RequestHeaders["referer"]
-		if r.doEvaluate(tx, &referer) {
+		if evaluateFunc(tx, &referer) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	if addition.validateUserAgent {
 		ua := tx.Variables.RequestHeaders["user-agent"]
-		if r.doEvaluate(tx, &ua) {
+		if evaluateFunc(tx, &ua) {
 			return rule_tasks.BLOCK
 		}
 	}
@@ -177,7 +175,7 @@ func (r *Rule941) evaluateRawValue(tx *core.Transaction) int {
 
 func (r *Rule941) doEvaluate(tx *core.Transaction, value *string) bool {
 
-	proxywasm.LogInfof("Rule941 do evaluate")
+	proxywasm.LogInfof("Rule941 load caches.")
 
 	// 一次加载全部，因此拿一个key来判断即可（这里以 cookie_key_941 为判断依据）
 	_, ok := tx.Variables.TransMap["cookie_key_941"]

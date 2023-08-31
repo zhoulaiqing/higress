@@ -14,11 +14,7 @@ func (r *Rule941360) Id() string {
 }
 
 func (r *Rule941360) Evaluate(tx *core.Transaction) int {
-	return r.evaluateRawValue(tx)
-}
-
-func (r *Rule941360) GetAddition() *Rule941Addition {
-	return fileNameAddition
+	return r.evaluateRawValue(tx, r.doEvaluate, fileNameAddition)
 }
 
 func (r *Rule941360) doEvaluate(tx *core.Transaction, value *string) bool {

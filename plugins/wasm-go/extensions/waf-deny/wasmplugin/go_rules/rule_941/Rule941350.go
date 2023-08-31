@@ -15,12 +15,7 @@ func (r *Rule941350) Id() string {
 }
 
 func (r *Rule941350) Evaluate(tx *core.Transaction) int {
-	// 注意这里和 doEvaluate 的冲突
-	return r.evaluateRawValue(tx)
-}
-
-func (r *Rule941350) GetAddition() *Rule941Addition {
-	return fileNameAddition
+	return r.Rule941.evaluateRawValue(tx, r.doEvaluate, fileNameAddition)
 }
 
 func (r *Rule941350) doEvaluate(tx *core.Transaction, value *string) bool {

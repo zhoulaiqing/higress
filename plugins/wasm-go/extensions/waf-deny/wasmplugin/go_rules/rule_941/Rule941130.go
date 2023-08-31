@@ -12,9 +12,8 @@ type Rule941130 struct {
 func (r *Rule941130) Id() string {
 	return "941130"
 }
-
-func (r *Rule941130) GetAddition() *Rule941Addition {
-	return additionWithoutReferer
+func (r *Rule941130) Evaluate(tx *core.Transaction) int {
+	return r.evaluateByCache(tx, r.doEvaluate, additionWithoutReferer)
 }
 
 func (r *Rule941130) doEvaluate(tx *core.Transaction, value *string) bool {
