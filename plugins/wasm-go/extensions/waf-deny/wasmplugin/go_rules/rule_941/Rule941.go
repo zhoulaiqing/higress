@@ -113,16 +113,16 @@ func (r *Rule941) evaluateByCache(tx *core.Transaction, evaluateFunc doEvaluateF
 }
 
 func (r *Rule941) evaluateRawValue(tx *core.Transaction, evaluateFunc doEvaluateFunc, addition *Rule941Addition) int {
-	proxywasm.LogInfo(r.Id())
+	//proxywasm.LogInfo(r.Id())
 	for k, v := range tx.Variables.RequestCookies {
 		if strings.Contains(k, "__utm") {
 			continue
 		}
-		proxywasm.LogInfof("cookie key: %s", k)
+		//proxywasm.LogInfof("cookie key: %s", k)
 		if evaluateFunc(tx, &k) {
 			return rule_tasks.BLOCK
 		}
-		proxywasm.LogInfof("cookie value: %s", v)
+		//proxywasm.LogInfof("cookie value: %s", v)
 		if evaluateFunc(tx, &v) {
 			return rule_tasks.BLOCK
 		}
@@ -130,12 +130,12 @@ func (r *Rule941) evaluateRawValue(tx *core.Transaction, evaluateFunc doEvaluate
 
 	for _, argMap := range tx.Variables.Args {
 		for k, v := range *argMap {
-			proxywasm.LogInfof("arg key: %s", k)
+			//proxywasm.LogInfof("arg key: %s", k)
 			if evaluateFunc(tx, &k) {
 				return rule_tasks.BLOCK
 			}
 
-			proxywasm.LogInfof("arg value: %s", v)
+			//proxywasm.LogInfof("arg value: %s", v)
 			if evaluateFunc(tx, &v) {
 				return rule_tasks.BLOCK
 			}
@@ -143,14 +143,14 @@ func (r *Rule941) evaluateRawValue(tx *core.Transaction, evaluateFunc doEvaluate
 	}
 
 	for _, v := range tx.Variables.XML["/*"] {
-		proxywasm.LogInfof("xml v: %s", v)
+		//proxywasm.LogInfof("xml v: %s", v)
 		if evaluateFunc(tx, &v) {
 			return rule_tasks.BLOCK
 		}
 	}
 
 	if addition.validateFileName && !tx.Variables.Skip941ForFileName {
-		proxywasm.LogInfof("file name v: %s", tx.Variables.RequestFileName)
+		//proxywasm.LogInfof("file name v: %s", tx.Variables.RequestFileName)
 		if evaluateFunc(tx, &tx.Variables.RequestFileName) {
 			return rule_tasks.BLOCK
 		}
