@@ -15,6 +15,7 @@ const (
 	EARLY_BLOCKING                   = 0
 	BLOCKING_PARANONIA_LEVEL         = 1
 	CRITICAL_ANOMALY_SCORE           = 5
+	ERROR_ANOMALY_SCORE              = 4
 	WARNING_ANOMALY_SCORE            = 3
 	NOTICE_ANOMALY_SCORE             = 2
 	ENFORCE_BODYPROC_URLENCODED      = 0
