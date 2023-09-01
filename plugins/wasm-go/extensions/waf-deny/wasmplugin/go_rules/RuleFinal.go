@@ -26,6 +26,9 @@ func (r *RuleFinal) Evaluate(tx *core.Transaction) int {
 	if tx.Variables.InboundAnomalyScorePl1 >= rule_tasks.INBOUND_ANOMALY_SCORE_THRESHOLD {
 		return rule_tasks.DENY
 	}
+	if tx.Variables.OutboundAnomalyScorePl1 >= rule_tasks.OUTBOUND_ANOMALY_SCORE_THRESHOLD {
+		return rule_tasks.DENY
+	}
 
 	return rule_tasks.PASS
 }
