@@ -59,6 +59,7 @@ type TransactionVariables struct {
 	MultipartPartHeaders map[string][]string
 	ResponseArgs         map[string]string
 	FilesCombinedSize    string
+	ResponseBody         string
 
 	Skip941ForFileName bool
 	TransMap           map[string][]string
