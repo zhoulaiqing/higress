@@ -60,6 +60,7 @@ type TransactionVariables struct {
 	ResponseArgs         map[string]string
 	FilesCombinedSize    string
 	ResponseBody         string
+	ResponseStatus       int
 
 	Skip941ForFileName bool
 	Skip951            bool
