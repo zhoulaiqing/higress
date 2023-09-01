@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/url_util"
+	"io"
 	"math"
 	"net/url"
 	"strconv"
@@ -11,9 +12,10 @@ import (
 )
 
 type Transaction struct {
-	id                string
-	RequestBodyBuffer *BodyBuffer
-	Variables         TransactionVariables
+	id                 string
+	Variables          TransactionVariables
+	RequestBodyBuffer  *BodyBuffer
+	ResponseBodyBuffer *BodyBuffer
 }
 
 func NewTransaction() Transaction {
@@ -30,7 +32,7 @@ func NewTransaction() Transaction {
 	variables.Args = append(variables.Args, &variables.ArgsGet, &variables.ArgsPost, &variables.ArgsPath)
 	variables.TransMap = make(map[string][]string)
 
-	return Transaction{id: id, Variables: variables, RequestBodyBuffer: NewBodyBuffer()}
+	return Transaction{id: id, Variables: variables, RequestBodyBuffer: NewBodyBuffer(), ResponseBodyBuffer: NewBodyBuffer()}
 }
 
 type TransactionVariables struct {
@@ -60,6 +62,7 @@ type TransactionVariables struct {
 	ResponseArgs         map[string]string
 	FilesCombinedSize    string
 	ResponseBody         string
+	ResBodyProcessor     string
 	ResponseStatus       int
 
 	Skip941ForFileName bool
@@ -213,6 +216,20 @@ func (tx *Transaction) WriteRequestBody(b []byte) (bool, int, error) {
 	return true, int(w), err
 }
 
+func (tx *Transaction) WriteResponseBody(b []byte) (bool, int, error) {
+	writingBytes := int64(len(b))
+	if tx.ResponseBodyBuffer.length >= (math.MaxInt64 - writingBytes) {
+		return false, 0, errors.New("overflow reached while writing response body")
+	}
+
+	w, err := tx.ResponseBodyBuffer.Write(b[:writingBytes])
+	if err != nil {
+		return false, 0, err
+	}
+
+	return true, int(w), err
+}
+
 func (tx *Transaction) ProcessRequestHeaders() bool {
 	return true
 }
@@ -251,8 +268,31 @@ func (tx *Transaction) ProcessResponseHeader() bool {
 	return false
 }
 
-func (tx *Transaction) ProcessResponseBody() bool {
-	return false
+func (tx *Transaction) ProcessResponseBody() (bool, error) {
+
+	reader, err := tx.ResponseBodyBuffer.Reader()
+	if err != nil {
+		return false, err
+	}
+	rbp := strings.ToLower(tx.Variables.ResBodyProcessor)
+	if len(rbp) > 0 {
+		bodyprocessor, err := GetBodyProcessor(rbp)
+		if err != nil {
+			return false, errors.New("invalid body processor")
+		}
+		if err := bodyprocessor.ProcessResponse(reader, tx, ""); err != nil {
+			return false, errors.New("failed to process response body")
+		}
+	} else {
+		buf := new(strings.Builder)
+		_, err := io.Copy(buf, reader)
+		if err != nil {
+			return false, err
+		}
+		tx.Variables.ResponseBody = buf.String()
+	}
+
+	return true, nil
 }
 
 func (tx *Transaction) CaptureField(idx int, value string) {

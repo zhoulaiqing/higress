@@ -129,7 +129,7 @@ func (ctx *httpContext) OnHttpRequestHeaders(numHeaders int, endOfStream bool) t
 	}
 
 	for _, h := range hs {
-		proxywasm.LogInfof("Add Header, header key: %s, value: %s", h[0], h[1])
+		proxywasm.LogInfof("Add Request Header, header key: %s, value: %s", h[0], h[1])
 		ctx.tx.AddRequestHeader(strings.ToLower(h[0]), h[1])
 	}
 
@@ -153,7 +153,7 @@ func (ctx *httpContext) OnHttpRequestBody(bodySize int, endOfStream bool) types.
 		if err == nil {
 			r, _, _ := tx.WriteRequestBody(b)
 			if !r {
-				proxywasm.LogError("Failed to write response body")
+				proxywasm.LogError("Failed to write request body")
 				return types.ActionContinue
 			}
 			ctx.bodyReadIndex += bodySize
@@ -164,7 +164,7 @@ func (ctx *httpContext) OnHttpRequestBody(bodySize int, endOfStream bool) types.
 		ctx.bodyReadIndex = 0
 		r, _ := tx.ProcessRequestBody()
 		if !r {
-			proxywasm.LogError("Failed to write process body")
+			proxywasm.LogError("Failed to process request body")
 		}
 		res := go_rules.ProcessRequestBodyRules(&ctx.tx)
 		if !res {
@@ -176,6 +176,59 @@ func (ctx *httpContext) OnHttpRequestBody(bodySize int, endOfStream bool) types.
 
 	return types.ActionPause
 }
+
+//
+//func (ctx *httpContext) OnHttpResponseHeaders(numHeaders int, endOfStream bool) types.Action {
+//	if ctx.tx.Variables.Interrupted {
+//		return types.ActionContinue
+//	}
+//
+//	status, err := proxywasm.GetHttpResponseHeader(":status")
+//	if err != nil {
+//		return types.ActionContinue
+//	}
+//
+//	code, err := strconv.Atoi(status)
+//	if err != nil {
+//		return types.ActionContinue
+//	}
+//
+//	ctx.tx.Variables.ResponseStatus = code
+//	// 目前暂时没有配置 Phase = 3 的规则，就不跑规则了
+//	return types.ActionContinue
+//}
+//
+//func (ctx *httpContext) OnHttpResponseBody(bodySize int, endOfStream bool) types.Action {
+//	if ctx.tx.Variables.Interrupted {
+//		return types.ActionContinue
+//	}
+//
+//	if bodySize > 0 {
+//		body, err := proxywasm.GetHttpResponseBody(ctx.bodyReadIndex, bodySize)
+//		if err == nil {
+//			r, _, _ := ctx.tx.WriteResponseBody(body)
+//			if !r {
+//				proxywasm.LogError("Failed to write response body")
+//				return types.ActionContinue
+//			}
+//			ctx.bodyReadIndex += bodySize
+//		}
+//	}
+//
+//	if endOfStream {
+//		ctx.bodyReadIndex = 0
+//		r, _ := ctx.tx.ProcessResponseBody()
+//		if !r {
+//			proxywasm.LogError("Failed to process response body")
+//		}
+//		res := go_rules.ProcessResponseBodyRules(&ctx.tx)
+//		if !res {
+//			_ = proxywasm.SendHttpResponse(403, nil, []byte("denied by waf"), -1)
+//		}
+//	}
+//
+//	return types.ActionContinue
+//}
 
 func (ctx *httpContext) OnHttpStreamDone() {
 	_ = ctx.tx.Close()

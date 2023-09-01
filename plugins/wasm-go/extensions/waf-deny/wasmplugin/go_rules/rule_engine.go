@@ -10,12 +10,6 @@ import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_942"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_943"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_944"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_950"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_951"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_952"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_953"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_954"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_955"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 )
@@ -56,19 +50,19 @@ var (
 		&rule_943.Rule943100{}, &rule_943.Rule943110_120{},
 		&rule_944.Rule944100{}, &rule_944.Rule944110{}, &rule_944.Rule944120{}, &rule_944.Rule944130{}, &rule_944.Rule944140{},
 		&rule_944.Rule944150{},
-		&rule_950.Rule950130{}, &rule_950.Rule950140{},
-		&rule_951.Rule951100{}, &rule_951.Rule951110{}, &rule_951.Rule951120{}, &rule_951.Rule951130{}, &rule_951.Rule951140{},
-		&rule_951.Rule951150{}, &rule_951.Rule951160{}, &rule_951.Rule951170{}, &rule_951.Rule951180{}, &rule_951.Rule951190{},
-		&rule_951.Rule951200{}, &rule_951.Rule951210{}, &rule_951.Rule951220{}, &rule_951.Rule951230{}, &rule_951.Rule951240{},
-		&rule_951.Rule951250{}, &rule_951.Rule951260{},
-		&rule_952.Rule952100{}, &rule_952.Rule952110{},
-		&rule_953.Rule953100{}, &rule_953.Rule953110{}, &rule_953.Rule953120{},
-		&rule_954.Rule954100{}, &rule_954.Rule954110{}, &rule_954.Rule954120{}, &rule_954.Rule954130{},
-		&rule_955.Rule955100{}, &rule_955.Rule955110{}, &rule_955.Rule955120{}, &rule_955.Rule955130{}, &rule_955.Rule955140{},
-		&rule_955.Rule955150{}, &rule_955.Rule955160{}, &rule_955.Rule955170{}, &rule_955.Rule955180{}, &rule_955.Rule955190{},
-		&rule_955.Rule955200{}, &rule_955.Rule955210{}, &rule_955.Rule955220{}, &rule_955.Rule955230{}, &rule_955.Rule955240{},
-		&rule_955.Rule955250{}, &rule_955.Rule955260{}, &rule_955.Rule955270{}, &rule_955.Rule955280{}, &rule_955.Rule955290{},
-		&rule_955.Rule955300{}, &rule_955.Rule955310{}, &rule_955.Rule955320{}, &rule_955.Rule955330{}, &rule_955.Rule955340{},
+		//&rule_950.Rule950130{}, &rule_950.Rule950140{},
+		//&rule_951.Rule951100{}, &rule_951.Rule951110{}, &rule_951.Rule951120{}, &rule_951.Rule951130{}, &rule_951.Rule951140{},
+		//&rule_951.Rule951150{}, &rule_951.Rule951160{}, &rule_951.Rule951170{}, &rule_951.Rule951180{}, &rule_951.Rule951190{},
+		//&rule_951.Rule951200{}, &rule_951.Rule951210{}, &rule_951.Rule951220{}, &rule_951.Rule951230{}, &rule_951.Rule951240{},
+		//&rule_951.Rule951250{}, &rule_951.Rule951260{},
+		//&rule_952.Rule952100{}, &rule_952.Rule952110{},
+		//&rule_953.Rule953100{}, &rule_953.Rule953110{}, &rule_953.Rule953120{},
+		//&rule_954.Rule954100{}, &rule_954.Rule954110{}, &rule_954.Rule954120{}, &rule_954.Rule954130{},
+		//&rule_955.Rule955100{}, &rule_955.Rule955110{}, &rule_955.Rule955120{}, &rule_955.Rule955130{}, &rule_955.Rule955140{},
+		//&rule_955.Rule955150{}, &rule_955.Rule955160{}, &rule_955.Rule955170{}, &rule_955.Rule955180{}, &rule_955.Rule955190{},
+		//&rule_955.Rule955200{}, &rule_955.Rule955210{}, &rule_955.Rule955220{}, &rule_955.Rule955230{}, &rule_955.Rule955240{},
+		//&rule_955.Rule955250{}, &rule_955.Rule955260{}, &rule_955.Rule955270{}, &rule_955.Rule955280{}, &rule_955.Rule955290{},
+		//&rule_955.Rule955300{}, &rule_955.Rule955310{}, &rule_955.Rule955320{}, &rule_955.Rule955330{}, &rule_955.Rule955340{},
 		&RuleFinal{},
 	}
 )
@@ -82,6 +76,10 @@ func ProcessRequestHeaderRules(tx *core.Transaction) bool {
 
 func ProcessRequestBodyRules(tx *core.Transaction) bool {
 	return ProcessRulesByPhase(tx, 2)
+}
+
+func ProcessResponseBodyRules(tx *core.Transaction) bool {
+	return ProcessRulesByPhase(tx, 4)
 }
 
 func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
