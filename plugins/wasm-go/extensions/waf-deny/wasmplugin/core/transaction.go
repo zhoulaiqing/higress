@@ -62,6 +62,7 @@ type TransactionVariables struct {
 	ResponseBody         string
 
 	Skip941ForFileName bool
+	Skip951            bool
 	TransMap           map[string][]string
 	Interrupted        bool
 
