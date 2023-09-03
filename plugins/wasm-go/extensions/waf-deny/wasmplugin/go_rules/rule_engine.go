@@ -92,7 +92,7 @@ func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
 		if rule.Phase() == phase {
 			r := rule.Evaluate(tx)
 			if r == rule_tasks.BLOCK {
-				proxywasm.LogInfof("Blocked at Rule %q ", rule.Id())
+				proxywasm.LogInfof("Blocked at Rule %s ", rule.Id())
 				r = finalRule.Evaluate(tx)
 			}
 			if r == rule_tasks.DENY {

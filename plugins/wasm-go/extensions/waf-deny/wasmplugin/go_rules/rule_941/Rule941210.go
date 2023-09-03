@@ -19,7 +19,6 @@ func (r *Rule941210) Evaluate(tx *core.Transaction) int {
 
 func (r *Rule941210) doEvaluate(tx *core.Transaction, value *string) bool {
 	m := rule_tasks.Re941210.MatchString(*value)
-
 	if m {
 		tx.Variables.XssScore += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE

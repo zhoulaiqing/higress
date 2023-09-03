@@ -207,7 +207,9 @@ func Build() error {
 		}
 	}
 
-	if err := sh.RunV("tinygo", "build", "-gc=custom", "-opt=2", "-o", filepath.Join("build", "mainraw.wasm"), "-scheduler=none", "-target=wasi", buildTagArg); err != nil {
+	if err := sh.RunV("tinygo", "build", "-gc=custom", "-opt=2", "-o", filepath.Join("build", "mainraw.wasm"), "-scheduler=none",
+		//"-print-allocs=.",
+		"-target=wasi", buildTagArg); err != nil {
 		return err
 	}
 
