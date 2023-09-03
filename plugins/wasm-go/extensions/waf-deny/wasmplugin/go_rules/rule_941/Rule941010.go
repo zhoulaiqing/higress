@@ -22,8 +22,5 @@ func (r *Rule941010) Evaluate(tx *core.Transaction) int {
 		tx.Variables.Skip941ForFileName = true
 	}
 
-	// 临时逻辑：先将加载缓存的逻辑放在这里，后续根据需要调整
-	emptyString := ""
-	r.Rule941.doEvaluate(tx, &emptyString)
 	return rule_tasks.PASS
 }

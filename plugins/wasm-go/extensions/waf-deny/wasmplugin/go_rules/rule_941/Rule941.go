@@ -3,41 +3,15 @@ package rule_941
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/corazawaf/libinjection-go"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
+	"github.com/wasilibs/go-re2"
+	"golang.org/x/exp/slices"
+	"strconv"
 	"strings"
 )
 
 type Rule941 struct {
-}
-
-type Rule941Addition struct {
-	validateFileName  bool
-	validateUserAgent bool
-	validateReferer   bool
-}
-
-var noAddition941 = &Rule941Addition{
-	validateFileName:  false,
-	validateUserAgent: false,
-	validateReferer:   false,
-}
-
-var additionWithoutReferer = &Rule941Addition{
-	validateFileName:  true,
-	validateUserAgent: true,
-	validateReferer:   false,
-}
-
-var fullAddition = &Rule941Addition{
-	validateFileName:  true,
-	validateUserAgent: true,
-	validateReferer:   true,
-}
-
-var fileNameAddition = &Rule941Addition{
-	validateFileName:  true,
-	validateUserAgent: false,
-	validateReferer:   false,
 }
 
 func (r *Rule941) Id() string {
@@ -49,178 +23,210 @@ func (r *Rule941) Phase() int {
 }
 
 func (r *Rule941) Evaluate(tx *core.Transaction) int {
-	//val := ""
-	//_ = r.doEvaluate(tx, &val)
-	return rule_tasks.PASS
+	return r.evaluateAll(tx)
 }
 
-type doEvaluateFunc func(*core.Transaction, *string) bool
+func (r *Rule941) evaluateAll(tx *core.Transaction) int {
 
-func (r *Rule941) evaluateByCache(tx *core.Transaction, evaluateFunc doEvaluateFunc, addition *Rule941Addition) int {
-	cookieKeyCache := tx.Variables.TransMap["cookie_key_941"]
-	cookieValueCache := tx.Variables.TransMap["cookie_value_941"]
-	for i, _ := range cookieKeyCache {
-		if evaluateFunc(tx, &cookieKeyCache[i]) {
-			return rule_tasks.BLOCK
+	cookieLiteral, ok := tx.Variables.RequestHeaders["cookie"]
+
+	//proxywasm.LogInfof("cookie literal: %s", cookieLiteral)
+	if ok {
+		if r.matchValue(cookieLiteral, false) {
+			return r.block(tx)
 		}
 
-		if evaluateFunc(tx, &cookieValueCache[i]) {
-			return rule_tasks.BLOCK
-		}
-	}
+		for k, v := range tx.Variables.RequestCookies {
+			if strings.Contains(k, "__utm") {
+				continue
+			}
 
-	argsKeyCache := tx.Variables.TransMap["arg_key_941"]
-	argsValueCache := tx.Variables.TransMap["arg_value_941"]
-	for i, _ := range argsKeyCache {
-		if evaluateFunc(tx, &argsKeyCache[i]) {
-			return rule_tasks.BLOCK
-		}
+			//proxywasm.LogInfof("cookie key: %s", k)
 
-		if evaluateFunc(tx, &argsValueCache[i]) {
-			return rule_tasks.BLOCK
-		}
-	}
+			if r.matchValue(k, false) {
+				return r.block(tx)
+			}
 
-	xmlCache := tx.Variables.TransMap["xml_941"]
-	for i, _ := range xmlCache {
-		if evaluateFunc(tx, &xmlCache[i]) {
-			return rule_tasks.BLOCK
-		}
-	}
+			//proxywasm.LogInfof("cookie value: %s", v)
 
-	if addition.validateFileName {
-		fileNameCache := tx.Variables.TransMap["file_name_941"]
-		if len(fileNameCache) > 0 && evaluateFunc(tx, &fileNameCache[0]) {
-			return rule_tasks.BLOCK
-		}
-	}
-
-	if addition.validateReferer {
-		refererCache := tx.Variables.TransMap["referer_941"]
-		if len(refererCache) > 0 && evaluateFunc(tx, &refererCache[0]) {
-			return rule_tasks.BLOCK
-		}
-	}
-
-	if addition.validateUserAgent {
-		uaCache := tx.Variables.TransMap["ua_941"]
-		if len(uaCache) > 0 && evaluateFunc(tx, &uaCache[0]) {
-			return rule_tasks.BLOCK
-		}
-	}
-
-	return rule_tasks.PASS
-}
-
-func (r *Rule941) evaluateRawValue(tx *core.Transaction, evaluateFunc doEvaluateFunc, addition *Rule941Addition) int {
-	//proxywasm.LogInfo(r.Id())
-	for k, v := range tx.Variables.RequestCookies {
-		if strings.Contains(k, "__utm") {
-			continue
-		}
-		//proxywasm.LogInfof("cookie key: %s", k)
-		if evaluateFunc(tx, &k) {
-			return rule_tasks.BLOCK
-		}
-		//proxywasm.LogInfof("cookie value: %s", v)
-		if evaluateFunc(tx, &v) {
-			return rule_tasks.BLOCK
+			if r.matchValue(v, false) {
+				return r.block(tx)
+			}
 		}
 	}
 
 	for _, argMap := range tx.Variables.Args {
 		for k, v := range *argMap {
 			//proxywasm.LogInfof("arg key: %s", k)
-			if evaluateFunc(tx, &k) {
-				return rule_tasks.BLOCK
+
+			if r.matchValue(k, false) {
+				return r.block(tx)
 			}
 
 			//proxywasm.LogInfof("arg value: %s", v)
-			if evaluateFunc(tx, &v) {
-				return rule_tasks.BLOCK
+			if r.matchValue(v, false) {
+				return r.block(tx)
 			}
 		}
 	}
 
 	for _, v := range tx.Variables.XML["/*"] {
-		//proxywasm.LogInfof("xml v: %s", v)
-		if evaluateFunc(tx, &v) {
-			return rule_tasks.BLOCK
+
+		//proxywasm.LogInfof("xml value: %s", v)
+
+		if r.matchValue(v, false) {
+			return r.block(tx)
 		}
 	}
 
-	if addition.validateFileName && !tx.Variables.Skip941ForFileName {
-		//proxywasm.LogInfof("file name v: %s", tx.Variables.RequestFileName)
-		if evaluateFunc(tx, &tx.Variables.RequestFileName) {
-			return rule_tasks.BLOCK
+	if !tx.Variables.Skip941ForFileName {
+
+		//proxywasm.LogInfof("file name: %s", tx.Variables.RequestFileName)
+
+		if r.matchValue(tx.Variables.RequestFileName, false) {
+			return r.block(tx)
 		}
 	}
 
-	if addition.validateReferer {
-		referer := tx.Variables.RequestHeaders["referer"]
-		if evaluateFunc(tx, &referer) {
-			return rule_tasks.BLOCK
-		}
+	referer := tx.Variables.RequestHeaders["referer"]
+
+	//proxywasm.LogInfof("referer: %s", referer)
+	if r.matchValue(referer, true) {
+		return r.block(tx)
 	}
 
-	if addition.validateUserAgent {
-		ua := tx.Variables.RequestHeaders["user-agent"]
-		if evaluateFunc(tx, &ua) {
-			return rule_tasks.BLOCK
-		}
+	ua := tx.Variables.RequestHeaders["user-agent"]
+	//proxywasm.LogInfof("user agent: %s", ua)
+	if r.matchValue(ua, true) {
+		return r.block(tx)
 	}
 
 	return rule_tasks.PASS
 }
 
-func (r *Rule941) doEvaluate(tx *core.Transaction, value *string) bool {
+var headerRuleIds = []int{941110, 941130, 941140, 941160, 941170}
 
-	proxywasm.LogInfof("Rule941 load caches.")
+func (r *Rule941) block(tx *core.Transaction) int {
+	tx.Variables.XssScore += rule_tasks.CRITICAL_ANOMALY_SCORE
+	tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 
-	// 一次加载全部，因此拿一个key来判断即可（这里以 cookie_key_941 为判断依据）
-	_, ok := tx.Variables.TransMap["cookie_key_941"]
-	if ok {
+	return rule_tasks.BLOCK
+}
+
+func (r *Rule941) matchValue(value string, isHeader bool) bool {
+
+	if !isHeader && libinjection.IsXSS(value) {
 		return true
 	}
 
-	for k, v := range tx.Variables.RequestCookies {
-		if strings.Contains(k, "__utm") {
+	// pure value e.g. 941360
+	//fmt.Println("941360: " + value)
+	if m := rule_tasks.Re941360.MatchString(value); m {
+		proxywasm.LogInfof("Match 941360")
+		return true
+	}
+
+	// default transform 941110 - 941310
+	var Re941ForCacheMap = map[int]*re2.Regexp{
+		941110:  rule_tasks.Re941110,
+		941130:  rule_tasks.Re941130,
+		941140:  rule_tasks.Re941140,
+		941160:  rule_tasks.Re941160,
+		941170:  rule_tasks.Re941170,
+		941190:  rule_tasks.Re941190,
+		941200:  rule_tasks.Re941200,
+		941210:  rule_tasks.Re941210,
+		941220:  rule_tasks.Re941220,
+		941230:  rule_tasks.Re941230,
+		941240:  rule_tasks.Re941240,
+		941250:  rule_tasks.Re941250,
+		941260:  rule_tasks.Re941260,
+		941270:  rule_tasks.Re941270,
+		941280:  rule_tasks.Re941280,
+		941290:  rule_tasks.Re941290,
+		941300:  rule_tasks.Re941300,
+		9413101: rule_tasks.Re9413101,
+		9413102: rule_tasks.Re9413102,
+	}
+
+	v1 := r.transformDefault(value)
+	for k, re := range Re941ForCacheMap {
+		//fmt.Println(strconv.Itoa(k) + ": " + v1)
+		if isHeader && !slices.Contains(headerRuleIds, k) {
 			continue
 		}
-		tx.Variables.TransMap["cookie_key_941"] = append(tx.Variables.TransMap["cookie_key_941"], r.transform(&k))
-		tx.Variables.TransMap["cookie_value_941"] = append(tx.Variables.TransMap["cookie_value_941"], r.transform(&v))
-	}
 
-	for _, argMap := range tx.Variables.Args {
-		for k, v := range *argMap {
-			tx.Variables.TransMap["arg_key_941"] = append(tx.Variables.TransMap["cookie_key_941"], r.transform(&k))
-			tx.Variables.TransMap["arg_value_941"] = append(tx.Variables.TransMap["cookie_value_941"], r.transform(&v))
+		//fmt.Println(re)
+		if m := re.MatchString(v1); m {
+			proxywasm.LogInfof("Match %s", strconv.Itoa(k))
+			return true
 		}
 	}
 
-	for _, v := range tx.Variables.XML["/*"] {
-		tx.Variables.TransMap["xml_941"] = append(tx.Variables.TransMap["xml_941"], r.transform(&v))
+	if m, _ := core.PmEvaluate(rule_tasks.Rule941180Matcher, v1, false); m {
+		return true
 	}
-	tx.Variables.TransMap["file_name_941"] = append(tx.Variables.TransMap["file_name_941"], r.transform(&tx.Variables.RequestFileName))
-	ua, ok := tx.Variables.RequestHeaders["user-agent"]
-	if ok {
-		tx.Variables.TransMap["ua_941"] = append(tx.Variables.TransMap["ua_941"], r.transform(&ua))
+
+	// 941350
+	v2 := r.transform350(value)
+	//fmt.Println("941350: " + v2)
+	if m := rule_tasks.Re941350.MatchString(v2); m {
+		proxywasm.LogInfof("Match 941350")
+		return true
 	}
-	referer, ok := tx.Variables.RequestHeaders["referer"]
-	if ok {
-		tx.Variables.TransMap["referer_941"] = append(tx.Variables.TransMap["referer_941"], r.transform(&referer))
+
+	// 941370, 941400
+	v3 := r.transform370And400(value)
+	//fmt.Println("941370, 941400: " + v3)
+	if m := rule_tasks.Re941370.MatchString(v3); m {
+		proxywasm.LogInfof("Match 941370")
+		return true
+	}
+	if m := rule_tasks.Re941400.MatchString(v3); m {
+		proxywasm.LogInfof("Match 941400")
+		return true
+	}
+
+	// 941390
+	v4 := r.transform390(value)
+	//fmt.Println("941390: " + v4)
+	if m := rule_tasks.Re941390.MatchString(v4); m {
+		proxywasm.LogInfof("Match 941390")
+		return true
 	}
 
 	return false
 }
 
-func (r *Rule941) transform(value *string) string {
-	v, _, _ := core.Utf8ToUnicode(*value)
+func (r *Rule941) transformDefault(value string) string {
+	v, _, _ := core.Utf8ToUnicode(value)
 	v, _, _ = core.UrlDecodeUni(v)
 	v, _, _ = core.HtmlEntityDecode(v)
 	v, _, _ = core.JsDecode(v)
 	v, _, _ = core.CssDecode(v)
 	v, _, _ = core.RemoveNulls(v)
+
+	return v
+}
+
+func (r *Rule941) transform350(value string) string {
+	v, _, _ := core.UrlDecode(value)
+	v, _, _ = core.HtmlEntityDecode(v)
+	v, _, _ = core.JsDecode(v)
+
+	return v
+}
+
+func (r *Rule941) transform370And400(value string) string {
+	v, _, _ := core.UrlDecodeUni(value)
+	v, _, _ = core.CompressWhitespace(v)
+
+	return v
+}
+
+func (r *Rule941) transform390(value string) string {
+	v, _, _ := core.HtmlEntityDecode(value)
+	v, _, _ = core.JsDecode(v)
 
 	return v
 }

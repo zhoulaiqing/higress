@@ -38,7 +38,7 @@ var (
 		&rule_933.Rule933210{},
 		&rule_934.Rule934100{}, &rule_934.Rule934101{}, &rule_934.Rule934110{}, &rule_934.Rule934130{}, &rule_934.Rule934150{},
 		&rule_934.Rule934160{}, &rule_934.Rule934170{},
-		&rule_941.Rule941010{}, &rule_941.Rule941100{},
+		&rule_941.Rule941010{}, &rule_941.Rule941{},
 		&rule_941.Rule941110{}, &rule_941.Rule941130{}, &rule_941.Rule941140{},
 		&rule_941.Rule941160{}, &rule_941.Rule941170{}, &rule_941.Rule941180{}, &rule_941.Rule941190{}, &rule_941.Rule941200{},
 		&rule_941.Rule941210{}, &rule_941.Rule941220{}, &rule_941.Rule941230{}, &rule_941.Rule941240{}, &rule_941.Rule941250{},

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/url_util"
+	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 	"io"
 	"math"
 	"net/url"
@@ -113,6 +114,7 @@ func (tx *Transaction) AddRequestHeader(key string, value string) {
 		values := url_util.ParseQuery(value, ';')
 		for k, vr := range values {
 			for _, v := range vr {
+				proxywasm.LogInfof("Add cookie, header key: %s, value: %s", k, v)
 				tx.Variables.RequestCookies[k] = v
 			}
 		}
