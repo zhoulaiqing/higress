@@ -128,7 +128,7 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 
 	// default transform 941110 - 941310
 	var Re941ForCacheMap = map[int]*re2.Regexp{
-		941110:  rule_tasks.Re941110,
+		//941110:  rule_tasks.Re941110,
 		941130:  rule_tasks.Re941130,
 		941140:  rule_tasks.Re941140,
 		941160:  rule_tasks.Re941160,
@@ -150,6 +150,12 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 	}
 
 	v1 := r.transformDefault(value)
+
+	if matchXSS([]byte(v1)) {
+		//proxywasm.LogInfo("Ragel Match")
+		return true
+	}
+
 	for k, re := range Re941ForCacheMap {
 		//fmt.Println(strconv.Itoa(k) + ": " + v1)
 		if isHeader && !slices.Contains(headerRuleIds, k) {
