@@ -40,6 +40,9 @@ func TestBatchMatchValue(t *testing.T) {
 		"case4": testCase{"xlink:hreflang", false},
 		"case5": testCase{"formaction ", true},
 		"case6": testCase{"pattern:m=abc", true},
+		"case7": testCase{"!ENTITY entity_name SYSTEM \"entity_value\"", true},
+		"case8": testCase{"!ENTITY SYSTEM", false},
+		"case9": testCase{"abc=def:g;xyz=url(javascript", false},
 	}
 
 	for key, v := range testGroup { //遍历
