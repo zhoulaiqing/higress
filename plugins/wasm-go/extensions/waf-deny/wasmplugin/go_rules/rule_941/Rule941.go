@@ -132,7 +132,7 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 		//941110:  rule_tasks.Re941110,
 		//941130:  rule_tasks.Re941130,
 		//941140:  rule_tasks.Re941140,
-		941160:  rule_tasks.Re941160,
+		//941160:  rule_tasks.Re941160,
 		941170:  rule_tasks.Re941170,
 		941190:  rule_tasks.Re941190,
 		941200:  rule_tasks.Re941200,
@@ -152,11 +152,11 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 
 	v1 := r.transformDefault(value)
 
-	if matchXSS([]byte(v1)) {
-		//proxywasm.LogInfo("Ragel Match")
-		fmt.Println("Ragel Match")
-		return true
-	}
+	//if matchXSS([]byte(v1)) {
+	//	//proxywasm.LogInfo("Ragel Match")
+	//	fmt.Println("Ragel Match")
+	//	return true
+	//}
 
 	for k, re := range Re941ForCacheMap {
 		//fmt.Println(strconv.Itoa(k) + ": " + v1)

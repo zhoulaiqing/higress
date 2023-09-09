@@ -6,5 +6,8 @@ import (
 )
 
 func TestExperiment(t *testing.T) {
-	assert.True(t, matchExp([]byte("<x s ")))
+	//var builder strings.Builder
+	//builder.Reset()
+	assert.True(t, matchExp([]byte("/char_test?mime=text/xml&body=<x onend=")))
+	assert.True(t, matchExp([]byte("xyz=< a b c /> < s c r i p t >alert(1);</script>")))
 }

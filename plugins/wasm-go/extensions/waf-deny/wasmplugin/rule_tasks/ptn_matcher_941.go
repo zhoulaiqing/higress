@@ -43,6 +43,11 @@ var DENY_KEYWORDS_941180 = []string{
 }
 var Rule941180Matcher ahocorasick.AhoCorasick
 
+//riskTags := []string {
+//	"script", "style", "svg", "set", "form", "marquee", "meta", "link", "object", "embed", "applet", "audio", "animate",
+//	"param", "iframe", "frame", "base", "body", "bindings", "image", "img", "video"
+//}
+
 func init() {
 	ValidateByteRange941010, _ = core.NewValidateByRange("20, 45-47, 48-57, 65-90, 95, 97-122")
 	Rule941180Matcher = AHO_CORASICK_BUILDER.Build(DENY_KEYWORDS_941180)

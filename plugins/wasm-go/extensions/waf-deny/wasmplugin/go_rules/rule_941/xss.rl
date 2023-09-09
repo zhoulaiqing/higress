@@ -19,9 +19,9 @@ func matchXSS(data []byte) bool {
         script_tag = any* '<script' any* '>' @setMatched;
 
         # 941130
-        x_tag = word_bound ('xlink:href' | 'xhtml' | 'xmlns' | 'data:text/html' | 'formaction' | '@import' | ';base64')  %/setMatched word_bound @setMatched;
-        pattern_tag = word_bound 'pattern' word_bound word_ele* '=' word_ele* %/setMatched word_bound @setMatched;
-        entity_tag = word_bound /!ENTITY/i space+ ('%' space+)? identifier+ space+ (/SYSTEM/i | /PUBLIC/i) %/setMatched word_bound @setMatched;
+        x_tag = any* word_bound ('xlink:href' | 'xhtml' | 'xmlns' | 'data:text/html' | 'formaction' | '@import' | ';base64')  %/setMatched word_bound @setMatched;
+        pattern_tag = any* word_bound 'pattern' word_bound word_ele* '=' word_ele* %/setMatched word_bound @setMatched;
+        entity_tag = any* word_bound /!ENTITY/i space+ ('%' space+)? identifier+ space+ (/SYSTEM/i | /PUBLIC/i) %/setMatched word_bound @setMatched;
 
         # 941140
         # [^:=]
@@ -83,55 +83,15 @@ func matchXSS(data []byte) bool {
             | object_like | embed_like | applet_like | audio_like | animate_like | param_like | iframe_like | base_like
             | body_like | bindings_like | image_like | video_like;
 
-        html_tag = '<' tag_prefix_like tag_name_like   ;
+        html_tag = '<' tag_prefix_like tag_name_like $setMatched ;
 
         quotes = '"' | '\'';
         attribute_start = ('<' word_ele any* (space | '/')) | (quotes (any* (space | '/'))?);
-        attribute_name = 'background' | 'formaction' | 'lowsrc' | 'on' ( 'abort' | 'activate' | 'adapteradded' | 'addtrack'
-            | 'afterprint' | 'afterscriptexecute' | 'afterupdate' | 'altering' | 'animationend' | 'animationiteration'
-            | 'animationstart' | 'antennastatechange' | 'appcommand' | 'audioend' | 'audioprocess' | 'audiostart'
-            | 'beforeactivate' | 'beforedeactivate' | 'beforescriptexecute' | 'beforecopy' | 'beforecut' | 'beforeeditfocus'
-            | 'beforepaste' | 'beforeprint' | 'beforeunload' | 'beforeupdate' | 'begin' | 'beginevent' | 'blocked' | 'blur'
-            | 'bounce' | 'boundary' | 'broadcast' | 'busy' | 'cached' | 'callschanged' | 'canplay' | 'canplaythrough'
-            | 'cardstatechange' | 'cellchange' | 'cfstatechange' | 'change' | 'chargingchange' | 'chargingtimechange'
-            | 'checking' | 'click' | 'close' | 'command' | 'commandupdate' | 'complete' | 'compositionend' | 'compositionstart'
-            | 'compositionupdate' | 'connected' | 'connecting' | 'contextmenu' | 'controlselect' | 'copy' | 'cuechange'
-            | 'cut' | 'dataavailable' | 'datachange' | 'dataerror' | 'datasetchanged' | 'datasetcomplete' | 'dblclick'
-            | 'deactivate' | 'deliveryerror' | 'deliverysuccess' | 'devicefound' | 'devicelight' | 'devicemotion'
-            | 'deviceorientation' | 'deviceproximity' | 'dialing' | 'disabled' | 'dischargingtimechange' | 'disconnected'
-            | 'disconnecting' | 'domactivate' | 'domattrmodified' | 'domcharacterdatamodified' | 'domsubtreemodified'
-            | 'domfocusin' | 'domfocusout' | 'dommousescroll' | 'domnodeinserted' | 'domnodeinsertedintodocument'
-            | 'domnoderemoved' | 'domnoderemovedfromdocument' | 'downloading' | 'dragdrop' | 'dragend' | 'dragenter'
-            | 'dragexit' | 'draggesture' | 'dragleave' | 'dragover' | 'dragstart' | 'drop' | 'durationchange' | 'emptied'
-            | 'enabled' | 'end' | 'ended' | 'endevent' | 'enter' | 'error' | 'errorupdate' | 'exit' | 'failed' | 'finish'
-            | 'filterchange' | 'focus' | 'focusin' | 'focusout' | 'formchange' | 'forminput' | 'gamepadaxismove'
-            | 'gamepadbuttondown' | 'gamepadbuttonup' | 'gamepadconnected' | 'gamepaddisconnected' | 'get' | 'hashchange'
-            | 'headphoneschange' | 'held' | 'help' | 'holding' | 'icccardlockerror' | 'iccinfochange' | 'incoming' | 'input'
-            | 'invalid' | 'keydown' | 'keypress' | 'keyup' | 'levelchange' | 'load' | 'loadeddata' | 'loadedmetadata'
-            | 'loadend' | 'loadstart' | 'losecapture' | 'ly' | 'mark' | 'message' | 'mousedown' | 'mouseenter' | 'mouseleave'
-            | 'mousemove' | 'mouseout' | 'mouseover' | 'mouseup' | 'mousewheel' | 'move' | 'moveend' | 'movestart'
-            | 'mozafterpaint' | 'mozaudioavailable' | 'mozbeforeresize' | 'mozorientationchange' | 'moztapgesture'
-            | 'moztimechange' | 'mozedgeuicanceled' | 'mozedgeuicompleted' | 'mozedgeuistarted' | 'moznetworkdownload'
-            | 'moznetworkupload' | 'mozfullscreenchange' | 'mozfullscreenerror' | 'mozmagnifygesture' | 'mozmagnifygesturestart'
-            | 'mozmagnifygestureupdate' | 'mozmousehittest' | 'mozmousepixelscroll' | 'mozpointerlockchange' | 'mozpointerlockerror'
-            | 'mozpresstapgesture' | 'mozrotategesture' | 'mozrotategesturestart' | 'mozrotategestureupdate' | 'mozscrolledareachanged'
-            | 'mozswipegesture' ('end' | 'start' | 'update')? | 'nomatch' | 'noupdate' | 'obsolete' | 'offline' | 'online'
-            | 'open' | 'overflow' ('changed')? | 'pagehide' | 'pageshow' | 'paint' | 'paste' | 'pause' | 'play' ('ing') ?
-            | 'popstate' | 'popup' ('hidden' | 'hiding' | 'showing' | 'shown') | 'progress' | 'propertychange' | 'ratechange'
-            | 'readystatechange' | 'received' | 'removetrack' | 'repeat' ('event')? | 'request' | 'reset' | 'resize'
-            | 'result' | 'resume' | 'resuming' | 'retrieving' | 'row' ('enter' | 'exit') | 'rows' ('delete' | 'inserted')
-            | 'scroll' | 'seek' ('complete' | 'ed' | 'ing') | 'select' ('start')? | 'sending' | 'sent' | 'set' | 'show'
-            | 'sound' ('end' | 'start') | 'speech' ('end' | 'start') | 'stalled' | 'start' | 'statechange' | 'statuschanged'
-            | 'stop' | 'stkcommand' | 'stksessionend' | 'submit' | 'success' | 'suspend' | 'svg' ('abort' | 'error' | 'load' |
-            'unload' | 'resize' | 'scroll' | 'zoom') | 'text' ('out' | 'update' ) | 'time' ('out' | 'update') | 'touch' (
-            'end' | 'enter' | 'cancel' | 'leave' | 'move' | 'start') | 'transition' ('cancel' | 'end' |'run') | 'underflow'
-            | 'unload' | 'updateready' | 'upgradeneeded' | 'userproximity' | 'ussdreceived' | ('version' | 'voice' | 'volume' ) 'change'
-            | 'waiting' | 'warning' | 'wheel' | 'zoom') | 'ping' | 'src' | 'style' ;
+        attribute_name = 'background' | 'formaction' | 'lowsrc' | 'on' alpha{3,30} | 'ping' | 'src' | 'style' ;
         # try with space
         attribute_sep = space;
 
-        html_attribute = attribute_start attribute_name attribute_sep* '=';
-
+        html_attribute = attribute_start attribute_name attribute_sep* '=' $setMatched;
 
         main := script_tag | x_tag | pattern_tag | entity_tag | url_js_tag | html_tag | html_attribute;
         write init;
