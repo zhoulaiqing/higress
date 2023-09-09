@@ -1,6 +1,7 @@
 package rule_941
 
 import (
+	"fmt"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/corazawaf/libinjection-go"
@@ -129,8 +130,8 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 	// default transform 941110 - 941310
 	var Re941ForCacheMap = map[int]*re2.Regexp{
 		//941110:  rule_tasks.Re941110,
-		941130:  rule_tasks.Re941130,
-		941140:  rule_tasks.Re941140,
+		//941130:  rule_tasks.Re941130,
+		//941140:  rule_tasks.Re941140,
 		941160:  rule_tasks.Re941160,
 		941170:  rule_tasks.Re941170,
 		941190:  rule_tasks.Re941190,
@@ -153,6 +154,7 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 
 	if matchXSS([]byte(v1)) {
 		//proxywasm.LogInfo("Ragel Match")
+		fmt.Println("Ragel Match")
 		return true
 	}
 
@@ -163,8 +165,11 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 		}
 
 		//fmt.Println(re)
-		if m := re.MatchString(v1); m {
-			proxywasm.LogInfof("Match %s", strconv.Itoa(k))
+		a := re.FindStringSubmatch(v1)
+		m := re.MatchString(v1)
+		//if m := re.MatchString(v1); m {
+		if len(a) > 0 || m {
+			fmt.Printf("Match %s \n", strconv.Itoa(k))
 			return true
 		}
 	}
@@ -177,7 +182,7 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 	v2 := r.transform350(value)
 	//fmt.Println("941350: " + v2)
 	if m := rule_tasks.Re941350.MatchString(v2); m {
-		proxywasm.LogInfof("Match 941350")
+		fmt.Println("Match 941350")
 		return true
 	}
 
@@ -185,11 +190,11 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 	v3 := r.transform370And400(value)
 	//fmt.Println("941370, 941400: " + v3)
 	if m := rule_tasks.Re941370.MatchString(v3); m {
-		proxywasm.LogInfof("Match 941370")
+		fmt.Println("Match 941370")
 		return true
 	}
 	if m := rule_tasks.Re941400.MatchString(v3); m {
-		proxywasm.LogInfof("Match 941400")
+		fmt.Println("Match 941400")
 		return true
 	}
 
@@ -197,7 +202,7 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 	v4 := r.transform390(value)
 	//fmt.Println("941390: " + v4)
 	if m := rule_tasks.Re941390.MatchString(v4); m {
-		proxywasm.LogInfof("Match 941390")
+		fmt.Println("Match 941390")
 		return true
 	}
 

@@ -72,7 +72,7 @@ func matchXSS(data []byte) bool {
         audio_like = a_like u_like d_like i_like 'o';
         animate_like = a_like n_like i_like m_like a_like t_like 'e';
         param_like = p_like a_like r_like a_like 'm';
-        iframe_like = i_like f_like r_like a_like m_like 'e';
+        iframe_like = (i_like | ^word_ele*) f_like r_like a_like m_like 'e';
         base_like = b_like a_like s_like 'e';
         body_like = b_like o_like d_like 'y';
         bindings_like = b_like i_like n_like d_like i_like n_like g_like 's';
@@ -87,7 +87,7 @@ func matchXSS(data []byte) bool {
 
         quotes = '"' | '\'';
         attribute_start = ('<' word_ele any* (space | '/')) | (quotes (any* (space | '/'))?);
-        attribute_name = 'background' | 'formaction' | 'lowsrc' | 'on' | 'abort' | 'activate' | 'adapteradded' | 'addtrack'
+        attribute_name = 'background' | 'formaction' | 'lowsrc' | 'on' ( 'abort' | 'activate' | 'adapteradded' | 'addtrack'
             | 'afterprint' | 'afterscriptexecute' | 'afterupdate' | 'altering' | 'animationend' | 'animationiteration'
             | 'animationstart' | 'antennastatechange' | 'appcommand' | 'audioend' | 'audioprocess' | 'audiostart'
             | 'beforeactivate' | 'beforedeactivate' | 'beforescriptexecute' | 'beforecopy' | 'beforecut' | 'beforeeditfocus'
@@ -108,10 +108,32 @@ func matchXSS(data []byte) bool {
             | 'gamepadbuttondown' | 'gamepadbuttonup' | 'gamepadconnected' | 'gamepaddisconnected' | 'get' | 'hashchange'
             | 'headphoneschange' | 'held' | 'help' | 'holding' | 'icccardlockerror' | 'iccinfochange' | 'incoming' | 'input'
             | 'invalid' | 'keydown' | 'keypress' | 'keyup' | 'levelchange' | 'load' | 'loadeddata' | 'loadedmetadata'
-            | 'loadend' | 'loadstart' | 'losecapture' | 'ly' |
+            | 'loadend' | 'loadstart' | 'losecapture' | 'ly' | 'mark' | 'message' | 'mousedown' | 'mouseenter' | 'mouseleave'
+            | 'mousemove' | 'mouseout' | 'mouseover' | 'mouseup' | 'mousewheel' | 'move' | 'moveend' | 'movestart'
+            | 'mozafterpaint' | 'mozaudioavailable' | 'mozbeforeresize' | 'mozorientationchange' | 'moztapgesture'
+            | 'moztimechange' | 'mozedgeuicanceled' | 'mozedgeuicompleted' | 'mozedgeuistarted' | 'moznetworkdownload'
+            | 'moznetworkupload' | 'mozfullscreenchange' | 'mozfullscreenerror' | 'mozmagnifygesture' | 'mozmagnifygesturestart'
+            | 'mozmagnifygestureupdate' | 'mozmousehittest' | 'mozmousepixelscroll' | 'mozpointerlockchange' | 'mozpointerlockerror'
+            | 'mozpresstapgesture' | 'mozrotategesture' | 'mozrotategesturestart' | 'mozrotategestureupdate' | 'mozscrolledareachanged'
+            | 'mozswipegesture' ('end' | 'start' | 'update')? | 'nomatch' | 'noupdate' | 'obsolete' | 'offline' | 'online'
+            | 'open' | 'overflow' ('changed')? | 'pagehide' | 'pageshow' | 'paint' | 'paste' | 'pause' | 'play' ('ing') ?
+            | 'popstate' | 'popup' ('hidden' | 'hiding' | 'showing' | 'shown') | 'progress' | 'propertychange' | 'ratechange'
+            | 'readystatechange' | 'received' | 'removetrack' | 'repeat' ('event')? | 'request' | 'reset' | 'resize'
+            | 'result' | 'resume' | 'resuming' | 'retrieving' | 'row' ('enter' | 'exit') | 'rows' ('delete' | 'inserted')
+            | 'scroll' | 'seek' ('complete' | 'ed' | 'ing') | 'select' ('start')? | 'sending' | 'sent' | 'set' | 'show'
+            | 'sound' ('end' | 'start') | 'speech' ('end' | 'start') | 'stalled' | 'start' | 'statechange' | 'statuschanged'
+            | 'stop' | 'stkcommand' | 'stksessionend' | 'submit' | 'success' | 'suspend' | 'svg' ('abort' | 'error' | 'load' |
+            'unload' | 'resize' | 'scroll' | 'zoom') | 'text' ('out' | 'update' ) | 'time' ('out' | 'update') | 'touch' (
+            'end' | 'enter' | 'cancel' | 'leave' | 'move' | 'start') | 'transition' ('cancel' | 'end' |'run') | 'underflow'
+            | 'unload' | 'updateready' | 'upgradeneeded' | 'userproximity' | 'ussdreceived' | ('version' | 'voice' | 'volume' ) 'change'
+            | 'waiting' | 'warning' | 'wheel' | 'zoom') | 'ping' | 'src' | 'style' ;
+        # try with space
+        attribute_sep = space;
+
+        html_attribute = attribute_start attribute_name attribute_sep* '=';
 
 
-        main := script_tag | x_tag | pattern_tag | entity_tag | url_js_tag;
+        main := script_tag | x_tag | pattern_tag | entity_tag | url_js_tag | html_tag | html_attribute;
         write init;
         write exec;
     }%%

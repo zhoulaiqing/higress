@@ -34,15 +34,23 @@ func TestBatchMatchValue(t *testing.T) {
 	rule941 := Rule941{}
 
 	testGroup := map[string]testCase{
-		"case1": testCase{"xyz", false},
-		"case2": testCase{"<script>alert('1');<script>", true},
-		"case3": testCase{"xlink:href", true},
-		"case4": testCase{"xlink:hreflang", false},
-		"case5": testCase{"formaction ", true},
-		"case6": testCase{"pattern:m=abc", true},
-		"case7": testCase{"!ENTITY entity_name SYSTEM \"entity_value\"", true},
-		"case8": testCase{"!ENTITY SYSTEM", false},
-		"case9": testCase{"abc=def:g;xyz=url(javascript", false},
+		"case1":  {"xyz", false},
+		"case2":  {"<script>alert('1');<script>", true},
+		"case3":  {"xlink:href", true},
+		"case4":  {"xlink:hreflang", false},
+		"case5":  {"formaction ", true},
+		"case6":  {"pattern:m=abc", true},
+		"case7":  {"!ENTITY entity_name SYSTEM \"entity_value\"", true},
+		"case8":  {"!ENTITY SYSTEM", false},
+		"case9":  {"abc=def:g;xyz=url(javascript", false},
+		"case10": {"/demo/xss/xml/vuln.xml.php?input=<script+xmlns=\"http://www.w3.org/1999/xhtml\">setTimeout(\"top.frame2.location=\"javascript:(function+()+{var+x+=+document.createElement(\\\\\"script\\\\\");x.src+=+\\\\\"//sdl.me/popup.js?//\\\\\";document.childNodes\\\\[0\\\\].appendChild(x);}());\"\",1000)</script>&//", true},
+		"case11": {"/char_test?mime=text/xml&body=%3Cx:script%20xmlns:x=%22http://www.w3.org/1999/xhtml%22%20src=%22data:,alert(1)%22%20/%3E", true},
+		"case12": {"/char_test?mime=text/xml&body=%3Cx%20onend%3D", true},
+		"case13": {"/char_test?mime=text/xml&body=%22onzoom%3D", true},
+		"case14": {"/char_test?mime=text/xml&body=%27formaction%3D", true},
+		"case15": {"/char_test?mime=text/xml&body=%3C%20x%3A%20script", true},
+		"case16": {"/char_test?mime=text/xml&body=$%3Cf%20o%20r%20m", true},
+		"case17": {"PHPSESSID%3Cf%20o%20r%20m=1234", true},
 	}
 
 	for key, v := range testGroup { //遍历

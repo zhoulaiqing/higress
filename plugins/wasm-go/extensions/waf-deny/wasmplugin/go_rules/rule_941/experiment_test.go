@@ -5,6 +5,6 @@ import (
 	"testing"
 )
 
-func TestXss(t *testing.T) {
-	assert.True(t, matchXSS([]byte("< x on=")))
+func TestExperiment(t *testing.T) {
+	assert.True(t, matchExp([]byte("<x s ")))
 }
