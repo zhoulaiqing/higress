@@ -19,14 +19,28 @@ var riskTags = []string {
     "param", "iframe", "frame", "base", "body", "bindings", "image", "img", "video",
 }
 
+var riskAttrs = []string{
+	"background", "formaction", "lowsrc", "ping", "src", "style",
+}
 
+func isRiskAttr(attr string) bool {
+    if slices.Contains(riskAttrs, attr) {
+        return true
+    }
+
+    if strings.HasPrefix(attr, "on") {
+        return true
+    }
+
+    return false
+}
 
 func matchExp(data []byte) bool {
 %% machine xss;
 %% write data;
     cs, p, pe, eof := 0, 0, len(data), len(data)
         _ = eof
-    pb := 0
+    pbt, pba := 0, 0
     maybeTag := false
     var tagNameBuilder strings.Builder
     var tagName string
@@ -38,7 +52,7 @@ func matchExp(data []byte) bool {
 
         action markTag {
             if maybeTag {
-                pb = p
+                pbt = p
             }
         }
 
@@ -47,16 +61,35 @@ func matchExp(data []byte) bool {
             tagNameBuilder.Reset()
         }
 
+        action endTag {
+            if !maybeTag {
+                maybeTag = false
+                tagNameBuilder.Reset()
+            }
+        }
+
+        action resetTag {
+            maybeTag = true
+            tagNameBuilder.Reset()
+        }
+
         action addTagNameChar {
             if maybeTag {
-                tagNameBuilder.WriteString(string(data[pb:p]))
+                tagNameBuilder.WriteString(string(data[pbt:p]))
+                tagName = tagNameBuilder.String()
+                fmt.Printf("tag name: %s \n", tagName)
+
+                if slices.Contains(riskTags, tagName) {
+                    fmt.Println("Matched")
+                    return true
+                }
             }
         }
 
         action checkMatchTag {
             if maybeTag {
                 tagName = tagNameBuilder.String()
-                fmt.Println(tagName)
+                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -71,19 +104,19 @@ func matchExp(data []byte) bool {
         action startAttr {
             maybeAttr = true
             attrName = ""
-            pb = p
+            pba = p
         }
 
         action endAttr {
             if maybeAttr {
-                attrName = string(data[pb:p])
-                fmt.Printf("Attr name: %d %d %s \n", pb, p, attrName)
+                attrName = string(data[pba:p])
+                fmt.Printf("Attr name: %d %d %s \n", pba, p, attrName)
                 maybeAttr = false
             }
         }
 
         action checkMatchAttr {
-            if len(attrName) > 0 {
+            if len(attrName) > 0 && isRiskAttr(attrName) {
                 return true
             }
         }
@@ -97,11 +130,11 @@ func matchExp(data []byte) bool {
         identifier = [_A-Za-z][_0-9A-Za-z]*;
 
         temp2 = [^0-9<>A-Z_a-z];
-        temp3 = any - (space | '"' | '\'' | '<' | '>');
+        temp3 = [^\s\v\"'<>] ;
         temp4 = [^0-9>A-Z_a-z];
-        tag_prefix = temp2* ( temp3 ':' )? temp2*;
-        alpha_like = ^word_ele* alpha >markTag;
-        html_tag = any* '<' %startTag tag_prefix (alpha_like %addTagNameChar)+ %/checkMatchTag ^word_ele @checkMatchTag ;
+        tag_prefix = temp2* ( temp3* ':' %resetTag )? temp2*;
+        alpha_like = ^(word_ele|':')* alpha >markTag;
+        html_tag = any* '<' %startTag tag_prefix (alpha_like %addTagNameChar)+ %/checkMatchTag '>' >endTag ;
 
         quotes = '"' | '\'';
         attr_start = ('<' word_ele any* (space | '/')) | (quotes (any* (space | '/'))?);
