@@ -10,6 +10,9 @@ func matchXss(value string) bool {
 	if matchXSS130(data) {
 		return true
 	}
+	if matchXSS140(data) {
+		return true
+	}
 
 	return false
 }
