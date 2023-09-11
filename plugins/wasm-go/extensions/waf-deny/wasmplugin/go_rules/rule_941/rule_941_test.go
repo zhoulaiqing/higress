@@ -22,6 +22,7 @@ func TestMatchValue(t *testing.T) {
 	assert.True(t, ra)
 
 	r = rule941.matchValue("xlink:hreflang", false)
+
 	assert.False(t, r)
 }
 

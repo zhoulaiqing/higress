@@ -163,7 +163,7 @@ func TestExperiment(t *testing.T) {
 	for key, v := range testGroup { //遍历
 		t.Run(key, func(t *testing.T) {
 			tv := testTransformDefault(v.value)
-			got := matchExp([]byte(tv))
+			got := matchXss(tv)
 			want := v.want
 			if !reflect.DeepEqual(want, got) { //比较
 				t.Errorf("excepted:%v, got:%v", want, got)
