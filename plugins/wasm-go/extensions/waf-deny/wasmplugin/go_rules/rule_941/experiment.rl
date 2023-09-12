@@ -16,7 +16,7 @@ type XssChecker struct {
 
 var riskTags = []string {
     "script", "style", "svg", "set", "form", "marquee", "meta", "link", "object", "embed", "applet", "audio", "animate",
-    "param", "iframe", "frame", "base", "body", "bindings", "image", "img", "video",
+    "param", "iframe", "frame", "base", "body", "bindings", "image", "img", "video", "importimplementation",
 }
 
 var riskAttrs = []string{
@@ -134,10 +134,12 @@ func matchExp(data []byte) bool {
         temp4 = [^0-9>A-Z_a-z];
         tag_prefix = temp2* ( temp3* ':' %resetTag )? temp2*;
         alpha_like = ^(word_ele|':')* alpha >markTag;
-        html_tag = any* '<' %startTag tag_prefix (alpha_like %addTagNameChar)+ %/checkMatchTag '>' >endTag ;
+        left_angle = '<' ;
+        right_angle = '>' ;
+        html_tag = any* left_angle %startTag tag_prefix (alpha_like %addTagNameChar)+ %/checkMatchTag right_angle >endTag ;
 
-        quotes = '"' | '\'';
-        attr_start = ('<' word_ele any* (space | '/')) | (quotes (any* (space | '/'))?);
+        quotes = '"' | '\'' ;
+        attr_start = (left_angle word_ele any* (space | '/')) | (quotes (any* (space | '/'))?);
         # attr_name = 'background' | 'formaction' | 'lowsrc' | 'on' alpha{3,30} | 'ping' | 'src' | 'style' ;
         attr_name = alpha{3,30} ;
         # try with space

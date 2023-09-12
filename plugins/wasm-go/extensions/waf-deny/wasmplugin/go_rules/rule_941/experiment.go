@@ -18,7 +18,7 @@ type XssChecker struct {
 
 var riskTags = []string {
     "script", "style", "svg", "set", "form", "marquee", "meta", "link", "object", "embed", "applet", "audio", "animate",
-    "param", "iframe", "frame", "base", "body", "bindings", "image", "img", "video",
+    "param", "iframe", "frame", "base", "body", "bindings", "image", "img", "video", "importimplementation",
 }
 
 var riskAttrs = []string{
@@ -8872,7 +8872,7 @@ tr212:
 
 	}
 
-//line experiment.rl:151
+//line experiment.rl:153
 
         return false
 }

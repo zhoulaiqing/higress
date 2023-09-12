@@ -174,6 +174,10 @@ func TestExperiment(t *testing.T) {
 
 func testTransformDefault(value string) string {
 	v := value
+	v = strings.ReplaceAll(v, "\\xbc", "<")
+	v = strings.ReplaceAll(v, "\\xbe", ">")
+	v = strings.ReplaceAll(v, "\\xa2", "\"")
+
 	v, _, _ = core.Utf8ToUnicode(v)
 	v, _, _ = core.UrlDecodeUni(v)
 	v, _, _ = core.HtmlEntityDecode(v)

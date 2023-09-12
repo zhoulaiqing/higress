@@ -21,18 +21,13 @@ func matchXSS170(data []byte) bool {
         word_bound = (any* not_word_ele)?;
         not_word = not_word_ele*;
 
-        js_suffix1 = any+ ( '=' | '\\' | '(' | '[' | '[' | '.' | '<' | space );
-        js_suffix2 = (any* not_word_ele)? ('name' not_word_ele | '\\' [ux] digit+) ;
-
-        js = 'javascript:' (js_suffix1 | js_suffix2 ) %/setMatched not_word_ele @setMatched ;
-
         data_suffix1 = (identifier '/' word_ele ( word_ele | '+' | '-' )+ word_ele)? [;,];
         data_suffix2 = any* ';' word_bound ('base64'|'charset=');
         data_suffix3 = any* ',' any* '<' any* word_ele any* '>';
 
         data = 'data:' (data_suffix1 | data_suffix2 | data_suffix3) %/setMatched not_word_ele @setMatched;
 
-        main := word_bound (js | data) ;
+        main := word_bound data ;
 
         write init;
         write exec;
