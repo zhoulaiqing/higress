@@ -43,6 +43,10 @@ func doMatchXssOriginal(value string) bool {
 		return true
 	}
 
+	if matchXSS200(data) {
+		return true
+	}
+
 	if matchXSS210(data) {
 		return true
 	}
@@ -60,6 +64,10 @@ func doMatchXssOriginal(value string) bool {
 	}
 
 	if matchXSS390(data) {
+		return true
+	}
+
+	if matchXSS400(data) {
 		return true
 	}
 

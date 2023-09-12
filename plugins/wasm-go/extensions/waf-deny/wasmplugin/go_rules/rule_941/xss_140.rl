@@ -1,5 +1,6 @@
 package rule_941
 
+
 func matchXSS140(data []byte) bool {
 %% machine xss;
 %% write data;

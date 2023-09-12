@@ -77,7 +77,6 @@ func matchExp(data []byte) bool {
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")

@@ -479,7 +479,6 @@ tr41:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -493,7 +492,7 @@ tr41:
 			goto _test_eof3
 		}
 	st_case_3:
-//line experiment.go:497
+//line experiment.go:496
 		switch data[p] {
 		case 32:
 			goto tr7
@@ -551,7 +550,7 @@ tr181:
 			goto _test_eof4
 		}
 	st_case_4:
-//line experiment.go:555
+//line experiment.go:554
 		switch data[p] {
 		case 32:
 			goto st5
@@ -609,7 +608,7 @@ tr182:
 			goto _test_eof5
 		}
 	st_case_5:
-//line experiment.go:613
+//line experiment.go:612
 		switch data[p] {
 		case 32:
 			goto st5
@@ -660,7 +659,7 @@ tr8:
 			goto _test_eof6
 		}
 	st_case_6:
-//line experiment.go:664
+//line experiment.go:663
 		switch data[p] {
 		case 11:
 			goto st1
@@ -735,7 +734,7 @@ tr29:
 			goto _test_eof8
 		}
 	st_case_8:
-//line experiment.go:739
+//line experiment.go:738
 		switch data[p] {
 		case 11:
 			goto tr28
@@ -788,7 +787,7 @@ tr26:
 			goto _test_eof9
 		}
 	st_case_9:
-//line experiment.go:792
+//line experiment.go:791
 		switch data[p] {
 		case 11:
 			goto st11
@@ -841,7 +840,7 @@ tr27:
 			goto _test_eof10
 		}
 	st_case_10:
-//line experiment.go:845
+//line experiment.go:844
 		switch data[p] {
 		case 11:
 			goto st11
@@ -894,7 +893,7 @@ tr28:
 			goto _test_eof11
 		}
 	st_case_11:
-//line experiment.go:898
+//line experiment.go:897
 		switch data[p] {
 		case 32:
 			goto st11
@@ -988,7 +987,6 @@ tr39:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1002,7 +1000,7 @@ tr39:
 			goto _test_eof13
 		}
 	st_case_13:
-//line experiment.go:1006
+//line experiment.go:1004
 		switch data[p] {
 		case 32:
 			goto st14
@@ -1041,7 +1039,6 @@ tr40:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1055,7 +1052,7 @@ tr40:
 			goto _test_eof14
 		}
 	st_case_14:
-//line experiment.go:1059
+//line experiment.go:1056
 		switch data[p] {
 		case 32:
 			goto st14
@@ -1095,7 +1092,7 @@ tr22:
                 pbt = p
             }
         
-//line experiment.rl:104
+//line experiment.rl:103
 
             maybeAttr = true
             attrName = ""
@@ -1107,7 +1104,7 @@ tr22:
 			goto _test_eof15
 		}
 	st_case_15:
-//line experiment.go:1111
+//line experiment.go:1108
 		switch data[p] {
 		case 32:
 			goto tr40
@@ -1148,7 +1145,6 @@ tr42:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1170,7 +1166,6 @@ tr47:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1178,7 +1173,7 @@ tr47:
                 }
             }
         
-//line experiment.rl:110
+//line experiment.rl:109
 
             if maybeAttr {
                 attrName = string(data[pba:p])
@@ -1186,7 +1181,7 @@ tr47:
                 maybeAttr = false
             }
         
-//line experiment.rl:118
+//line experiment.rl:117
 
             if len(attrName) > 0 && isRiskAttr(attrName) {
                 return true
@@ -1194,7 +1189,7 @@ tr47:
         
 	goto st155
 tr50:
-//line experiment.rl:118
+//line experiment.rl:117
 
             if len(attrName) > 0 && isRiskAttr(attrName) {
                 return true
@@ -1206,7 +1201,7 @@ tr50:
 			goto _test_eof155
 		}
 	st_case_155:
-//line experiment.go:1210
+//line experiment.go:1205
 		switch data[p] {
 		case 32:
 			goto st14
@@ -1279,7 +1274,6 @@ tr44:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1299,7 +1293,7 @@ tr44:
 			goto _test_eof16
 		}
 	st_case_16:
-//line experiment.go:1303
+//line experiment.go:1297
 		switch data[p] {
 		case 32:
 			goto tr40
@@ -1340,7 +1334,6 @@ tr43:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1360,7 +1353,7 @@ tr43:
 			goto _test_eof17
 		}
 	st_case_17:
-//line experiment.go:1364
+//line experiment.go:1357
 		switch data[p] {
 		case 32:
 			goto tr40
@@ -1401,7 +1394,6 @@ tr45:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1421,7 +1413,7 @@ tr45:
 			goto _test_eof18
 		}
 	st_case_18:
-//line experiment.go:1425
+//line experiment.go:1417
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -1464,7 +1456,6 @@ tr46:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1472,7 +1463,7 @@ tr46:
                 }
             }
         
-//line experiment.rl:110
+//line experiment.rl:109
 
             if maybeAttr {
                 attrName = string(data[pba:p])
@@ -1486,7 +1477,7 @@ tr46:
 			goto _test_eof19
 		}
 	st_case_19:
-//line experiment.go:1490
+//line experiment.go:1481
 		switch data[p] {
 		case 32:
 			goto st19
@@ -1527,7 +1518,6 @@ tr48:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1547,7 +1537,7 @@ tr48:
 			goto _test_eof20
 		}
 	st_case_20:
-//line experiment.go:1551
+//line experiment.go:1541
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -1590,7 +1580,6 @@ tr51:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1610,7 +1599,7 @@ tr51:
 			goto _test_eof21
 		}
 	st_case_21:
-//line experiment.go:1614
+//line experiment.go:1603
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -1653,7 +1642,6 @@ tr52:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1673,7 +1661,7 @@ tr52:
 			goto _test_eof22
 		}
 	st_case_22:
-//line experiment.go:1677
+//line experiment.go:1665
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -1716,7 +1704,6 @@ tr53:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1736,7 +1723,7 @@ tr53:
 			goto _test_eof23
 		}
 	st_case_23:
-//line experiment.go:1740
+//line experiment.go:1727
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -1779,7 +1766,6 @@ tr54:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1799,7 +1785,7 @@ tr54:
 			goto _test_eof24
 		}
 	st_case_24:
-//line experiment.go:1803
+//line experiment.go:1789
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -1842,7 +1828,6 @@ tr55:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1862,7 +1847,7 @@ tr55:
 			goto _test_eof25
 		}
 	st_case_25:
-//line experiment.go:1866
+//line experiment.go:1851
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -1905,7 +1890,6 @@ tr56:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1925,7 +1909,7 @@ tr56:
 			goto _test_eof26
 		}
 	st_case_26:
-//line experiment.go:1929
+//line experiment.go:1913
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -1968,7 +1952,6 @@ tr57:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -1988,7 +1971,7 @@ tr57:
 			goto _test_eof27
 		}
 	st_case_27:
-//line experiment.go:1992
+//line experiment.go:1975
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2031,7 +2014,6 @@ tr58:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2051,7 +2033,7 @@ tr58:
 			goto _test_eof28
 		}
 	st_case_28:
-//line experiment.go:2055
+//line experiment.go:2037
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2094,7 +2076,6 @@ tr59:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2114,7 +2095,7 @@ tr59:
 			goto _test_eof29
 		}
 	st_case_29:
-//line experiment.go:2118
+//line experiment.go:2099
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2157,7 +2138,6 @@ tr60:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2177,7 +2157,7 @@ tr60:
 			goto _test_eof30
 		}
 	st_case_30:
-//line experiment.go:2181
+//line experiment.go:2161
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2220,7 +2200,6 @@ tr61:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2240,7 +2219,7 @@ tr61:
 			goto _test_eof31
 		}
 	st_case_31:
-//line experiment.go:2244
+//line experiment.go:2223
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2283,7 +2262,6 @@ tr62:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2303,7 +2281,7 @@ tr62:
 			goto _test_eof32
 		}
 	st_case_32:
-//line experiment.go:2307
+//line experiment.go:2285
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2346,7 +2324,6 @@ tr63:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2366,7 +2343,7 @@ tr63:
 			goto _test_eof33
 		}
 	st_case_33:
-//line experiment.go:2370
+//line experiment.go:2347
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2409,7 +2386,6 @@ tr64:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2429,7 +2405,7 @@ tr64:
 			goto _test_eof34
 		}
 	st_case_34:
-//line experiment.go:2433
+//line experiment.go:2409
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2472,7 +2448,6 @@ tr65:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2492,7 +2467,7 @@ tr65:
 			goto _test_eof35
 		}
 	st_case_35:
-//line experiment.go:2496
+//line experiment.go:2471
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2535,7 +2510,6 @@ tr66:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2555,7 +2529,7 @@ tr66:
 			goto _test_eof36
 		}
 	st_case_36:
-//line experiment.go:2559
+//line experiment.go:2533
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2598,7 +2572,6 @@ tr67:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2618,7 +2591,7 @@ tr67:
 			goto _test_eof37
 		}
 	st_case_37:
-//line experiment.go:2622
+//line experiment.go:2595
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2661,7 +2634,6 @@ tr68:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2681,7 +2653,7 @@ tr68:
 			goto _test_eof38
 		}
 	st_case_38:
-//line experiment.go:2685
+//line experiment.go:2657
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2724,7 +2696,6 @@ tr69:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2744,7 +2715,7 @@ tr69:
 			goto _test_eof39
 		}
 	st_case_39:
-//line experiment.go:2748
+//line experiment.go:2719
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2787,7 +2758,6 @@ tr70:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2807,7 +2777,7 @@ tr70:
 			goto _test_eof40
 		}
 	st_case_40:
-//line experiment.go:2811
+//line experiment.go:2781
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2850,7 +2820,6 @@ tr71:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2870,7 +2839,7 @@ tr71:
 			goto _test_eof41
 		}
 	st_case_41:
-//line experiment.go:2874
+//line experiment.go:2843
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2913,7 +2882,6 @@ tr72:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2933,7 +2901,7 @@ tr72:
 			goto _test_eof42
 		}
 	st_case_42:
-//line experiment.go:2937
+//line experiment.go:2905
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -2976,7 +2944,6 @@ tr73:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -2996,7 +2963,7 @@ tr73:
 			goto _test_eof43
 		}
 	st_case_43:
-//line experiment.go:3000
+//line experiment.go:2967
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -3039,7 +3006,6 @@ tr74:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3059,7 +3025,7 @@ tr74:
 			goto _test_eof44
 		}
 	st_case_44:
-//line experiment.go:3063
+//line experiment.go:3029
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -3102,7 +3068,6 @@ tr75:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3122,7 +3087,7 @@ tr75:
 			goto _test_eof45
 		}
 	st_case_45:
-//line experiment.go:3126
+//line experiment.go:3091
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -3165,7 +3130,6 @@ tr76:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3185,7 +3149,7 @@ tr76:
 			goto _test_eof46
 		}
 	st_case_46:
-//line experiment.go:3189
+//line experiment.go:3153
 		switch data[p] {
 		case 32:
 			goto tr46
@@ -3229,7 +3193,7 @@ tr21:
                 pbt = p
             }
         
-//line experiment.rl:104
+//line experiment.rl:103
 
             maybeAttr = true
             attrName = ""
@@ -3241,7 +3205,7 @@ tr21:
 			goto _test_eof47
 		}
 	st_case_47:
-//line experiment.go:3245
+//line experiment.go:3209
 		switch data[p] {
 		case 11:
 			goto tr40
@@ -3288,7 +3252,6 @@ tr77:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3302,7 +3265,7 @@ tr77:
 			goto _test_eof48
 		}
 	st_case_48:
-//line experiment.go:3306
+//line experiment.go:3269
 		switch data[p] {
 		case 11:
 			goto st14
@@ -3349,7 +3312,6 @@ tr78:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3363,7 +3325,7 @@ tr78:
 			goto _test_eof49
 		}
 	st_case_49:
-//line experiment.go:3367
+//line experiment.go:3329
 		switch data[p] {
 		case 11:
 			goto st14
@@ -3444,7 +3406,6 @@ tr82:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3464,7 +3425,7 @@ tr82:
 			goto _test_eof50
 		}
 	st_case_50:
-//line experiment.go:3468
+//line experiment.go:3429
 		switch data[p] {
 		case 11:
 			goto tr40
@@ -3511,7 +3472,6 @@ tr79:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3531,7 +3491,7 @@ tr79:
 			goto _test_eof51
 		}
 	st_case_51:
-//line experiment.go:3535
+//line experiment.go:3495
 		switch data[p] {
 		case 11:
 			goto tr40
@@ -3578,7 +3538,6 @@ tr83:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3598,7 +3557,7 @@ tr83:
 			goto _test_eof52
 		}
 	st_case_52:
-//line experiment.go:3602
+//line experiment.go:3561
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -3647,7 +3606,6 @@ tr84:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3655,7 +3613,7 @@ tr84:
                 }
             }
         
-//line experiment.rl:110
+//line experiment.rl:109
 
             if maybeAttr {
                 attrName = string(data[pba:p])
@@ -3669,7 +3627,7 @@ tr84:
 			goto _test_eof53
 		}
 	st_case_53:
-//line experiment.go:3673
+//line experiment.go:3631
 		switch data[p] {
 		case 11:
 			goto st19
@@ -3718,7 +3676,6 @@ tr85:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3726,7 +3683,7 @@ tr85:
                 }
             }
         
-//line experiment.rl:110
+//line experiment.rl:109
 
             if maybeAttr {
                 attrName = string(data[pba:p])
@@ -3734,7 +3691,7 @@ tr85:
                 maybeAttr = false
             }
         
-//line experiment.rl:118
+//line experiment.rl:117
 
             if len(attrName) > 0 && isRiskAttr(attrName) {
                 return true
@@ -3742,7 +3699,7 @@ tr85:
         
 	goto st156
 tr88:
-//line experiment.rl:118
+//line experiment.rl:117
 
             if len(attrName) > 0 && isRiskAttr(attrName) {
                 return true
@@ -3754,7 +3711,7 @@ tr88:
 			goto _test_eof156
 		}
 	st_case_156:
-//line experiment.go:3758
+//line experiment.go:3715
 		switch data[p] {
 		case 11:
 			goto st14
@@ -3801,7 +3758,6 @@ tr86:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3821,7 +3777,7 @@ tr86:
 			goto _test_eof54
 		}
 	st_case_54:
-//line experiment.go:3825
+//line experiment.go:3781
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -3870,7 +3826,6 @@ tr89:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3890,7 +3845,7 @@ tr89:
 			goto _test_eof55
 		}
 	st_case_55:
-//line experiment.go:3894
+//line experiment.go:3849
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -3939,7 +3894,6 @@ tr90:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -3959,7 +3913,7 @@ tr90:
 			goto _test_eof56
 		}
 	st_case_56:
-//line experiment.go:3963
+//line experiment.go:3917
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4008,7 +3962,6 @@ tr91:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4028,7 +3981,7 @@ tr91:
 			goto _test_eof57
 		}
 	st_case_57:
-//line experiment.go:4032
+//line experiment.go:3985
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4077,7 +4030,6 @@ tr92:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4097,7 +4049,7 @@ tr92:
 			goto _test_eof58
 		}
 	st_case_58:
-//line experiment.go:4101
+//line experiment.go:4053
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4146,7 +4098,6 @@ tr93:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4166,7 +4117,7 @@ tr93:
 			goto _test_eof59
 		}
 	st_case_59:
-//line experiment.go:4170
+//line experiment.go:4121
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4215,7 +4166,6 @@ tr94:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4235,7 +4185,7 @@ tr94:
 			goto _test_eof60
 		}
 	st_case_60:
-//line experiment.go:4239
+//line experiment.go:4189
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4284,7 +4234,6 @@ tr95:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4304,7 +4253,7 @@ tr95:
 			goto _test_eof61
 		}
 	st_case_61:
-//line experiment.go:4308
+//line experiment.go:4257
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4353,7 +4302,6 @@ tr96:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4373,7 +4321,7 @@ tr96:
 			goto _test_eof62
 		}
 	st_case_62:
-//line experiment.go:4377
+//line experiment.go:4325
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4422,7 +4370,6 @@ tr97:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4442,7 +4389,7 @@ tr97:
 			goto _test_eof63
 		}
 	st_case_63:
-//line experiment.go:4446
+//line experiment.go:4393
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4491,7 +4438,6 @@ tr98:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4511,7 +4457,7 @@ tr98:
 			goto _test_eof64
 		}
 	st_case_64:
-//line experiment.go:4515
+//line experiment.go:4461
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4560,7 +4506,6 @@ tr99:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4580,7 +4525,7 @@ tr99:
 			goto _test_eof65
 		}
 	st_case_65:
-//line experiment.go:4584
+//line experiment.go:4529
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4629,7 +4574,6 @@ tr100:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4649,7 +4593,7 @@ tr100:
 			goto _test_eof66
 		}
 	st_case_66:
-//line experiment.go:4653
+//line experiment.go:4597
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4698,7 +4642,6 @@ tr101:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4718,7 +4661,7 @@ tr101:
 			goto _test_eof67
 		}
 	st_case_67:
-//line experiment.go:4722
+//line experiment.go:4665
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4767,7 +4710,6 @@ tr102:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4787,7 +4729,7 @@ tr102:
 			goto _test_eof68
 		}
 	st_case_68:
-//line experiment.go:4791
+//line experiment.go:4733
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4836,7 +4778,6 @@ tr103:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4856,7 +4797,7 @@ tr103:
 			goto _test_eof69
 		}
 	st_case_69:
-//line experiment.go:4860
+//line experiment.go:4801
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4905,7 +4846,6 @@ tr104:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4925,7 +4865,7 @@ tr104:
 			goto _test_eof70
 		}
 	st_case_70:
-//line experiment.go:4929
+//line experiment.go:4869
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -4974,7 +4914,6 @@ tr105:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -4994,7 +4933,7 @@ tr105:
 			goto _test_eof71
 		}
 	st_case_71:
-//line experiment.go:4998
+//line experiment.go:4937
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -5043,7 +4982,6 @@ tr106:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -5063,7 +5001,7 @@ tr106:
 			goto _test_eof72
 		}
 	st_case_72:
-//line experiment.go:5067
+//line experiment.go:5005
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -5112,7 +5050,6 @@ tr107:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -5132,7 +5069,7 @@ tr107:
 			goto _test_eof73
 		}
 	st_case_73:
-//line experiment.go:5136
+//line experiment.go:5073
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -5181,7 +5118,6 @@ tr108:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -5201,7 +5137,7 @@ tr108:
 			goto _test_eof74
 		}
 	st_case_74:
-//line experiment.go:5205
+//line experiment.go:5141
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -5250,7 +5186,6 @@ tr109:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -5270,7 +5205,7 @@ tr109:
 			goto _test_eof75
 		}
 	st_case_75:
-//line experiment.go:5274
+//line experiment.go:5209
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -5319,7 +5254,6 @@ tr110:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -5339,7 +5273,7 @@ tr110:
 			goto _test_eof76
 		}
 	st_case_76:
-//line experiment.go:5343
+//line experiment.go:5277
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -5388,7 +5322,6 @@ tr111:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -5408,7 +5341,7 @@ tr111:
 			goto _test_eof77
 		}
 	st_case_77:
-//line experiment.go:5412
+//line experiment.go:5345
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -5457,7 +5390,6 @@ tr112:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -5477,7 +5409,7 @@ tr112:
 			goto _test_eof78
 		}
 	st_case_78:
-//line experiment.go:5481
+//line experiment.go:5413
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -5526,7 +5458,6 @@ tr113:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -5546,7 +5477,7 @@ tr113:
 			goto _test_eof79
 		}
 	st_case_79:
-//line experiment.go:5550
+//line experiment.go:5481
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -5595,7 +5526,6 @@ tr114:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -5615,7 +5545,7 @@ tr114:
 			goto _test_eof80
 		}
 	st_case_80:
-//line experiment.go:5619
+//line experiment.go:5549
 		switch data[p] {
 		case 11:
 			goto tr46
@@ -5659,7 +5589,7 @@ tr114:
 		}
 		goto tr77
 tr25:
-//line experiment.rl:104
+//line experiment.rl:103
 
             maybeAttr = true
             attrName = ""
@@ -5671,7 +5601,7 @@ tr25:
 			goto _test_eof81
 		}
 	st_case_81:
-//line experiment.go:5675
+//line experiment.go:5605
 		switch data[p] {
 		case 11:
 			goto st1
@@ -5784,7 +5714,7 @@ tr25:
 		}
 		goto st6
 tr119:
-//line experiment.rl:110
+//line experiment.rl:109
 
             if maybeAttr {
                 attrName = string(data[pba:p])
@@ -5798,7 +5728,7 @@ tr119:
 			goto _test_eof84
 		}
 	st_case_84:
-//line experiment.go:5802
+//line experiment.go:5732
 		switch data[p] {
 		case 11:
 			goto st85
@@ -5835,7 +5765,7 @@ tr119:
 		}
 		goto st6
 tr120:
-//line experiment.rl:110
+//line experiment.rl:109
 
             if maybeAttr {
                 attrName = string(data[pba:p])
@@ -5849,7 +5779,7 @@ tr120:
 			goto _test_eof85
 		}
 	st_case_85:
-//line experiment.go:5853
+//line experiment.go:5783
 		switch data[p] {
 		case 32:
 			goto st85
@@ -5878,7 +5808,7 @@ tr120:
 		}
 		goto st2
 tr127:
-//line experiment.rl:118
+//line experiment.rl:117
 
             if len(attrName) > 0 && isRiskAttr(attrName) {
                 return true
@@ -5886,7 +5816,7 @@ tr127:
         
 	goto st157
 tr128:
-//line experiment.rl:110
+//line experiment.rl:109
 
             if maybeAttr {
                 attrName = string(data[pba:p])
@@ -5894,7 +5824,7 @@ tr128:
                 maybeAttr = false
             }
         
-//line experiment.rl:118
+//line experiment.rl:117
 
             if len(attrName) > 0 && isRiskAttr(attrName) {
                 return true
@@ -5906,7 +5836,7 @@ tr128:
 			goto _test_eof157
 		}
 	st_case_157:
-//line experiment.go:5910
+//line experiment.go:5840
 		switch data[p] {
 		case 32:
 			goto st1
@@ -5924,7 +5854,7 @@ tr128:
 		}
 		goto st2
 tr5:
-//line experiment.rl:104
+//line experiment.rl:103
 
             maybeAttr = true
             attrName = ""
@@ -5936,7 +5866,7 @@ tr5:
 			goto _test_eof86
 		}
 	st_case_86:
-//line experiment.go:5940
+//line experiment.go:5870
 		switch data[p] {
 		case 32:
 			goto st1
@@ -6880,7 +6810,7 @@ tr5:
 		}
 		goto st2
 tr126:
-//line experiment.rl:118
+//line experiment.rl:117
 
             if len(attrName) > 0 && isRiskAttr(attrName) {
                 return true
@@ -6888,7 +6818,7 @@ tr126:
         
 	goto st158
 tr121:
-//line experiment.rl:110
+//line experiment.rl:109
 
             if maybeAttr {
                 attrName = string(data[pba:p])
@@ -6896,7 +6826,7 @@ tr121:
                 maybeAttr = false
             }
         
-//line experiment.rl:118
+//line experiment.rl:117
 
             if len(attrName) > 0 && isRiskAttr(attrName) {
                 return true
@@ -6908,7 +6838,7 @@ tr121:
 			goto _test_eof158
 		}
 	st_case_158:
-//line experiment.go:6912
+//line experiment.go:6842
 		switch data[p] {
 		case 11:
 			goto st1
@@ -8023,7 +7953,7 @@ tr183:
 			goto _test_eof143
 		}
 	st_case_143:
-//line experiment.go:8027
+//line experiment.go:7957
 		switch data[p] {
 		case 32:
 			goto tr182
@@ -8082,7 +8012,6 @@ tr205:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -8096,7 +8025,7 @@ tr205:
 			goto _test_eof144
 		}
 	st_case_144:
-//line experiment.go:8100
+//line experiment.go:8029
 		switch data[p] {
 		case 34:
 			goto tr7
@@ -8145,7 +8074,7 @@ tr211:
 			goto _test_eof145
 		}
 	st_case_145:
-//line experiment.go:8149
+//line experiment.go:8078
 		switch data[p] {
 		case 34:
 			goto st5
@@ -8209,7 +8138,7 @@ tr197:
 			goto _test_eof147
 		}
 	st_case_147:
-//line experiment.go:8213
+//line experiment.go:8142
 		switch data[p] {
 		case 11:
 			goto tr196
@@ -8253,7 +8182,7 @@ tr195:
 			goto _test_eof148
 		}
 	st_case_148:
-//line experiment.go:8257
+//line experiment.go:8186
 		switch data[p] {
 		case 11:
 			goto st149
@@ -8297,7 +8226,7 @@ tr196:
 			goto _test_eof149
 		}
 	st_case_149:
-//line experiment.go:8301
+//line experiment.go:8230
 		switch data[p] {
 		case 34:
 			goto st11
@@ -8343,7 +8272,6 @@ tr204:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -8357,7 +8285,7 @@ tr204:
 			goto _test_eof150
 		}
 	st_case_150:
-//line experiment.go:8361
+//line experiment.go:8289
 		switch data[p] {
 		case 34:
 			goto st14
@@ -8408,7 +8336,6 @@ tr207:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -8428,7 +8355,7 @@ tr207:
 			goto _test_eof151
 		}
 	st_case_151:
-//line experiment.go:8432
+//line experiment.go:8359
 		switch data[p] {
 		case 34:
 			goto tr40
@@ -8460,7 +8387,6 @@ tr206:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -8481,7 +8407,7 @@ tr206:
 			goto _test_eof159
 		}
 	st_case_159:
-//line experiment.go:8485
+//line experiment.go:8411
 		switch data[p] {
 		case 34:
 			goto st14
@@ -8532,7 +8458,6 @@ tr209:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -8552,7 +8477,7 @@ tr209:
 			goto _test_eof152
 		}
 	st_case_152:
-//line experiment.go:8556
+//line experiment.go:8481
 		switch data[p] {
 		case 11:
 			goto tr204
@@ -8590,7 +8515,6 @@ tr208:
             if maybeTag {
                 tagNameBuilder.WriteString(string(data[pbt:p]))
                 tagName = tagNameBuilder.String()
-                fmt.Printf("tag name: %s \n", tagName)
 
                 if slices.Contains(riskTags, tagName) {
                     fmt.Println("Matched")
@@ -8604,7 +8528,7 @@ tr208:
 			goto _test_eof153
 		}
 	st_case_153:
-//line experiment.go:8608
+//line experiment.go:8532
 		switch data[p] {
 		case 11:
 			goto st150
@@ -8655,7 +8579,7 @@ tr212:
 			goto _test_eof154
 		}
 	st_case_154:
-//line experiment.go:8659
+//line experiment.go:8583
 		switch data[p] {
 		case 34:
 			goto tr182
@@ -8851,7 +8775,7 @@ tr212:
 	if p == eof {
 		switch cs {
 		case 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 151, 152:
-//line experiment.rl:89
+//line experiment.rl:88
 
             if maybeTag {
                 tagName = tagNameBuilder.String()
@@ -8866,13 +8790,13 @@ tr212:
                 maybeTag = false
             }
         
-//line experiment.go:8870
+//line experiment.go:8794
 		}
 	}
 
 	}
 
-//line experiment.rl:153
+//line experiment.rl:152
 
         return false
 }
