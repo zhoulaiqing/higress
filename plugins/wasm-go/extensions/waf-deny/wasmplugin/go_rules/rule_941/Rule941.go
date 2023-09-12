@@ -4,11 +4,7 @@ import (
 	"fmt"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
-	"github.com/corazawaf/libinjection-go"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
-	"github.com/wasilibs/go-re2"
-	"golang.org/x/exp/slices"
-	"strconv"
 	"strings"
 )
 
@@ -115,8 +111,11 @@ func (r *Rule941) block(tx *core.Transaction) int {
 }
 
 func (r *Rule941) matchValue(value string, isHeader bool) bool {
+	// default transform 941110 - 941310
+	v1 := r.transformDefault(value)
 
-	if !isHeader && libinjection.IsXSS(value) {
+	if matchXss(v1) {
+		fmt.Println("Match ragel machines")
 		return true
 	}
 
@@ -125,53 +124,6 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 	if m := rule_tasks.Re941360.MatchString(value); m {
 		proxywasm.LogInfof("Match 941360")
 		return true
-	}
-
-	// default transform 941110 - 941310
-	var Re941ForCacheMap = map[int]*re2.Regexp{
-		//941110:  rule_tasks.Re941110,
-		//941130:  rule_tasks.Re941130,
-		//941140:  rule_tasks.Re941140,
-		//941160:  rule_tasks.Re941160,
-		941170:  rule_tasks.Re941170,
-		941190:  rule_tasks.Re941190,
-		941200:  rule_tasks.Re941200,
-		941210:  rule_tasks.Re941210,
-		941220:  rule_tasks.Re941220,
-		941230:  rule_tasks.Re941230,
-		941240:  rule_tasks.Re941240,
-		941250:  rule_tasks.Re941250,
-		941260:  rule_tasks.Re941260,
-		941270:  rule_tasks.Re941270,
-		941280:  rule_tasks.Re941280,
-		941290:  rule_tasks.Re941290,
-		941300:  rule_tasks.Re941300,
-		9413101: rule_tasks.Re9413101,
-		9413102: rule_tasks.Re9413102,
-	}
-
-	v1 := r.transformDefault(value)
-
-	//if matchXSS([]byte(v1)) {
-	//	//proxywasm.LogInfo("Ragel Match")
-	//	fmt.Println("Ragel Match")
-	//	return true
-	//}
-
-	for k, re := range Re941ForCacheMap {
-		//fmt.Println(strconv.Itoa(k) + ": " + v1)
-		if isHeader && !slices.Contains(headerRuleIds, k) {
-			continue
-		}
-
-		//fmt.Println(re)
-		a := re.FindStringSubmatch(v1)
-		m := re.MatchString(v1)
-		//if m := re.MatchString(v1); m {
-		if len(a) > 0 || m {
-			fmt.Printf("Match %s \n", strconv.Itoa(k))
-			return true
-		}
 	}
 
 	if m, _ := core.PmEvaluate(rule_tasks.Rule941180Matcher, v1, false); m {
@@ -210,14 +162,19 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 }
 
 func (r *Rule941) transformDefault(value string) string {
-	v, _, _ := core.Utf8ToUnicode(value)
+	v := value
+
+	v, _, _ = core.Utf8ToUnicode(v)
 	v, _, _ = core.UrlDecodeUni(v)
 	v, _, _ = core.HtmlEntityDecode(v)
 	v, _, _ = core.JsDecode(v)
 	v, _, _ = core.CssDecode(v)
 	v, _, _ = core.RemoveNulls(v)
 
-	return v
+	v, _, _ = core.Utf8ToUnicode(v)
+	v, _, _ = core.UrlDecodeUni(v)
+
+	return strings.ToLower(v) + " "
 }
 
 func (r *Rule941) transform350(value string) string {
