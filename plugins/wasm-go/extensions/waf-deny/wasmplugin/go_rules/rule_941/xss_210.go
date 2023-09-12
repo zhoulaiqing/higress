@@ -6,18 +6,18 @@ import (
     "fmt"
     "strings"
 )
-var builder strings.Builder
+var builder210 strings.Builder
 
 func checkColon() bool {
-    s := builder.String()
+    s := builder210.String()
     fmt.Println(s)
 
     if s == "javascript" || s == "vbscript" {
         fmt.Println("here")
-        builder.Reset()
+        builder210.Reset()
         return true
     }
-    builder.Reset()
+    builder210.Reset()
     return false
 }
 
@@ -30,12 +30,12 @@ func checkHtmlSpace(word string) bool {
         return checkColon()
     }
 
-    builder.Reset()
+    builder210.Reset()
     return false
 }
 
 func appendWord(s string) {
-    builder.WriteString(s)
+    builder210.WriteString(s)
 }
 
 func matchXSS210(data []byte) bool {
@@ -83,10 +83,10 @@ const xss_en_main int = 1
 	}
 	goto st_out
 tr0:
-//line xss_210.rl:74
+//line xss_210.rl:78
 p = (te) - 1
 {
-                builder.Reset()
+                builder210.Reset()
             }
 	goto st1
 tr1:
@@ -102,16 +102,23 @@ tr3:
 //line xss_210.rl:74
 te = p+1
 {
-                builder.Reset()
+                builder210.Reset()
             }
 	goto st1
 tr4:
+//line xss_210.rl:78
+te = p+1
+{
+                builder210.Reset()
+            }
+	goto st1
+tr5:
 //line xss_210.rl:71
 te = p+1
 {
             }
 	goto st1
-tr6:
+tr7:
 //line xss_210.rl:65
 te = p+1
 {
@@ -120,15 +127,15 @@ te = p+1
                 }
             }
 	goto st1
-tr8:
-//line xss_210.rl:74
+tr9:
+//line xss_210.rl:78
 te = p
 p--
 {
-                builder.Reset()
+                builder210.Reset()
             }
 	goto st1
-tr9:
+tr10:
 //line xss_210.rl:61
 te = p
 p--
@@ -147,19 +154,21 @@ ts = 0
 //line NONE:1
 ts = p
 
-//line xss_210.go:151
+//line xss_210.go:158
 		switch data[p] {
+		case 0:
+			goto tr3
 		case 32:
-			goto tr4
-		case 38:
 			goto tr5
-		case 58:
+		case 38:
 			goto tr6
+		case 58:
+			goto tr7
 		}
 		switch {
 		case data[p] < 65:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto tr4
+				goto tr5
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
@@ -168,8 +177,8 @@ ts = p
 		default:
 			goto st3
 		}
-		goto tr3
-tr5:
+		goto tr4
+tr6:
 //line NONE:1
 te = p+1
 
@@ -179,7 +188,7 @@ te = p+1
 			goto _test_eof2
 		}
 	st_case_2:
-//line xss_210.go:183
+//line xss_210.go:192
 		switch {
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
@@ -188,7 +197,7 @@ te = p+1
 		case data[p] >= 65:
 			goto st0
 		}
-		goto tr8
+		goto tr9
 	st0:
 		if p++; p == pe {
 			goto _test_eof0
@@ -219,7 +228,7 @@ te = p+1
 		case data[p] >= 65:
 			goto st3
 		}
-		goto tr9
+		goto tr10
 	st_out:
 	_test_eof1: cs = 1; goto _test_eof
 	_test_eof2: cs = 2; goto _test_eof
@@ -230,17 +239,17 @@ te = p+1
 	if p == eof {
 		switch cs {
 		case 2:
-			goto tr8
+			goto tr9
 		case 0:
 			goto tr0
 		case 3:
-			goto tr9
+			goto tr10
 		}
 	}
 
 	}
 
-//line xss_210.rl:83
+//line xss_210.rl:87
 
 
     return false

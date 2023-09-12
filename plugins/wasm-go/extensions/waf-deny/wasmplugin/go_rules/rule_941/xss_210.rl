@@ -4,18 +4,18 @@ import (
     "fmt"
     "strings"
 )
-var builder strings.Builder
+var builder210 strings.Builder
 
 func checkColon() bool {
-    s := builder.String()
+    s := builder210.String()
     fmt.Println(s)
 
     if s == "javascript" || s == "vbscript" {
         fmt.Println("here")
-        builder.Reset()
+        builder210.Reset()
         return true
     }
-    builder.Reset()
+    builder210.Reset()
     return false
 }
 
@@ -28,12 +28,12 @@ func checkHtmlSpace(word string) bool {
         return checkColon()
     }
 
-    builder.Reset()
+    builder210.Reset()
     return false
 }
 
 func appendWord(s string) {
-    builder.WriteString(s)
+    builder210.WriteString(s)
 }
 
 func matchXSS210(data []byte) bool {
@@ -71,8 +71,12 @@ func matchXSS210(data []byte) bool {
             space => {
             };
 
+            0 => {
+                builder210.Reset()
+            };
+
             any => {
-                builder.Reset()
+                builder210.Reset()
             };
 
         *|;

@@ -51,5 +51,17 @@ func doMatchXssOriginal(value string) bool {
 		return true
 	}
 
+	if matchXSS360(data) {
+		return true
+	}
+
+	if matchXSS370(data) {
+		return true
+	}
+
+	if matchXSS390(data) {
+		return true
+	}
+
 	return false
 }
