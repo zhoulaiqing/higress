@@ -37,7 +37,12 @@ func checkLeft370() {
     if step370 >= 1 {
         step370 = 2
     } else {
-        builder370.Reset()
+        checkWord370()
+        if step370 >= 1 {
+            step370 = 2
+        } else {
+            builder370.Reset()
+        }
     }
 }
 
@@ -52,9 +57,9 @@ func checkRight370() bool {
 
 func matchXSS370(data []byte) bool {
 
-//line xss_370.rl:53
+//line xss_370.rl:58
 
-//line xss_370.go:58
+//line xss_370.go:63
 const xss_start int = 0
 const xss_first_final int = 0
 const xss_error int = -1
@@ -62,7 +67,7 @@ const xss_error int = -1
 const xss_en_main int = 0
 
 
-//line xss_370.rl:54
+//line xss_370.rl:59
     cs, p, pe, eof := 0, 0, len(data), len(data)
         _ = eof
 
@@ -70,7 +75,7 @@ const xss_en_main int = 0
             _ = act
 
     
-//line xss_370.go:74
+//line xss_370.go:79
 	{
 	cs = xss_start
 	ts = 0
@@ -78,7 +83,7 @@ const xss_en_main int = 0
 	act = 0
 	}
 
-//line xss_370.go:82
+//line xss_370.go:87
 	{
 	if p == pe {
 		goto _test_eof
@@ -95,7 +100,7 @@ const xss_en_main int = 0
 	}
 	goto st_out
 tr0:
-//line xss_370.rl:81
+//line xss_370.rl:86
 te = p+1
 {
                 if step370 < 2 {
@@ -105,21 +110,21 @@ te = p+1
             }
 	goto st0
 tr1:
-//line xss_370.rl:77
+//line xss_370.rl:82
 te = p+1
 {
                 checkWord370()
             }
 	goto st0
 tr2:
-//line xss_370.rl:67
+//line xss_370.rl:72
 te = p+1
 {
                 checkLeft370()
             }
 	goto st0
 tr6:
-//line xss_370.rl:71
+//line xss_370.rl:76
 te = p+1
 {
                 if checkRight370() {
@@ -128,7 +133,7 @@ te = p+1
             }
 	goto st0
 tr7:
-//line xss_370.rl:81
+//line xss_370.rl:86
 te = p
 p--
 {
@@ -139,7 +144,7 @@ p--
             }
 	goto st0
 tr8:
-//line xss_370.rl:63
+//line xss_370.rl:68
 te = p
 p--
 {
@@ -157,7 +162,7 @@ ts = 0
 //line NONE:1
 ts = p
 
-//line xss_370.go:161
+//line xss_370.go:166
 		switch data[p] {
 		case 32:
 			goto tr1
@@ -237,7 +242,7 @@ ts = p
 
 	}
 
-//line xss_370.rl:91
+//line xss_370.rl:96
 
 
     return false

@@ -35,7 +35,12 @@ func checkLeft370() {
     if step370 >= 1 {
         step370 = 2
     } else {
-        builder370.Reset()
+        checkWord370()
+        if step370 >= 1 {
+            step370 = 2
+        } else {
+            builder370.Reset()
+        }
     }
 }
 
