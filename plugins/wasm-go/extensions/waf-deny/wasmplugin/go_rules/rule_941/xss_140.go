@@ -2,11 +2,12 @@
 //line xss_140.rl:1
 package rule_941
 
+
 func matchXSS140(data []byte) bool {
 
-//line xss_140.rl:5
+//line xss_140.rl:6
 
-//line xss_140.go:10
+//line xss_140.go:11
 const xss_start int = 0
 const xss_first_final int = 25
 const xss_error int = -1
@@ -14,16 +15,16 @@ const xss_error int = -1
 const xss_en_main int = 0
 
 
-//line xss_140.rl:6
+//line xss_140.rl:7
     cs, p, pe, eof := 0, 0, len(data), len(data)
         _ = eof
     
-//line xss_140.go:22
+//line xss_140.go:23
 	{
 	cs = xss_start
 	}
 
-//line xss_140.go:27
+//line xss_140.go:28
 	{
 	if p == pe {
 		goto _test_eof
@@ -491,7 +492,7 @@ const xss_en_main int = 0
 		}
 		goto tr26
 tr26:
-//line xss_140.rl:9
+//line xss_140.rl:10
 
             return true
         
@@ -501,7 +502,7 @@ tr26:
 			goto _test_eof26
 		}
 	st_case_26:
-//line xss_140.go:505
+//line xss_140.go:506
 		if data[p] == 59 {
 			goto st27
 		}
@@ -510,7 +511,7 @@ tr26:
 		}
 		goto st26
 tr27:
-//line xss_140.rl:9
+//line xss_140.rl:10
 
             return true
         
@@ -520,7 +521,7 @@ tr27:
 			goto _test_eof27
 		}
 	st_case_27:
-//line xss_140.go:524
+//line xss_140.go:525
 		switch data[p] {
 		case 58:
 			goto st26
@@ -562,7 +563,7 @@ tr27:
 		}
 		goto st26
 tr28:
-//line xss_140.rl:9
+//line xss_140.rl:10
 
             return true
         
@@ -572,7 +573,7 @@ tr28:
 			goto _test_eof30
 		}
 	st_case_30:
-//line xss_140.go:576
+//line xss_140.go:577
 		switch data[p] {
 		case 59:
 			goto st27
@@ -898,17 +899,17 @@ tr28:
 	if p == eof {
 		switch cs {
 		case 25:
-//line xss_140.rl:9
+//line xss_140.rl:10
 
             return true
         
-//line xss_140.go:906
+//line xss_140.go:907
 		}
 	}
 
 	}
 
-//line xss_140.rl:18
+//line xss_140.rl:19
 
 
     return false

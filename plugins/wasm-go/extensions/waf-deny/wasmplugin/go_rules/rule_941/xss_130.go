@@ -12,7 +12,7 @@ func matchXSS130(data []byte) bool {
 
 //line xss_130.go:14
 const xss_start int = 0
-const xss_first_final int = 172
+const xss_first_final int = 183
 const xss_error int = -1
 
 const xss_en_main int = 0
@@ -76,18 +76,18 @@ const xss_en_main int = 0
 		goto st_case_18
 	case 19:
 		goto st_case_19
-	case 172:
-		goto st_case_172
-	case 173:
-		goto st_case_173
-	case 174:
-		goto st_case_174
-	case 175:
-		goto st_case_175
-	case 176:
-		goto st_case_176
-	case 177:
-		goto st_case_177
+	case 183:
+		goto st_case_183
+	case 184:
+		goto st_case_184
+	case 185:
+		goto st_case_185
+	case 186:
+		goto st_case_186
+	case 187:
+		goto st_case_187
+	case 188:
+		goto st_case_188
 	case 20:
 		goto st_case_20
 	case 21:
@@ -118,14 +118,14 @@ const xss_en_main int = 0
 		goto st_case_33
 	case 34:
 		goto st_case_34
-	case 178:
-		goto st_case_178
 	case 35:
 		goto st_case_35
 	case 36:
 		goto st_case_36
 	case 37:
 		goto st_case_37
+	case 189:
+		goto st_case_189
 	case 38:
 		goto st_case_38
 	case 39:
@@ -152,24 +152,24 @@ const xss_en_main int = 0
 		goto st_case_49
 	case 50:
 		goto st_case_50
-	case 179:
-		goto st_case_179
-	case 180:
-		goto st_case_180
-	case 181:
-		goto st_case_181
-	case 182:
-		goto st_case_182
-	case 183:
-		goto st_case_183
-	case 184:
-		goto st_case_184
 	case 51:
 		goto st_case_51
 	case 52:
 		goto st_case_52
 	case 53:
 		goto st_case_53
+	case 190:
+		goto st_case_190
+	case 191:
+		goto st_case_191
+	case 192:
+		goto st_case_192
+	case 193:
+		goto st_case_193
+	case 194:
+		goto st_case_194
+	case 195:
+		goto st_case_195
 	case 54:
 		goto st_case_54
 	case 55:
@@ -190,16 +190,16 @@ const xss_en_main int = 0
 		goto st_case_62
 	case 63:
 		goto st_case_63
-	case 185:
-		goto st_case_185
-	case 186:
-		goto st_case_186
 	case 64:
 		goto st_case_64
 	case 65:
 		goto st_case_65
 	case 66:
 		goto st_case_66
+	case 196:
+		goto st_case_196
+	case 197:
+		goto st_case_197
 	case 67:
 		goto st_case_67
 	case 68:
@@ -316,12 +316,6 @@ const xss_en_main int = 0
 		goto st_case_123
 	case 124:
 		goto st_case_124
-	case 187:
-		goto st_case_187
-	case 188:
-		goto st_case_188
-	case 189:
-		goto st_case_189
 	case 125:
 		goto st_case_125
 	case 126:
@@ -334,6 +328,12 @@ const xss_en_main int = 0
 		goto st_case_129
 	case 130:
 		goto st_case_130
+	case 198:
+		goto st_case_198
+	case 199:
+		goto st_case_199
+	case 200:
+		goto st_case_200
 	case 131:
 		goto st_case_131
 	case 132:
@@ -416,6 +416,28 @@ const xss_en_main int = 0
 		goto st_case_170
 	case 171:
 		goto st_case_171
+	case 172:
+		goto st_case_172
+	case 173:
+		goto st_case_173
+	case 174:
+		goto st_case_174
+	case 175:
+		goto st_case_175
+	case 176:
+		goto st_case_176
+	case 177:
+		goto st_case_177
+	case 178:
+		goto st_case_178
+	case 179:
+		goto st_case_179
+	case 180:
+		goto st_case_180
+	case 181:
+		goto st_case_181
+	case 182:
+		goto st_case_182
 	}
 	goto st_out
 	st_case_0:
@@ -459,10 +481,12 @@ const xss_en_main int = 0
 			goto tr5
 		case 102:
 			goto tr6
-		case 112:
+		case 104:
 			goto tr7
-		case 120:
+		case 112:
 			goto tr8
+		case 120:
+			goto tr9
 		}
 		switch {
 		case data[p] < 65:
@@ -492,7 +516,7 @@ tr2:
 			goto _test_eof3
 		}
 	st_case_3:
-//line xss_130.go:496
+//line xss_130.go:520
 		switch data[p] {
 		case 33:
 			goto tr2
@@ -505,13 +529,15 @@ tr2:
 		case 100:
 			goto tr5
 		case 101:
-			goto st161
+			goto st170
 		case 102:
 			goto tr6
-		case 112:
+		case 104:
 			goto tr7
-		case 120:
+		case 112:
 			goto tr8
+		case 120:
+			goto tr9
 		}
 		switch {
 		case data[p] < 65:
@@ -541,7 +567,7 @@ tr3:
 			goto _test_eof4
 		}
 	st_case_4:
-//line xss_130.go:545
+//line xss_130.go:571
 		switch data[p] {
 		case 33:
 			goto tr2
@@ -552,15 +578,17 @@ tr3:
 		case 95:
 			goto st1
 		case 98:
-			goto st156
+			goto st165
 		case 100:
 			goto tr5
 		case 102:
 			goto tr6
-		case 112:
+		case 104:
 			goto tr7
-		case 120:
+		case 112:
 			goto tr8
+		case 120:
+			goto tr9
 		}
 		switch {
 		case data[p] < 65:
@@ -590,7 +618,7 @@ tr4:
 			goto _test_eof5
 		}
 	st_case_5:
-//line xss_130.go:594
+//line xss_130.go:622
 		switch data[p] {
 		case 33:
 			goto tr2
@@ -604,12 +632,14 @@ tr4:
 			goto tr5
 		case 102:
 			goto tr6
-		case 105:
-			goto st20
-		case 112:
+		case 104:
 			goto tr7
-		case 120:
+		case 105:
+			goto st23
+		case 112:
 			goto tr8
+		case 120:
+			goto tr9
 		}
 		switch {
 		case data[p] < 65:
@@ -639,7 +669,7 @@ tr5:
 			goto _test_eof6
 		}
 	st_case_6:
-//line xss_130.go:643
+//line xss_130.go:673
 		switch data[p] {
 		case 95:
 			goto st1
@@ -749,12 +779,14 @@ tr5:
 			goto tr5
 		case 102:
 			goto tr6
-		case 112:
+		case 104:
 			goto tr7
-		case 116:
-			goto st167
-		case 120:
+		case 112:
 			goto tr8
+		case 116:
+			goto st176
+		case 120:
+			goto tr9
 		}
 		switch {
 		case data[p] < 65:
@@ -784,7 +816,7 @@ tr6:
 			goto _test_eof11
 		}
 	st_case_11:
-//line xss_130.go:788
+//line xss_130.go:820
 		switch data[p] {
 		case 95:
 			goto st1
@@ -981,7 +1013,7 @@ tr6:
 		case 95:
 			goto st1
 		case 110:
-			goto st172
+			goto st183
 		}
 		switch {
 		case data[p] < 65:
@@ -996,27 +1028,27 @@ tr6:
 			goto st1
 		}
 		goto st2
-	st172:
+	st183:
 		if p++; p == pe {
-			goto _test_eof172
+			goto _test_eof183
 		}
-	st_case_172:
+	st_case_183:
 		if data[p] == 95 {
-			goto tr177
+			goto tr188
 		}
 		switch {
 		case data[p] < 58:
 			switch {
 			case data[p] < 32:
 				if 9 <= data[p] && data[p] <= 13 {
-					goto tr176
+					goto tr187
 				}
 			case data[p] > 47:
 				if 48 <= data[p] && data[p] <= 57 {
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		case data[p] > 64:
 			switch {
@@ -1028,61 +1060,63 @@ tr6:
 				switch {
 				case data[p] > 122:
 					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
+						goto tr187
 					}
 				case data[p] >= 97:
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		default:
-			goto tr176
+			goto tr187
 		}
 		goto st2
-tr176:
+tr187:
 //line xss_130.rl:35
 
             return true
         
-	goto st173
-	st173:
+	goto st184
+	st184:
 		if p++; p == pe {
-			goto _test_eof173
+			goto _test_eof184
 		}
-	st_case_173:
-//line xss_130.go:1055
+	st_case_184:
+//line xss_130.go:1087
 		switch data[p] {
 		case 33:
-			goto tr178
+			goto tr189
 		case 59:
-			goto tr179
+			goto tr190
 		case 64:
-			goto tr180
+			goto tr191
 		case 95:
-			goto tr177
+			goto tr188
 		case 100:
 			goto tr5
 		case 102:
 			goto tr6
-		case 112:
+		case 104:
 			goto tr7
-		case 120:
+		case 112:
 			goto tr8
+		case 120:
+			goto tr9
 		}
 		switch {
 		case data[p] < 58:
 			switch {
 			case data[p] < 32:
 				if 9 <= data[p] && data[p] <= 13 {
-					goto tr176
+					goto tr187
 				}
 			case data[p] > 47:
 				if 48 <= data[p] && data[p] <= 57 {
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		case data[p] > 63:
 			switch {
@@ -1094,19 +1128,19 @@ tr176:
 				switch {
 				case data[p] > 122:
 					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
+						goto tr187
 					}
 				case data[p] >= 97:
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		default:
-			goto tr176
+			goto tr187
 		}
 		goto st2
-tr178:
+tr189:
 //line xss_130.rl:27
 
             if !lastIsWordEle {
@@ -1119,46 +1153,48 @@ tr178:
 
             return true
         
-	goto st174
-	st174:
+	goto st185
+	st185:
 		if p++; p == pe {
-			goto _test_eof174
+			goto _test_eof185
 		}
-	st_case_174:
-//line xss_130.go:1129
+	st_case_185:
+//line xss_130.go:1163
 		switch data[p] {
 		case 33:
-			goto tr178
+			goto tr189
 		case 59:
-			goto tr179
+			goto tr190
 		case 64:
-			goto tr180
+			goto tr191
 		case 95:
-			goto tr177
+			goto tr188
 		case 100:
 			goto tr5
 		case 101:
-			goto st161
+			goto st170
 		case 102:
 			goto tr6
-		case 112:
+		case 104:
 			goto tr7
-		case 120:
+		case 112:
 			goto tr8
+		case 120:
+			goto tr9
 		}
 		switch {
 		case data[p] < 58:
 			switch {
 			case data[p] < 32:
 				if 9 <= data[p] && data[p] <= 13 {
-					goto tr176
+					goto tr187
 				}
 			case data[p] > 47:
 				if 48 <= data[p] && data[p] <= 57 {
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		case data[p] > 63:
 			switch {
@@ -1170,19 +1206,19 @@ tr178:
 				switch {
 				case data[p] > 122:
 					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
+						goto tr187
 					}
 				case data[p] >= 97:
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		default:
-			goto tr176
+			goto tr187
 		}
 		goto st2
-tr179:
+tr190:
 //line xss_130.rl:27
 
             if !lastIsWordEle {
@@ -1195,46 +1231,48 @@ tr179:
 
             return true
         
-	goto st175
-	st175:
+	goto st186
+	st186:
 		if p++; p == pe {
-			goto _test_eof175
+			goto _test_eof186
 		}
-	st_case_175:
-//line xss_130.go:1205
+	st_case_186:
+//line xss_130.go:1241
 		switch data[p] {
 		case 33:
-			goto tr178
+			goto tr189
 		case 59:
-			goto tr179
+			goto tr190
 		case 64:
-			goto tr180
+			goto tr191
 		case 95:
-			goto tr177
+			goto tr188
 		case 98:
-			goto st156
+			goto st165
 		case 100:
 			goto tr5
 		case 102:
 			goto tr6
-		case 112:
+		case 104:
 			goto tr7
-		case 120:
+		case 112:
 			goto tr8
+		case 120:
+			goto tr9
 		}
 		switch {
 		case data[p] < 58:
 			switch {
 			case data[p] < 32:
 				if 9 <= data[p] && data[p] <= 13 {
-					goto tr176
+					goto tr187
 				}
 			case data[p] > 47:
 				if 48 <= data[p] && data[p] <= 57 {
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		case data[p] > 63:
 			switch {
@@ -1246,19 +1284,19 @@ tr179:
 				switch {
 				case data[p] > 122:
 					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
+						goto tr187
 					}
 				case data[p] >= 97:
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		default:
-			goto tr176
+			goto tr187
 		}
 		goto st2
-tr180:
+tr191:
 //line xss_130.rl:27
 
             if !lastIsWordEle {
@@ -1271,46 +1309,48 @@ tr180:
 
             return true
         
-	goto st176
-	st176:
+	goto st187
+	st187:
 		if p++; p == pe {
-			goto _test_eof176
+			goto _test_eof187
 		}
-	st_case_176:
-//line xss_130.go:1281
+	st_case_187:
+//line xss_130.go:1319
 		switch data[p] {
 		case 33:
-			goto tr178
+			goto tr189
 		case 59:
-			goto tr179
+			goto tr190
 		case 64:
-			goto tr180
+			goto tr191
 		case 95:
-			goto tr177
+			goto tr188
 		case 100:
 			goto tr5
 		case 102:
 			goto tr6
-		case 105:
-			goto st20
-		case 112:
+		case 104:
 			goto tr7
-		case 120:
+		case 105:
+			goto st23
+		case 112:
 			goto tr8
+		case 120:
+			goto tr9
 		}
 		switch {
 		case data[p] < 58:
 			switch {
 			case data[p] < 32:
 				if 9 <= data[p] && data[p] <= 13 {
-					goto tr176
+					goto tr187
 				}
 			case data[p] > 47:
 				if 48 <= data[p] && data[p] <= 57 {
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		case data[p] > 63:
 			switch {
@@ -1322,46 +1362,46 @@ tr180:
 				switch {
 				case data[p] > 122:
 					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
+						goto tr187
 					}
 				case data[p] >= 97:
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		default:
-			goto tr176
+			goto tr187
 		}
 		goto st2
-tr177:
+tr188:
 //line xss_130.rl:35
 
             return true
         
-	goto st177
-	st177:
+	goto st188
+	st188:
 		if p++; p == pe {
-			goto _test_eof177
+			goto _test_eof188
 		}
-	st_case_177:
-//line xss_130.go:1349
+	st_case_188:
+//line xss_130.go:1389
 		if data[p] == 95 {
-			goto tr177
+			goto tr188
 		}
 		switch {
 		case data[p] < 58:
 			switch {
 			case data[p] < 32:
 				if 9 <= data[p] && data[p] <= 13 {
-					goto tr176
+					goto tr187
 				}
 			case data[p] > 47:
 				if 48 <= data[p] && data[p] <= 57 {
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		case data[p] > 64:
 			switch {
@@ -1373,27 +1413,38 @@ tr177:
 				switch {
 				case data[p] > 122:
 					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
+						goto tr187
 					}
 				case data[p] >= 97:
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		default:
-			goto tr176
+			goto tr187
 		}
 		goto st2
+tr7:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st20
 	st20:
 		if p++; p == pe {
 			goto _test_eof20
 		}
 	st_case_20:
+//line xss_130.go:1444
 		switch data[p] {
 		case 95:
 			goto st1
-		case 109:
+		case 116:
 			goto st21
 		}
 		switch {
@@ -1417,7 +1468,7 @@ tr177:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 112:
+		case 116:
 			goto st22
 		}
 		switch {
@@ -1441,8 +1492,8 @@ tr177:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 111:
-			goto st23
+		case 112:
+			goto st183
 		}
 		switch {
 		case data[p] < 65:
@@ -1465,7 +1516,7 @@ tr177:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 114:
+		case 109:
 			goto st24
 		}
 		switch {
@@ -1489,8 +1540,8 @@ tr177:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 116:
-			goto st172
+		case 112:
+			goto st25
 		}
 		switch {
 		case data[p] < 65:
@@ -1505,26 +1556,15 @@ tr177:
 			goto st1
 		}
 		goto st2
-tr7:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-	goto st25
 	st25:
 		if p++; p == pe {
 			goto _test_eof25
 		}
 	st_case_25:
-//line xss_130.go:1524
 		switch data[p] {
 		case 95:
 			goto st1
-		case 97:
+		case 111:
 			goto st26
 		}
 		switch {
@@ -1533,7 +1573,7 @@ tr7:
 				goto st1
 			}
 		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
+			if 97 <= data[p] && data[p] <= 122 {
 				goto st1
 			}
 		default:
@@ -1548,7 +1588,7 @@ tr7:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 116:
+		case 114:
 			goto st27
 		}
 		switch {
@@ -1573,7 +1613,7 @@ tr7:
 		case 95:
 			goto st1
 		case 116:
-			goto st28
+			goto st183
 		}
 		switch {
 		case data[p] < 65:
@@ -1588,15 +1628,26 @@ tr7:
 			goto st1
 		}
 		goto st2
+tr8:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st28
 	st28:
 		if p++; p == pe {
 			goto _test_eof28
 		}
 	st_case_28:
+//line xss_130.go:1647
 		switch data[p] {
 		case 95:
 			goto st1
-		case 101:
+		case 97:
 			goto st29
 		}
 		switch {
@@ -1605,7 +1656,7 @@ tr7:
 				goto st1
 			}
 		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
+			if 98 <= data[p] && data[p] <= 122 {
 				goto st1
 			}
 		default:
@@ -1620,7 +1671,7 @@ tr7:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 114:
+		case 116:
 			goto st30
 		}
 		switch {
@@ -1644,7 +1695,7 @@ tr7:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 110:
+		case 116:
 			goto st31
 		}
 		switch {
@@ -1666,45 +1717,22 @@ tr7:
 		}
 	st_case_31:
 		switch data[p] {
-		case 61:
-			goto st179
 		case 95:
-			goto st31
+			goto st1
+		case 101:
+			goto st32
 		}
 		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto st32
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto st32
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
 			}
-		case data[p] > 64:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto st32
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto st32
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
 			}
 		default:
-			goto st32
+			goto st1
 		}
 		goto st2
 	st32:
@@ -1713,133 +1741,46 @@ tr7:
 		}
 	st_case_32:
 		switch data[p] {
-		case 33:
-			goto tr39
-		case 59:
-			goto tr40
-		case 61:
-			goto st179
-		case 64:
-			goto tr41
 		case 95:
-			goto st31
-		case 100:
-			goto tr42
-		case 102:
-			goto tr43
-		case 112:
-			goto tr44
-		case 120:
-			goto tr45
+			goto st1
+		case 114:
+			goto st33
 		}
 		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto st32
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto st32
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
 			}
-		case data[p] > 63:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto st32
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto st32
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
 			}
 		default:
-			goto st32
+			goto st1
 		}
 		goto st2
-tr39:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-	goto st33
 	st33:
 		if p++; p == pe {
 			goto _test_eof33
 		}
 	st_case_33:
-//line xss_130.go:1787
 		switch data[p] {
-		case 33:
-			goto tr39
-		case 59:
-			goto tr40
-		case 61:
-			goto st179
-		case 64:
-			goto tr41
 		case 95:
-			goto st31
-		case 100:
-			goto tr42
-		case 101:
-			goto st91
-		case 102:
-			goto tr43
-		case 112:
-			goto tr44
-		case 120:
-			goto tr45
+			goto st1
+		case 110:
+			goto st34
 		}
 		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto st32
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto st32
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
 			}
-		case data[p] > 63:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto st32
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto st32
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
 			}
 		default:
-			goto st32
+			goto st1
 		}
 		goto st2
 	st34:
@@ -1849,66 +1790,254 @@ tr39:
 	st_case_34:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st190
 		case 95:
 			goto st34
-		}
-		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
-			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
-			}
-		default:
-			goto st34
-		}
-		goto st2
-tr187:
-//line xss_130.rl:35
-
-            return true
-        
-	goto st178
-	st178:
-		if p++; p == pe {
-			goto _test_eof178
-		}
-	st_case_178:
-//line xss_130.go:1881
-		switch data[p] {
-		case 33:
-			goto tr178
-		case 59:
-			goto tr179
-		case 64:
-			goto tr180
-		case 95:
-			goto tr177
-		case 100:
-			goto tr5
-		case 102:
-			goto tr6
-		case 112:
-			goto tr7
-		case 120:
-			goto tr8
 		}
 		switch {
 		case data[p] < 58:
 			switch {
 			case data[p] < 32:
 				if 9 <= data[p] && data[p] <= 13 {
-					goto tr176
+					goto st35
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto st35
+			}
+		case data[p] > 64:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto st35
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto st35
+			}
+		default:
+			goto st35
+		}
+		goto st2
+	st35:
+		if p++; p == pe {
+			goto _test_eof35
+		}
+	st_case_35:
+		switch data[p] {
+		case 33:
+			goto tr42
+		case 59:
+			goto tr43
+		case 61:
+			goto st190
+		case 64:
+			goto tr44
+		case 95:
+			goto st34
+		case 100:
+			goto tr45
+		case 102:
+			goto tr46
+		case 104:
+			goto tr47
+		case 112:
+			goto tr48
+		case 120:
+			goto tr49
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto st35
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto st35
+			}
+		case data[p] > 63:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto st35
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto st35
+			}
+		default:
+			goto st35
+		}
+		goto st2
+tr42:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st36
+	st36:
+		if p++; p == pe {
+			goto _test_eof36
+		}
+	st_case_36:
+//line xss_130.go:1912
+		switch data[p] {
+		case 33:
+			goto tr42
+		case 59:
+			goto tr43
+		case 61:
+			goto st190
+		case 64:
+			goto tr44
+		case 95:
+			goto st34
+		case 100:
+			goto tr45
+		case 101:
+			goto st97
+		case 102:
+			goto tr46
+		case 104:
+			goto tr47
+		case 112:
+			goto tr48
+		case 120:
+			goto tr49
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto st35
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto st35
+			}
+		case data[p] > 63:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto st35
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto st35
+			}
+		default:
+			goto st35
+		}
+		goto st2
+	st37:
+		if p++; p == pe {
+			goto _test_eof37
+		}
+	st_case_37:
+		switch data[p] {
+		case 61:
+			goto st189
+		case 95:
+			goto st37
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
+			}
+		default:
+			goto st37
+		}
+		goto st2
+tr198:
+//line xss_130.rl:35
+
+            return true
+        
+	goto st189
+	st189:
+		if p++; p == pe {
+			goto _test_eof189
+		}
+	st_case_189:
+//line xss_130.go:2008
+		switch data[p] {
+		case 33:
+			goto tr189
+		case 59:
+			goto tr190
+		case 64:
+			goto tr191
+		case 95:
+			goto tr188
+		case 100:
+			goto tr5
+		case 102:
+			goto tr6
+		case 104:
+			goto tr7
+		case 112:
+			goto tr8
+		case 120:
+			goto tr9
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto tr187
 				}
 			case data[p] > 47:
 				if 48 <= data[p] && data[p] <= 57 {
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		case data[p] > 63:
 			switch {
@@ -1920,19 +2049,19 @@ tr187:
 				switch {
 				case data[p] > 122:
 					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
+						goto tr187
 					}
 				case data[p] >= 97:
 					goto st1
 				}
 			default:
-				goto tr176
+				goto tr187
 			}
 		default:
-			goto tr176
+			goto tr187
 		}
 		goto st2
-tr8:
+tr9:
 //line xss_130.rl:27
 
             if !lastIsWordEle {
@@ -1941,94 +2070,22 @@ tr8:
                 fmt.Println("no")
             }
         
-	goto st35
-	st35:
-		if p++; p == pe {
-			goto _test_eof35
-		}
-	st_case_35:
-//line xss_130.go:1951
-		switch data[p] {
-		case 95:
-			goto st1
-		case 104:
-			goto st36
-		case 108:
-			goto st39
-		case 109:
-			goto st47
-		}
-		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
-			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
-			}
-		default:
-			goto st1
-		}
-		goto st2
-	st36:
-		if p++; p == pe {
-			goto _test_eof36
-		}
-	st_case_36:
-		switch data[p] {
-		case 95:
-			goto st1
-		case 116:
-			goto st37
-		}
-		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
-			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
-			}
-		default:
-			goto st1
-		}
-		goto st2
-	st37:
-		if p++; p == pe {
-			goto _test_eof37
-		}
-	st_case_37:
-		switch data[p] {
-		case 95:
-			goto st1
-		case 109:
-			goto st38
-		}
-		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
-			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
-			}
-		default:
-			goto st1
-		}
-		goto st2
+	goto st38
 	st38:
 		if p++; p == pe {
 			goto _test_eof38
 		}
 	st_case_38:
+//line xss_130.go:2080
 		switch data[p] {
 		case 95:
 			goto st1
+		case 104:
+			goto st39
 		case 108:
-			goto st172
+			goto st42
+		case 109:
+			goto st50
 		}
 		switch {
 		case data[p] < 65:
@@ -2051,7 +2108,7 @@ tr8:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 105:
+		case 116:
 			goto st40
 		}
 		switch {
@@ -2075,7 +2132,7 @@ tr8:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 110:
+		case 109:
 			goto st41
 		}
 		switch {
@@ -2099,8 +2156,8 @@ tr8:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 107:
-			goto st42
+		case 108:
+			goto st183
 		}
 		switch {
 		case data[p] < 65:
@@ -2121,10 +2178,10 @@ tr8:
 		}
 	st_case_42:
 		switch data[p] {
-		case 58:
-			goto st43
 		case 95:
 			goto st1
+		case 105:
+			goto st43
 		}
 		switch {
 		case data[p] < 65:
@@ -2145,24 +2202,10 @@ tr8:
 		}
 	st_case_43:
 		switch data[p] {
-		case 33:
-			goto tr2
-		case 59:
-			goto tr3
-		case 64:
-			goto tr4
 		case 95:
 			goto st1
-		case 100:
-			goto tr5
-		case 102:
-			goto tr6
-		case 104:
+		case 110:
 			goto st44
-		case 112:
-			goto tr7
-		case 120:
-			goto tr8
 		}
 		switch {
 		case data[p] < 65:
@@ -2185,7 +2228,7 @@ tr8:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 114:
+		case 107:
 			goto st45
 		}
 		switch {
@@ -2207,10 +2250,10 @@ tr8:
 		}
 	st_case_45:
 		switch data[p] {
+		case 58:
+			goto st46
 		case 95:
 			goto st1
-		case 101:
-			goto st46
 		}
 		switch {
 		case data[p] < 65:
@@ -2231,10 +2274,24 @@ tr8:
 		}
 	st_case_46:
 		switch data[p] {
+		case 33:
+			goto tr2
+		case 59:
+			goto tr3
+		case 64:
+			goto tr4
 		case 95:
 			goto st1
+		case 100:
+			goto tr5
 		case 102:
-			goto st172
+			goto tr6
+		case 104:
+			goto tr61
+		case 112:
+			goto tr8
+		case 120:
+			goto tr9
 		}
 		switch {
 		case data[p] < 65:
@@ -2249,16 +2306,29 @@ tr8:
 			goto st1
 		}
 		goto st2
+tr61:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st47
 	st47:
 		if p++; p == pe {
 			goto _test_eof47
 		}
 	st_case_47:
+//line xss_130.go:2325
 		switch data[p] {
 		case 95:
 			goto st1
-		case 108:
+		case 114:
 			goto st48
+		case 116:
+			goto st21
 		}
 		switch {
 		case data[p] < 65:
@@ -2281,7 +2351,7 @@ tr8:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 110:
+		case 101:
 			goto st49
 		}
 		switch {
@@ -2305,8 +2375,8 @@ tr8:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 115:
-			goto st172
+		case 102:
+			goto st183
 		}
 		switch {
 		case data[p] < 65:
@@ -2321,539 +2391,52 @@ tr8:
 			goto st1
 		}
 		goto st2
-tr40:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-	goto st50
 	st50:
 		if p++; p == pe {
 			goto _test_eof50
 		}
 	st_case_50:
-//line xss_130.go:2340
 		switch data[p] {
-		case 33:
-			goto tr39
-		case 59:
-			goto tr40
-		case 61:
-			goto st179
-		case 64:
-			goto tr41
 		case 95:
-			goto st31
-		case 98:
-			goto st86
-		case 100:
-			goto tr42
-		case 102:
-			goto tr43
-		case 112:
-			goto tr44
-		case 120:
-			goto tr45
+			goto st1
+		case 108:
+			goto st51
 		}
 		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto st32
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto st32
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
 			}
-		case data[p] > 63:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto st32
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto st32
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
 			}
 		default:
-			goto st32
+			goto st1
 		}
 		goto st2
-tr184:
-//line xss_130.rl:35
-
-            return true
-        
-	goto st179
-	st179:
-		if p++; p == pe {
-			goto _test_eof179
-		}
-	st_case_179:
-//line xss_130.go:2410
-		switch data[p] {
-		case 33:
-			goto tr182
-		case 59:
-			goto tr183
-		case 61:
-			goto tr184
-		case 64:
-			goto tr185
-		case 95:
-			goto tr186
-		case 100:
-			goto tr42
-		case 102:
-			goto tr43
-		case 112:
-			goto tr44
-		case 120:
-			goto tr45
-		}
-		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto tr181
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		case data[p] > 63:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto tr181
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		default:
-			goto tr181
-		}
-		goto st2
-tr181:
-//line xss_130.rl:35
-
-            return true
-        
-	goto st180
-	st180:
-		if p++; p == pe {
-			goto _test_eof180
-		}
-	st_case_180:
-//line xss_130.go:2478
-		switch data[p] {
-		case 33:
-			goto tr182
-		case 59:
-			goto tr183
-		case 61:
-			goto tr184
-		case 64:
-			goto tr185
-		case 95:
-			goto tr186
-		case 100:
-			goto tr42
-		case 102:
-			goto tr43
-		case 112:
-			goto tr44
-		case 120:
-			goto tr45
-		}
-		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto tr181
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		case data[p] > 63:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto tr181
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		default:
-			goto tr181
-		}
-		goto st2
-tr182:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-//line xss_130.rl:35
-
-            return true
-        
-	goto st181
-	st181:
-		if p++; p == pe {
-			goto _test_eof181
-		}
-	st_case_181:
-//line xss_130.go:2554
-		switch data[p] {
-		case 33:
-			goto tr182
-		case 59:
-			goto tr183
-		case 61:
-			goto tr184
-		case 64:
-			goto tr185
-		case 95:
-			goto tr186
-		case 100:
-			goto tr42
-		case 101:
-			goto st91
-		case 102:
-			goto tr43
-		case 112:
-			goto tr44
-		case 120:
-			goto tr45
-		}
-		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto tr181
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		case data[p] > 63:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto tr181
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		default:
-			goto tr181
-		}
-		goto st2
-tr183:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-//line xss_130.rl:35
-
-            return true
-        
-	goto st182
-	st182:
-		if p++; p == pe {
-			goto _test_eof182
-		}
-	st_case_182:
-//line xss_130.go:2632
-		switch data[p] {
-		case 33:
-			goto tr182
-		case 59:
-			goto tr183
-		case 61:
-			goto tr184
-		case 64:
-			goto tr185
-		case 95:
-			goto tr186
-		case 98:
-			goto st86
-		case 100:
-			goto tr42
-		case 102:
-			goto tr43
-		case 112:
-			goto tr44
-		case 120:
-			goto tr45
-		}
-		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto tr181
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		case data[p] > 63:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto tr181
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		default:
-			goto tr181
-		}
-		goto st2
-tr185:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-//line xss_130.rl:35
-
-            return true
-        
-	goto st183
-	st183:
-		if p++; p == pe {
-			goto _test_eof183
-		}
-	st_case_183:
-//line xss_130.go:2710
-		switch data[p] {
-		case 33:
-			goto tr182
-		case 59:
-			goto tr183
-		case 61:
-			goto tr184
-		case 64:
-			goto tr185
-		case 95:
-			goto tr186
-		case 100:
-			goto tr42
-		case 102:
-			goto tr43
-		case 105:
-			goto st64
-		case 112:
-			goto tr44
-		case 120:
-			goto tr45
-		}
-		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto tr181
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		case data[p] > 63:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto tr181
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		default:
-			goto tr181
-		}
-		goto st2
-tr186:
-//line xss_130.rl:35
-
-            return true
-        
-	goto st184
-	st184:
-		if p++; p == pe {
-			goto _test_eof184
-		}
-	st_case_184:
-//line xss_130.go:2780
-		switch data[p] {
-		case 61:
-			goto tr184
-		case 95:
-			goto tr186
-		}
-		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto tr181
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		case data[p] > 64:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto tr181
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto tr181
-			}
-		default:
-			goto tr181
-		}
-		goto st2
-tr42:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-	goto st51
 	st51:
 		if p++; p == pe {
 			goto _test_eof51
 		}
 	st_case_51:
-//line xss_130.go:2838
 		switch data[p] {
-		case 61:
-			goto st178
 		case 95:
-			goto st34
-		case 97:
+			goto st1
+		case 110:
 			goto st52
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st1
 			}
 		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
-				goto st34
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
 			}
 		default:
-			goto st34
+			goto st1
 		}
 		goto st2
 	st52:
@@ -2862,76 +2445,22 @@ tr42:
 		}
 	st_case_52:
 		switch data[p] {
-		case 61:
-			goto st178
 		case 95:
-			goto st34
-		case 116:
-			goto st53
+			goto st1
+		case 115:
+			goto st183
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st1
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st1
 			}
 		default:
-			goto st34
-		}
-		goto st2
-	st53:
-		if p++; p == pe {
-			goto _test_eof53
-		}
-	st_case_53:
-		switch data[p] {
-		case 61:
-			goto st178
-		case 95:
-			goto st34
-		case 97:
-			goto st54
-		}
-		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
-			}
-		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
-				goto st34
-			}
-		default:
-			goto st34
-		}
-		goto st2
-	st54:
-		if p++; p == pe {
-			goto _test_eof54
-		}
-	st_case_54:
-		switch data[p] {
-		case 58:
-			goto st10
-		case 61:
-			goto st178
-		case 95:
-			goto st34
-		}
-		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
-			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
-			}
-		default:
-			goto st34
+			goto st1
 		}
 		goto st2
 tr43:
@@ -2943,32 +2472,568 @@ tr43:
                 fmt.Println("no")
             }
         
-	goto st55
+	goto st53
+	st53:
+		if p++; p == pe {
+			goto _test_eof53
+		}
+	st_case_53:
+//line xss_130.go:2482
+		switch data[p] {
+		case 33:
+			goto tr42
+		case 59:
+			goto tr43
+		case 61:
+			goto st190
+		case 64:
+			goto tr44
+		case 95:
+			goto st34
+		case 98:
+			goto st92
+		case 100:
+			goto tr45
+		case 102:
+			goto tr46
+		case 104:
+			goto tr47
+		case 112:
+			goto tr48
+		case 120:
+			goto tr49
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto st35
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto st35
+			}
+		case data[p] > 63:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto st35
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto st35
+			}
+		default:
+			goto st35
+		}
+		goto st2
+tr195:
+//line xss_130.rl:35
+
+            return true
+        
+	goto st190
+	st190:
+		if p++; p == pe {
+			goto _test_eof190
+		}
+	st_case_190:
+//line xss_130.go:2554
+		switch data[p] {
+		case 33:
+			goto tr193
+		case 59:
+			goto tr194
+		case 61:
+			goto tr195
+		case 64:
+			goto tr196
+		case 95:
+			goto tr197
+		case 100:
+			goto tr45
+		case 102:
+			goto tr46
+		case 104:
+			goto tr47
+		case 112:
+			goto tr48
+		case 120:
+			goto tr49
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto tr192
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		case data[p] > 63:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto tr192
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		default:
+			goto tr192
+		}
+		goto st2
+tr192:
+//line xss_130.rl:35
+
+            return true
+        
+	goto st191
+	st191:
+		if p++; p == pe {
+			goto _test_eof191
+		}
+	st_case_191:
+//line xss_130.go:2624
+		switch data[p] {
+		case 33:
+			goto tr193
+		case 59:
+			goto tr194
+		case 61:
+			goto tr195
+		case 64:
+			goto tr196
+		case 95:
+			goto tr197
+		case 100:
+			goto tr45
+		case 102:
+			goto tr46
+		case 104:
+			goto tr47
+		case 112:
+			goto tr48
+		case 120:
+			goto tr49
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto tr192
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		case data[p] > 63:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto tr192
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		default:
+			goto tr192
+		}
+		goto st2
+tr193:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+//line xss_130.rl:35
+
+            return true
+        
+	goto st192
+	st192:
+		if p++; p == pe {
+			goto _test_eof192
+		}
+	st_case_192:
+//line xss_130.go:2702
+		switch data[p] {
+		case 33:
+			goto tr193
+		case 59:
+			goto tr194
+		case 61:
+			goto tr195
+		case 64:
+			goto tr196
+		case 95:
+			goto tr197
+		case 100:
+			goto tr45
+		case 101:
+			goto st97
+		case 102:
+			goto tr46
+		case 104:
+			goto tr47
+		case 112:
+			goto tr48
+		case 120:
+			goto tr49
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto tr192
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		case data[p] > 63:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto tr192
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		default:
+			goto tr192
+		}
+		goto st2
+tr194:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+//line xss_130.rl:35
+
+            return true
+        
+	goto st193
+	st193:
+		if p++; p == pe {
+			goto _test_eof193
+		}
+	st_case_193:
+//line xss_130.go:2782
+		switch data[p] {
+		case 33:
+			goto tr193
+		case 59:
+			goto tr194
+		case 61:
+			goto tr195
+		case 64:
+			goto tr196
+		case 95:
+			goto tr197
+		case 98:
+			goto st92
+		case 100:
+			goto tr45
+		case 102:
+			goto tr46
+		case 104:
+			goto tr47
+		case 112:
+			goto tr48
+		case 120:
+			goto tr49
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto tr192
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		case data[p] > 63:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto tr192
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		default:
+			goto tr192
+		}
+		goto st2
+tr196:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+//line xss_130.rl:35
+
+            return true
+        
+	goto st194
+	st194:
+		if p++; p == pe {
+			goto _test_eof194
+		}
+	st_case_194:
+//line xss_130.go:2862
+		switch data[p] {
+		case 33:
+			goto tr193
+		case 59:
+			goto tr194
+		case 61:
+			goto tr195
+		case 64:
+			goto tr196
+		case 95:
+			goto tr197
+		case 100:
+			goto tr45
+		case 102:
+			goto tr46
+		case 104:
+			goto tr47
+		case 105:
+			goto st70
+		case 112:
+			goto tr48
+		case 120:
+			goto tr49
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto tr192
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		case data[p] > 63:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto tr192
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		default:
+			goto tr192
+		}
+		goto st2
+tr197:
+//line xss_130.rl:35
+
+            return true
+        
+	goto st195
+	st195:
+		if p++; p == pe {
+			goto _test_eof195
+		}
+	st_case_195:
+//line xss_130.go:2934
+		switch data[p] {
+		case 61:
+			goto tr195
+		case 95:
+			goto tr197
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto tr192
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		case data[p] > 64:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto tr192
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto tr192
+			}
+		default:
+			goto tr192
+		}
+		goto st2
+tr45:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st54
+	st54:
+		if p++; p == pe {
+			goto _test_eof54
+		}
+	st_case_54:
+//line xss_130.go:2992
+		switch data[p] {
+		case 61:
+			goto st189
+		case 95:
+			goto st37
+		case 97:
+			goto st55
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
+			}
+		case data[p] > 90:
+			if 98 <= data[p] && data[p] <= 122 {
+				goto st37
+			}
+		default:
+			goto st37
+		}
+		goto st2
 	st55:
 		if p++; p == pe {
 			goto _test_eof55
 		}
 	st_case_55:
-//line xss_130.go:2953
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 111:
+			goto st37
+		case 116:
 			goto st56
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st56:
@@ -2978,23 +3043,23 @@ tr43:
 	st_case_56:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 114:
+			goto st37
+		case 97:
 			goto st57
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+			if 98 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st57:
@@ -3003,50 +3068,61 @@ tr43:
 		}
 	st_case_57:
 		switch data[p] {
+		case 58:
+			goto st10
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 109:
-			goto st58
+			goto st37
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
+tr46:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st58
 	st58:
 		if p++; p == pe {
 			goto _test_eof58
 		}
 	st_case_58:
+//line xss_130.go:3107
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 97:
+			goto st37
+		case 111:
 			goto st59
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
-				goto st34
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st59:
@@ -3056,23 +3132,23 @@ tr43:
 	st_case_59:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 99:
+			goto st37
+		case 114:
 			goto st60
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st60:
@@ -3082,23 +3158,23 @@ tr43:
 	st_case_60:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 116:
+			goto st37
+		case 109:
 			goto st61
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st61:
@@ -3108,23 +3184,23 @@ tr43:
 	st_case_61:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 105:
+			goto st37
+		case 97:
 			goto st62
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+			if 98 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st62:
@@ -3134,23 +3210,23 @@ tr43:
 	st_case_62:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 111:
+			goto st37
+		case 99:
 			goto st63
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st63:
@@ -3160,124 +3236,23 @@ tr43:
 	st_case_63:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 110:
-			goto st185
+			goto st37
+		case 116:
+			goto st64
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
-		}
-		goto st2
-	st185:
-		if p++; p == pe {
-			goto _test_eof185
-		}
-	st_case_185:
-		switch data[p] {
-		case 61:
-			goto tr187
-		case 95:
-			goto tr188
-		}
-		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto tr176
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto tr176
-			}
-		case data[p] > 64:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto tr176
-			}
-		default:
-			goto tr176
-		}
-		goto st2
-tr188:
-//line xss_130.rl:35
-
-            return true
-        
-	goto st186
-	st186:
-		if p++; p == pe {
-			goto _test_eof186
-		}
-	st_case_186:
-//line xss_130.go:3241
-		switch data[p] {
-		case 61:
-			goto tr187
-		case 95:
-			goto tr188
-		}
-		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto tr176
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto tr176
-			}
-		case data[p] > 64:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto tr176
-			}
-		default:
-			goto tr176
+			goto st37
 		}
 		goto st2
 	st64:
@@ -3287,23 +3262,23 @@ tr188:
 	st_case_64:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 109:
+			goto st37
+		case 105:
 			goto st65
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st65:
@@ -3313,23 +3288,23 @@ tr188:
 	st_case_65:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 112:
+			goto st37
+		case 111:
 			goto st66
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st66:
@@ -3339,49 +3314,161 @@ tr188:
 	st_case_66:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 111:
-			goto st67
+			goto st37
+		case 110:
+			goto st196
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
+	st196:
+		if p++; p == pe {
+			goto _test_eof196
+		}
+	st_case_196:
+		switch data[p] {
+		case 61:
+			goto tr198
+		case 95:
+			goto tr199
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto tr187
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto tr187
+			}
+		case data[p] > 64:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto tr187
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto tr187
+			}
+		default:
+			goto tr187
+		}
+		goto st2
+tr199:
+//line xss_130.rl:35
+
+            return true
+        
+	goto st197
+	st197:
+		if p++; p == pe {
+			goto _test_eof197
+		}
+	st_case_197:
+//line xss_130.go:3395
+		switch data[p] {
+		case 61:
+			goto tr198
+		case 95:
+			goto tr199
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto tr187
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto tr187
+			}
+		case data[p] > 64:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto tr187
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto tr187
+			}
+		default:
+			goto tr187
+		}
+		goto st2
+tr47:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st67
 	st67:
 		if p++; p == pe {
 			goto _test_eof67
 		}
 	st_case_67:
+//line xss_130.go:3453
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 114:
+			goto st37
+		case 116:
 			goto st68
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st68:
@@ -3391,60 +3478,49 @@ tr188:
 	st_case_68:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
+			goto st37
 		case 116:
-			goto st185
+			goto st69
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
-tr44:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-	goto st69
 	st69:
 		if p++; p == pe {
 			goto _test_eof69
 		}
 	st_case_69:
-//line xss_130.go:3429
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 97:
-			goto st70
+			goto st37
+		case 112:
+			goto st196
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
-				goto st34
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st70:
@@ -3454,23 +3530,23 @@ tr44:
 	st_case_70:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 116:
+			goto st37
+		case 109:
 			goto st71
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st71:
@@ -3480,23 +3556,23 @@ tr44:
 	st_case_71:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 116:
+			goto st37
+		case 112:
 			goto st72
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st72:
@@ -3506,23 +3582,23 @@ tr44:
 	st_case_72:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 101:
+			goto st37
+		case 111:
 			goto st73
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st73:
@@ -3532,23 +3608,23 @@ tr44:
 	st_case_73:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
+			goto st37
 		case 114:
 			goto st74
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st74:
@@ -3558,26 +3634,26 @@ tr44:
 	st_case_74:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 110:
-			goto st31
+			goto st37
+		case 116:
+			goto st196
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
-tr45:
+tr48:
 //line xss_130.rl:27
 
             if !lastIsWordEle {
@@ -3592,30 +3668,26 @@ tr45:
 			goto _test_eof75
 		}
 	st_case_75:
-//line xss_130.go:3596
+//line xss_130.go:3672
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 104:
+			goto st37
+		case 97:
 			goto st76
-		case 108:
-			goto st79
-		case 109:
-			goto st83
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+			if 98 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st76:
@@ -3625,23 +3697,23 @@ tr45:
 	st_case_76:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
+			goto st37
 		case 116:
 			goto st77
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st77:
@@ -3651,23 +3723,23 @@ tr45:
 	st_case_77:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 109:
+			goto st37
+		case 116:
 			goto st78
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st78:
@@ -3677,23 +3749,23 @@ tr45:
 	st_case_78:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 108:
-			goto st185
+			goto st37
+		case 101:
+			goto st79
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st79:
@@ -3703,23 +3775,23 @@ tr45:
 	st_case_79:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 105:
+			goto st37
+		case 114:
 			goto st80
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st80:
@@ -3729,49 +3801,64 @@ tr45:
 	st_case_80:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
+			goto st37
 		case 110:
-			goto st81
+			goto st34
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
+tr49:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st81
 	st81:
 		if p++; p == pe {
 			goto _test_eof81
 		}
 	st_case_81:
+//line xss_130.go:3839
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 107:
+			goto st37
+		case 104:
 			goto st82
+		case 108:
+			goto st85
+		case 109:
+			goto st89
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st82:
@@ -3780,24 +3867,24 @@ tr45:
 		}
 	st_case_82:
 		switch data[p] {
-		case 58:
-			goto st43
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
+			goto st37
+		case 116:
+			goto st83
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st83:
@@ -3807,23 +3894,23 @@ tr45:
 	st_case_83:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 108:
+			goto st37
+		case 109:
 			goto st84
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st84:
@@ -3833,23 +3920,23 @@ tr45:
 	st_case_84:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 110:
-			goto st85
+			goto st37
+		case 108:
+			goto st196
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st85:
@@ -3859,23 +3946,23 @@ tr45:
 	st_case_85:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 115:
-			goto st185
+			goto st37
+		case 105:
+			goto st86
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st86:
@@ -3885,23 +3972,23 @@ tr45:
 	st_case_86:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 97:
+			goto st37
+		case 110:
 			goto st87
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
-				goto st34
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st87:
@@ -3911,23 +3998,23 @@ tr45:
 	st_case_87:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 115:
+			goto st37
+		case 107:
 			goto st88
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st88:
@@ -3936,24 +4023,24 @@ tr45:
 		}
 	st_case_88:
 		switch data[p] {
+		case 58:
+			goto st46
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 101:
-			goto st89
+			goto st37
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st89:
@@ -3962,24 +4049,24 @@ tr45:
 		}
 	st_case_89:
 		switch data[p] {
-		case 54:
-			goto st90
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
+			goto st37
+		case 108:
+			goto st90
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st90:
@@ -3988,24 +4075,24 @@ tr45:
 		}
 	st_case_90:
 		switch data[p] {
-		case 52:
-			goto st185
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
+			goto st37
+		case 110:
+			goto st91
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st91:
@@ -4015,23 +4102,23 @@ tr45:
 	st_case_91:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 110:
-			goto st92
+			goto st37
+		case 115:
+			goto st196
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st92:
@@ -4041,23 +4128,23 @@ tr45:
 	st_case_92:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 116:
+			goto st37
+		case 97:
 			goto st93
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+			if 98 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st93:
@@ -4067,23 +4154,23 @@ tr45:
 	st_case_93:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 105:
+			goto st37
+		case 115:
 			goto st94
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st94:
@@ -4093,23 +4180,23 @@ tr45:
 	st_case_94:
 		switch data[p] {
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
-		case 116:
+			goto st37
+		case 101:
 			goto st95
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st95:
@@ -4118,24 +4205,24 @@ tr45:
 		}
 	st_case_95:
 		switch data[p] {
-		case 61:
-			goto st178
-		case 95:
-			goto st34
-		case 121:
+		case 54:
 			goto st96
+		case 61:
+			goto st189
+		case 95:
+			goto st37
 		}
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+				goto st37
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st96:
@@ -4144,29 +4231,24 @@ tr45:
 		}
 	st_case_96:
 		switch data[p] {
-		case 32:
-			goto st97
+		case 52:
+			goto st196
 		case 61:
-			goto st178
+			goto st189
 		case 95:
-			goto st34
+			goto st37
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st97
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st34
-				}
-			case data[p] >= 65:
-				goto st34
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st34
+			goto st37
 		}
 		goto st2
 	st97:
@@ -4175,43 +4257,24 @@ tr45:
 		}
 	st_case_97:
 		switch data[p] {
-		case 32:
-			goto st97
-		case 33:
-			goto tr2
-		case 37:
-			goto st98
-		case 59:
-			goto tr3
-		case 64:
-			goto tr4
+		case 61:
+			goto st189
 		case 95:
-			goto st100
-		case 100:
-			goto tr106
-		case 102:
-			goto tr107
-		case 112:
-			goto tr108
-		case 120:
-			goto tr109
+			goto st37
+		case 110:
+			goto st98
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st97
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st1
+			goto st37
 		}
 		goto st2
 	st98:
@@ -4220,41 +4283,24 @@ tr45:
 		}
 	st_case_98:
 		switch data[p] {
-		case 32:
-			goto st99
-		case 33:
-			goto tr2
-		case 59:
-			goto tr3
-		case 64:
-			goto tr4
+		case 61:
+			goto st189
 		case 95:
-			goto st1
-		case 100:
-			goto tr5
-		case 102:
-			goto tr6
-		case 112:
-			goto tr7
-		case 120:
-			goto tr8
+			goto st37
+		case 116:
+			goto st99
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st99
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st1
-				}
-			case data[p] >= 65:
-				goto st1
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st1
+			goto st37
 		}
 		goto st2
 	st99:
@@ -4263,41 +4309,24 @@ tr45:
 		}
 	st_case_99:
 		switch data[p] {
-		case 32:
-			goto st99
-		case 33:
-			goto tr2
-		case 59:
-			goto tr3
-		case 64:
-			goto tr4
+		case 61:
+			goto st189
 		case 95:
+			goto st37
+		case 105:
 			goto st100
-		case 100:
-			goto tr106
-		case 102:
-			goto tr107
-		case 112:
-			goto tr108
-		case 120:
-			goto tr109
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st99
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st1
+			goto st37
 		}
 		goto st2
 	st100:
@@ -4306,27 +4335,24 @@ tr45:
 		}
 	st_case_100:
 		switch data[p] {
-		case 32:
-			goto st101
+		case 61:
+			goto st189
 		case 95:
-			goto st100
+			goto st37
+		case 116:
+			goto st101
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st100
+			goto st37
 		}
 		goto st2
 	st101:
@@ -4335,80 +4361,55 @@ tr45:
 		}
 	st_case_101:
 		switch data[p] {
-		case 32:
-			goto st101
-		case 33:
-			goto tr2
-		case 59:
-			goto tr3
-		case 64:
-			goto tr4
+		case 61:
+			goto st189
 		case 95:
-			goto st1
-		case 100:
-			goto tr5
-		case 102:
-			goto tr6
-		case 112:
-			goto tr112
-		case 115:
-			goto st107
-		case 120:
-			goto tr8
+			goto st37
+		case 121:
+			goto st102
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st1
-				}
-			case data[p] >= 65:
-				goto st1
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st1
+			goto st37
 		}
 		goto st2
-tr112:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-	goto st102
 	st102:
 		if p++; p == pe {
 			goto _test_eof102
 		}
 	st_case_102:
-//line xss_130.go:4393
 		switch data[p] {
-		case 95:
-			goto st1
-		case 97:
-			goto st26
-		case 117:
+		case 32:
 			goto st103
+		case 61:
+			goto st189
+		case 95:
+			goto st37
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st103
 			}
-		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st37
+				}
+			case data[p] >= 65:
+				goto st37
 			}
 		default:
-			goto st1
+			goto st37
 		}
 		goto st2
 	st103:
@@ -4417,19 +4418,42 @@ tr112:
 		}
 	st_case_103:
 		switch data[p] {
-		case 95:
-			goto st1
-		case 98:
+		case 32:
+			goto st103
+		case 33:
+			goto tr2
+		case 37:
 			goto st104
+		case 59:
+			goto tr3
+		case 64:
+			goto tr4
+		case 95:
+			goto st106
+		case 100:
+			goto tr112
+		case 102:
+			goto tr113
+		case 104:
+			goto tr114
+		case 112:
+			goto tr115
+		case 120:
+			goto tr116
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st103
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
 			goto st1
@@ -4441,18 +4465,39 @@ tr112:
 		}
 	st_case_104:
 		switch data[p] {
+		case 32:
+			goto st105
+		case 33:
+			goto tr2
+		case 59:
+			goto tr3
+		case 64:
+			goto tr4
 		case 95:
 			goto st1
-		case 108:
-			goto st105
+		case 100:
+			goto tr5
+		case 102:
+			goto tr6
+		case 104:
+			goto tr7
+		case 112:
+			goto tr8
+		case 120:
+			goto tr9
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st105
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st1
+				}
+			case data[p] >= 65:
 				goto st1
 			}
 		default:
@@ -4465,19 +4510,40 @@ tr112:
 		}
 	st_case_105:
 		switch data[p] {
+		case 32:
+			goto st105
+		case 33:
+			goto tr2
+		case 59:
+			goto tr3
+		case 64:
+			goto tr4
 		case 95:
-			goto st1
-		case 105:
 			goto st106
+		case 100:
+			goto tr112
+		case 102:
+			goto tr113
+		case 104:
+			goto tr114
+		case 112:
+			goto tr115
+		case 120:
+			goto tr116
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st105
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
 			goto st1
@@ -4489,22 +4555,27 @@ tr112:
 		}
 	st_case_106:
 		switch data[p] {
+		case 32:
+			goto st107
 		case 95:
-			goto st1
-		case 99:
-			goto st172
+			goto st106
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st1
+			goto st106
 		}
 		goto st2
 	st107:
@@ -4513,33 +4584,69 @@ tr112:
 		}
 	st_case_107:
 		switch data[p] {
+		case 32:
+			goto st107
+		case 33:
+			goto tr2
+		case 59:
+			goto tr3
+		case 64:
+			goto tr4
 		case 95:
 			goto st1
-		case 121:
-			goto st108
+		case 100:
+			goto tr5
+		case 102:
+			goto tr6
+		case 104:
+			goto tr7
+		case 112:
+			goto tr119
+		case 115:
+			goto st113
+		case 120:
+			goto tr9
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st1
+				}
+			case data[p] >= 65:
 				goto st1
 			}
 		default:
 			goto st1
 		}
 		goto st2
+tr119:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st108
 	st108:
 		if p++; p == pe {
 			goto _test_eof108
 		}
 	st_case_108:
+//line xss_130.go:4644
 		switch data[p] {
 		case 95:
 			goto st1
-		case 115:
+		case 97:
+			goto st29
+		case 117:
 			goto st109
 		}
 		switch {
@@ -4548,7 +4655,7 @@ tr112:
 				goto st1
 			}
 		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
+			if 98 <= data[p] && data[p] <= 122 {
 				goto st1
 			}
 		default:
@@ -4563,7 +4670,7 @@ tr112:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 116:
+		case 98:
 			goto st110
 		}
 		switch {
@@ -4587,7 +4694,7 @@ tr112:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 101:
+		case 108:
 			goto st111
 		}
 		switch {
@@ -4611,8 +4718,8 @@ tr112:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 109:
-			goto st172
+		case 105:
+			goto st112
 		}
 		switch {
 		case data[p] < 65:
@@ -4627,46 +4734,28 @@ tr112:
 			goto st1
 		}
 		goto st2
-tr106:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-	goto st112
 	st112:
 		if p++; p == pe {
 			goto _test_eof112
 		}
 	st_case_112:
-//line xss_130.go:4646
 		switch data[p] {
-		case 32:
-			goto st101
 		case 95:
-			goto st100
-		case 97:
-			goto st113
+			goto st1
+		case 99:
+			goto st183
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 98 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
 			}
 		default:
-			goto st100
+			goto st1
 		}
 		goto st2
 	st113:
@@ -4675,29 +4764,22 @@ tr106:
 		}
 	st_case_113:
 		switch data[p] {
-		case 32:
-			goto st101
 		case 95:
-			goto st100
-		case 116:
+			goto st1
+		case 121:
 			goto st114
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
 			}
 		default:
-			goto st100
+			goto st1
 		}
 		goto st2
 	st114:
@@ -4706,29 +4788,22 @@ tr106:
 		}
 	st_case_114:
 		switch data[p] {
-		case 32:
-			goto st101
 		case 95:
-			goto st100
-		case 97:
+			goto st1
+		case 115:
 			goto st115
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 98 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
 			}
 		default:
-			goto st100
+			goto st1
 		}
 		goto st2
 	st115:
@@ -4737,71 +4812,46 @@ tr106:
 		}
 	st_case_115:
 		switch data[p] {
-		case 32:
-			goto st101
-		case 58:
-			goto st10
 		case 95:
-			goto st100
+			goto st1
+		case 116:
+			goto st116
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
 			}
 		default:
-			goto st100
+			goto st1
 		}
 		goto st2
-tr107:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-	goto st116
 	st116:
 		if p++; p == pe {
 			goto _test_eof116
 		}
 	st_case_116:
-//line xss_130.go:4781
 		switch data[p] {
-		case 32:
-			goto st101
 		case 95:
-			goto st100
-		case 111:
+			goto st1
+		case 101:
 			goto st117
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
 			}
 		default:
-			goto st100
+			goto st1
 		}
 		goto st2
 	st117:
@@ -4810,60 +4860,64 @@ tr107:
 		}
 	st_case_117:
 		switch data[p] {
-		case 32:
-			goto st101
 		case 95:
-			goto st100
-		case 114:
-			goto st118
+			goto st1
+		case 109:
+			goto st183
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
 			}
 		default:
-			goto st100
+			goto st1
 		}
 		goto st2
+tr112:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st118
 	st118:
 		if p++; p == pe {
 			goto _test_eof118
 		}
 	st_case_118:
+//line xss_130.go:4897
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
-		case 109:
+			goto st106
+		case 97:
 			goto st119
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+				if 98 <= data[p] && data[p] <= 122 {
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st119:
@@ -4873,28 +4927,28 @@ tr107:
 	st_case_119:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
-		case 97:
+			goto st106
+		case 116:
 			goto st120
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
-				if 98 <= data[p] && data[p] <= 122 {
-					goto st100
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st120:
@@ -4904,28 +4958,28 @@ tr107:
 	st_case_120:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
-		case 99:
+			goto st106
+		case 97:
 			goto st121
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+				if 98 <= data[p] && data[p] <= 122 {
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st121:
@@ -4935,59 +4989,70 @@ tr107:
 	st_case_121:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
+		case 58:
+			goto st10
 		case 95:
-			goto st100
-		case 116:
-			goto st122
+			goto st106
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
+tr113:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st122
 	st122:
 		if p++; p == pe {
 			goto _test_eof122
 		}
 	st_case_122:
+//line xss_130.go:5032
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
-		case 105:
+			goto st106
+		case 111:
 			goto st123
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st123:
@@ -4997,28 +5062,28 @@ tr107:
 	st_case_123:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
-		case 111:
+			goto st106
+		case 114:
 			goto st124
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st124:
@@ -5028,241 +5093,59 @@ tr107:
 	st_case_124:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
-		case 110:
-			goto st187
+			goto st106
+		case 109:
+			goto st125
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
-	st187:
-		if p++; p == pe {
-			goto _test_eof187
-		}
-	st_case_187:
-		switch data[p] {
-		case 32:
-			goto tr189
-		case 95:
-			goto tr190
-		}
-		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 33:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto tr189
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st100
-				}
-			default:
-				goto tr176
-			}
-		case data[p] > 64:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st100
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
-					}
-				case data[p] >= 97:
-					goto st100
-				}
-			default:
-				goto tr176
-			}
-		default:
-			goto tr176
-		}
-		goto st2
-tr189:
-//line xss_130.rl:35
-
-            return true
-        
-	goto st188
-	st188:
-		if p++; p == pe {
-			goto _test_eof188
-		}
-	st_case_188:
-//line xss_130.go:5114
-		switch data[p] {
-		case 32:
-			goto tr189
-		case 33:
-			goto tr178
-		case 59:
-			goto tr179
-		case 64:
-			goto tr180
-		case 95:
-			goto tr177
-		case 100:
-			goto tr5
-		case 102:
-			goto tr6
-		case 112:
-			goto tr112
-		case 115:
-			goto st107
-		case 120:
-			goto tr8
-		}
-		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 34:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto tr189
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st1
-				}
-			default:
-				goto tr176
-			}
-		case data[p] > 63:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st1
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
-					}
-				case data[p] >= 97:
-					goto st1
-				}
-			default:
-				goto tr176
-			}
-		default:
-			goto tr176
-		}
-		goto st2
-tr190:
-//line xss_130.rl:35
-
-            return true
-        
-	goto st189
-	st189:
-		if p++; p == pe {
-			goto _test_eof189
-		}
-	st_case_189:
-//line xss_130.go:5184
-		switch data[p] {
-		case 32:
-			goto tr189
-		case 95:
-			goto tr190
-		}
-		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 33:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto tr189
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st100
-				}
-			default:
-				goto tr176
-			}
-		case data[p] > 64:
-			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st100
-				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto tr176
-					}
-				case data[p] >= 97:
-					goto st100
-				}
-			default:
-				goto tr176
-			}
-		default:
-			goto tr176
-		}
-		goto st2
-tr108:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-	goto st125
 	st125:
 		if p++; p == pe {
 			goto _test_eof125
 		}
 	st_case_125:
-//line xss_130.go:5242
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
+			goto st106
 		case 97:
 			goto st126
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 98 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st126:
@@ -5272,28 +5155,28 @@ tr108:
 	st_case_126:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
-		case 116:
+			goto st106
+		case 99:
 			goto st127
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st127:
@@ -5303,28 +5186,28 @@ tr108:
 	st_case_127:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
+			goto st106
 		case 116:
 			goto st128
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st128:
@@ -5334,28 +5217,28 @@ tr108:
 	st_case_128:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
-		case 101:
+			goto st106
+		case 105:
 			goto st129
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st129:
@@ -5365,28 +5248,28 @@ tr108:
 	st_case_129:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
-		case 114:
+			goto st106
+		case 111:
 			goto st130
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st130:
@@ -5396,77 +5279,243 @@ tr108:
 	st_case_130:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
+			goto st106
 		case 110:
-			goto st131
+			goto st198
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
-	st131:
+	st198:
 		if p++; p == pe {
-			goto _test_eof131
+			goto _test_eof198
 		}
-	st_case_131:
+	st_case_198:
 		switch data[p] {
 		case 32:
-			goto st132
-		case 61:
-			goto st179
+			goto tr200
 		case 95:
-			goto st131
+			goto tr201
 		}
 		switch {
 		case data[p] < 58:
 			switch {
 			case data[p] < 33:
 				if 9 <= data[p] && data[p] <= 13 {
-					goto st132
+					goto tr200
 				}
 			case data[p] > 47:
 				if 48 <= data[p] && data[p] <= 57 {
-					goto st144
+					goto st106
 				}
 			default:
-				goto st32
+				goto tr187
 			}
 		case data[p] > 64:
 			switch {
 			case data[p] < 91:
 				if 65 <= data[p] && data[p] <= 90 {
-					goto st144
+					goto st106
 				}
 			case data[p] > 96:
 				switch {
 				case data[p] > 122:
 					if 123 <= data[p] && data[p] <= 126 {
-						goto st32
+						goto tr187
 					}
 				case data[p] >= 97:
-					goto st144
+					goto st106
 				}
 			default:
-				goto st32
+				goto tr187
 			}
 		default:
-			goto st32
+			goto tr187
+		}
+		goto st2
+tr200:
+//line xss_130.rl:35
+
+            return true
+        
+	goto st199
+	st199:
+		if p++; p == pe {
+			goto _test_eof199
+		}
+	st_case_199:
+//line xss_130.go:5365
+		switch data[p] {
+		case 32:
+			goto tr200
+		case 33:
+			goto tr189
+		case 59:
+			goto tr190
+		case 64:
+			goto tr191
+		case 95:
+			goto tr188
+		case 100:
+			goto tr5
+		case 102:
+			goto tr6
+		case 104:
+			goto tr7
+		case 112:
+			goto tr119
+		case 115:
+			goto st113
+		case 120:
+			goto tr9
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 34:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto tr200
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st1
+				}
+			default:
+				goto tr187
+			}
+		case data[p] > 63:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st1
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto tr187
+					}
+				case data[p] >= 97:
+					goto st1
+				}
+			default:
+				goto tr187
+			}
+		default:
+			goto tr187
+		}
+		goto st2
+tr201:
+//line xss_130.rl:35
+
+            return true
+        
+	goto st200
+	st200:
+		if p++; p == pe {
+			goto _test_eof200
+		}
+	st_case_200:
+//line xss_130.go:5437
+		switch data[p] {
+		case 32:
+			goto tr200
+		case 95:
+			goto tr201
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 33:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto tr200
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st106
+				}
+			default:
+				goto tr187
+			}
+		case data[p] > 64:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st106
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto tr187
+					}
+				case data[p] >= 97:
+					goto st106
+				}
+			default:
+				goto tr187
+			}
+		default:
+			goto tr187
+		}
+		goto st2
+tr114:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st131
+	st131:
+		if p++; p == pe {
+			goto _test_eof131
+		}
+	st_case_131:
+//line xss_130.go:5495
+		switch data[p] {
+		case 32:
+			goto st107
+		case 95:
+			goto st106
+		case 116:
+			goto st132
+		}
+		switch {
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
+			}
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
+			}
+		default:
+			goto st106
 		}
 		goto st2
 	st132:
@@ -5476,139 +5525,62 @@ tr108:
 	st_case_132:
 		switch data[p] {
 		case 32:
-			goto st132
-		case 33:
-			goto tr39
-		case 59:
-			goto tr40
-		case 61:
-			goto st179
-		case 64:
-			goto tr41
+			goto st107
 		case 95:
-			goto st31
-		case 100:
-			goto tr42
-		case 102:
-			goto tr43
-		case 112:
-			goto tr142
-		case 115:
-			goto st139
-		case 120:
-			goto tr45
+			goto st106
+		case 116:
+			goto st133
 		}
 		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 34:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto st132
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto st32
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 63:
+		case data[p] > 57:
 			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
 				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto st32
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto st32
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st32
+			goto st106
 		}
 		goto st2
-tr41:
-//line xss_130.rl:27
-
-            if !lastIsWordEle {
-                fmt.Println(lastIsWordEle)
-            } else {
-                fmt.Println("no")
-            }
-        
-	goto st133
 	st133:
 		if p++; p == pe {
 			goto _test_eof133
 		}
 	st_case_133:
-//line xss_130.go:5553
 		switch data[p] {
-		case 33:
-			goto tr39
-		case 59:
-			goto tr40
-		case 61:
-			goto st179
-		case 64:
-			goto tr41
+		case 32:
+			goto st107
 		case 95:
-			goto st31
-		case 100:
-			goto tr42
-		case 102:
-			goto tr43
-		case 105:
-			goto st64
+			goto st106
 		case 112:
-			goto tr44
-		case 120:
-			goto tr45
+			goto st198
 		}
 		switch {
-		case data[p] < 58:
-			switch {
-			case data[p] < 32:
-				if 9 <= data[p] && data[p] <= 13 {
-					goto st32
-				}
-			case data[p] > 47:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st34
-				}
-			default:
-				goto st32
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 63:
+		case data[p] > 57:
 			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto st34
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
 				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto st32
-					}
-				case data[p] >= 97:
-					goto st34
-				}
-			default:
-				goto st32
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st32
+			goto st106
 		}
 		goto st2
-tr142:
+tr115:
 //line xss_130.rl:27
 
             if !lastIsWordEle {
@@ -5623,28 +5595,31 @@ tr142:
 			goto _test_eof134
 		}
 	st_case_134:
-//line xss_130.go:5627
+//line xss_130.go:5599
 		switch data[p] {
-		case 61:
-			goto st178
+		case 32:
+			goto st107
 		case 95:
-			goto st34
+			goto st106
 		case 97:
-			goto st70
-		case 117:
 			goto st135
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
-				goto st34
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 98 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st34
+			goto st106
 		}
 		goto st2
 	st135:
@@ -5653,24 +5628,29 @@ tr142:
 		}
 	st_case_135:
 		switch data[p] {
-		case 61:
-			goto st178
+		case 32:
+			goto st107
 		case 95:
-			goto st34
-		case 98:
+			goto st106
+		case 116:
 			goto st136
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st34
+			goto st106
 		}
 		goto st2
 	st136:
@@ -5679,24 +5659,29 @@ tr142:
 		}
 	st_case_136:
 		switch data[p] {
-		case 61:
-			goto st178
+		case 32:
+			goto st107
 		case 95:
-			goto st34
-		case 108:
+			goto st106
+		case 116:
 			goto st137
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st34
+			goto st106
 		}
 		goto st2
 	st137:
@@ -5705,24 +5690,29 @@ tr142:
 		}
 	st_case_137:
 		switch data[p] {
-		case 61:
-			goto st178
+		case 32:
+			goto st107
 		case 95:
-			goto st34
-		case 105:
+			goto st106
+		case 101:
 			goto st138
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st34
+			goto st106
 		}
 		goto st2
 	st138:
@@ -5731,24 +5721,29 @@ tr142:
 		}
 	st_case_138:
 		switch data[p] {
-		case 61:
-			goto st178
+		case 32:
+			goto st107
 		case 95:
-			goto st34
-		case 99:
-			goto st185
+			goto st106
+		case 114:
+			goto st139
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st34
+			goto st106
 		}
 		goto st2
 	st139:
@@ -5757,24 +5752,29 @@ tr142:
 		}
 	st_case_139:
 		switch data[p] {
-		case 61:
-			goto st178
+		case 32:
+			goto st107
 		case 95:
-			goto st34
-		case 121:
+			goto st106
+		case 110:
 			goto st140
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st34
+			goto st106
 		}
 		goto st2
 	st140:
@@ -5783,24 +5783,47 @@ tr142:
 		}
 	st_case_140:
 		switch data[p] {
-		case 61:
-			goto st178
-		case 95:
-			goto st34
-		case 115:
+		case 32:
 			goto st141
+		case 61:
+			goto st190
+		case 95:
+			goto st140
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
+		case data[p] < 58:
+			switch {
+			case data[p] < 33:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto st141
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st153
+				}
+			default:
+				goto st35
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
+		case data[p] > 64:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st153
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto st35
+					}
+				case data[p] >= 97:
+					goto st153
+				}
+			default:
+				goto st35
 			}
 		default:
-			goto st34
+			goto st35
 		}
 		goto st2
 	st141:
@@ -5809,110 +5832,68 @@ tr142:
 		}
 	st_case_141:
 		switch data[p] {
-		case 61:
-			goto st178
-		case 95:
-			goto st34
-		case 116:
-			goto st142
-		}
-		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
-			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
-			}
-		default:
-			goto st34
-		}
-		goto st2
-	st142:
-		if p++; p == pe {
-			goto _test_eof142
-		}
-	st_case_142:
-		switch data[p] {
-		case 61:
-			goto st178
-		case 95:
-			goto st34
-		case 101:
-			goto st143
-		}
-		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
-			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
-			}
-		default:
-			goto st34
-		}
-		goto st2
-	st143:
-		if p++; p == pe {
-			goto _test_eof143
-		}
-	st_case_143:
-		switch data[p] {
-		case 61:
-			goto st178
-		case 95:
-			goto st34
-		case 109:
-			goto st185
-		}
-		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st34
-			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st34
-			}
-		default:
-			goto st34
-		}
-		goto st2
-	st144:
-		if p++; p == pe {
-			goto _test_eof144
-		}
-	st_case_144:
-		switch data[p] {
 		case 32:
-			goto st101
+			goto st141
+		case 33:
+			goto tr42
+		case 59:
+			goto tr43
 		case 61:
-			goto st178
+			goto st190
+		case 64:
+			goto tr44
 		case 95:
-			goto st144
+			goto st34
+		case 100:
+			goto tr45
+		case 102:
+			goto tr46
+		case 104:
+			goto tr47
+		case 112:
+			goto tr151
+		case 115:
+			goto st148
+		case 120:
+			goto tr49
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
-			}
-		case data[p] > 57:
+		case data[p] < 58:
 			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st144
+			case data[p] < 34:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto st141
 				}
-			case data[p] >= 65:
-				goto st144
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto st35
+			}
+		case data[p] > 63:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto st35
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto st35
 			}
 		default:
-			goto st144
+			goto st35
 		}
 		goto st2
-tr109:
+tr44:
 //line xss_130.rl:27
 
             if !lastIsWordEle {
@@ -5921,41 +5902,162 @@ tr109:
                 fmt.Println("no")
             }
         
-	goto st145
+	goto st142
+	st142:
+		if p++; p == pe {
+			goto _test_eof142
+		}
+	st_case_142:
+//line xss_130.go:5912
+		switch data[p] {
+		case 33:
+			goto tr42
+		case 59:
+			goto tr43
+		case 61:
+			goto st190
+		case 64:
+			goto tr44
+		case 95:
+			goto st34
+		case 100:
+			goto tr45
+		case 102:
+			goto tr46
+		case 104:
+			goto tr47
+		case 105:
+			goto st70
+		case 112:
+			goto tr48
+		case 120:
+			goto tr49
+		}
+		switch {
+		case data[p] < 58:
+			switch {
+			case data[p] < 32:
+				if 9 <= data[p] && data[p] <= 13 {
+					goto st35
+				}
+			case data[p] > 47:
+				if 48 <= data[p] && data[p] <= 57 {
+					goto st37
+				}
+			default:
+				goto st35
+			}
+		case data[p] > 63:
+			switch {
+			case data[p] < 91:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto st37
+				}
+			case data[p] > 96:
+				switch {
+				case data[p] > 122:
+					if 123 <= data[p] && data[p] <= 126 {
+						goto st35
+					}
+				case data[p] >= 97:
+					goto st37
+				}
+			default:
+				goto st35
+			}
+		default:
+			goto st35
+		}
+		goto st2
+tr151:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st143
+	st143:
+		if p++; p == pe {
+			goto _test_eof143
+		}
+	st_case_143:
+//line xss_130.go:5988
+		switch data[p] {
+		case 61:
+			goto st189
+		case 95:
+			goto st37
+		case 97:
+			goto st76
+		case 117:
+			goto st144
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
+			}
+		case data[p] > 90:
+			if 98 <= data[p] && data[p] <= 122 {
+				goto st37
+			}
+		default:
+			goto st37
+		}
+		goto st2
+	st144:
+		if p++; p == pe {
+			goto _test_eof144
+		}
+	st_case_144:
+		switch data[p] {
+		case 61:
+			goto st189
+		case 95:
+			goto st37
+		case 98:
+			goto st145
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
+			}
+		default:
+			goto st37
+		}
+		goto st2
 	st145:
 		if p++; p == pe {
 			goto _test_eof145
 		}
 	st_case_145:
-//line xss_130.go:5931
 		switch data[p] {
-		case 32:
-			goto st101
+		case 61:
+			goto st189
 		case 95:
-			goto st100
-		case 104:
-			goto st146
+			goto st37
 		case 108:
-			goto st149
-		case 109:
-			goto st153
+			goto st146
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st100
+			goto st37
 		}
 		goto st2
 	st146:
@@ -5964,29 +6066,24 @@ tr109:
 		}
 	st_case_146:
 		switch data[p] {
-		case 32:
-			goto st101
+		case 61:
+			goto st189
 		case 95:
-			goto st100
-		case 116:
+			goto st37
+		case 105:
 			goto st147
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st100
+			goto st37
 		}
 		goto st2
 	st147:
@@ -5995,29 +6092,24 @@ tr109:
 		}
 	st_case_147:
 		switch data[p] {
-		case 32:
-			goto st101
+		case 61:
+			goto st189
 		case 95:
-			goto st100
-		case 109:
-			goto st148
+			goto st37
+		case 99:
+			goto st196
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st100
+			goto st37
 		}
 		goto st2
 	st148:
@@ -6026,29 +6118,24 @@ tr109:
 		}
 	st_case_148:
 		switch data[p] {
-		case 32:
-			goto st101
+		case 61:
+			goto st189
 		case 95:
-			goto st100
-		case 108:
-			goto st187
+			goto st37
+		case 121:
+			goto st149
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st100
+			goto st37
 		}
 		goto st2
 	st149:
@@ -6057,29 +6144,24 @@ tr109:
 		}
 	st_case_149:
 		switch data[p] {
-		case 32:
-			goto st101
+		case 61:
+			goto st189
 		case 95:
-			goto st100
-		case 105:
+			goto st37
+		case 115:
 			goto st150
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st100
+			goto st37
 		}
 		goto st2
 	st150:
@@ -6088,29 +6170,24 @@ tr109:
 		}
 	st_case_150:
 		switch data[p] {
-		case 32:
-			goto st101
+		case 61:
+			goto st189
 		case 95:
-			goto st100
-		case 110:
+			goto st37
+		case 116:
 			goto st151
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st100
+			goto st37
 		}
 		goto st2
 	st151:
@@ -6119,29 +6196,24 @@ tr109:
 		}
 	st_case_151:
 		switch data[p] {
-		case 32:
-			goto st101
+		case 61:
+			goto st189
 		case 95:
-			goto st100
-		case 107:
+			goto st37
+		case 101:
 			goto st152
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st100
+			goto st37
 		}
 		goto st2
 	st152:
@@ -6150,29 +6222,24 @@ tr109:
 		}
 	st_case_152:
 		switch data[p] {
-		case 32:
-			goto st101
-		case 58:
-			goto st43
+		case 61:
+			goto st189
 		case 95:
-			goto st100
+			goto st37
+		case 109:
+			goto st196
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st37
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
-				}
-			case data[p] >= 65:
-				goto st100
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st37
 			}
 		default:
-			goto st100
+			goto st37
 		}
 		goto st2
 	st153:
@@ -6182,59 +6249,74 @@ tr109:
 	st_case_153:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
+		case 61:
+			goto st189
 		case 95:
-			goto st100
-		case 108:
-			goto st154
+			goto st153
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st153
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st153
 			}
 		default:
-			goto st100
+			goto st153
 		}
 		goto st2
+tr116:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st154
 	st154:
 		if p++; p == pe {
 			goto _test_eof154
 		}
 	st_case_154:
+//line xss_130.go:6292
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
-		case 110:
+			goto st106
+		case 104:
 			goto st155
+		case 108:
+			goto st158
+		case 109:
+			goto st162
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st155:
@@ -6244,28 +6326,28 @@ tr109:
 	st_case_155:
 		switch data[p] {
 		case 32:
-			goto st101
+			goto st107
 		case 95:
-			goto st100
-		case 115:
-			goto st187
+			goto st106
+		case 116:
+			goto st156
 		}
 		switch {
 		case data[p] < 48:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto st101
+				goto st107
 			}
 		case data[p] > 57:
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto st100
+					goto st106
 				}
 			case data[p] >= 65:
-				goto st100
+				goto st106
 			}
 		default:
-			goto st100
+			goto st106
 		}
 		goto st2
 	st156:
@@ -6274,22 +6356,29 @@ tr109:
 		}
 	st_case_156:
 		switch data[p] {
+		case 32:
+			goto st107
 		case 95:
-			goto st1
-		case 97:
+			goto st106
+		case 109:
 			goto st157
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st1
+			goto st106
 		}
 		goto st2
 	st157:
@@ -6298,22 +6387,29 @@ tr109:
 		}
 	st_case_157:
 		switch data[p] {
+		case 32:
+			goto st107
 		case 95:
-			goto st1
-		case 115:
-			goto st158
+			goto st106
+		case 108:
+			goto st198
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st1
+			goto st106
 		}
 		goto st2
 	st158:
@@ -6322,22 +6418,29 @@ tr109:
 		}
 	st_case_158:
 		switch data[p] {
+		case 32:
+			goto st107
 		case 95:
-			goto st1
-		case 101:
+			goto st106
+		case 105:
 			goto st159
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st1
+			goto st106
 		}
 		goto st2
 	st159:
@@ -6346,22 +6449,29 @@ tr109:
 		}
 	st_case_159:
 		switch data[p] {
-		case 54:
-			goto st160
+		case 32:
+			goto st107
 		case 95:
-			goto st1
+			goto st106
+		case 110:
+			goto st160
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st1
+			goto st106
 		}
 		goto st2
 	st160:
@@ -6370,22 +6480,29 @@ tr109:
 		}
 	st_case_160:
 		switch data[p] {
-		case 52:
-			goto st172
+		case 32:
+			goto st107
 		case 95:
-			goto st1
+			goto st106
+		case 107:
+			goto st161
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st1
+			goto st106
 		}
 		goto st2
 	st161:
@@ -6394,22 +6511,29 @@ tr109:
 		}
 	st_case_161:
 		switch data[p] {
+		case 32:
+			goto st107
+		case 58:
+			goto st46
 		case 95:
-			goto st1
-		case 110:
-			goto st162
+			goto st106
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st1
+			goto st106
 		}
 		goto st2
 	st162:
@@ -6418,22 +6542,29 @@ tr109:
 		}
 	st_case_162:
 		switch data[p] {
+		case 32:
+			goto st107
 		case 95:
-			goto st1
-		case 116:
+			goto st106
+		case 108:
 			goto st163
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st1
+			goto st106
 		}
 		goto st2
 	st163:
@@ -6442,22 +6573,29 @@ tr109:
 		}
 	st_case_163:
 		switch data[p] {
+		case 32:
+			goto st107
 		case 95:
-			goto st1
-		case 105:
+			goto st106
+		case 110:
 			goto st164
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st1
+			goto st106
 		}
 		goto st2
 	st164:
@@ -6466,22 +6604,29 @@ tr109:
 		}
 	st_case_164:
 		switch data[p] {
+		case 32:
+			goto st107
 		case 95:
-			goto st1
-		case 116:
-			goto st165
+			goto st106
+		case 115:
+			goto st198
 		}
 		switch {
-		case data[p] < 65:
-			if 48 <= data[p] && data[p] <= 57 {
-				goto st1
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st107
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st1
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st106
+				}
+			case data[p] >= 65:
+				goto st106
 			}
 		default:
-			goto st1
+			goto st106
 		}
 		goto st2
 	st165:
@@ -6492,7 +6637,7 @@ tr109:
 		switch data[p] {
 		case 95:
 			goto st1
-		case 121:
+		case 97:
 			goto st166
 		}
 		switch {
@@ -6501,7 +6646,7 @@ tr109:
 				goto st1
 			}
 		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
+			if 98 <= data[p] && data[p] <= 122 {
 				goto st1
 			}
 		default:
@@ -6514,23 +6659,18 @@ tr109:
 		}
 	st_case_166:
 		switch data[p] {
-		case 32:
-			goto st97
 		case 95:
 			goto st1
+		case 115:
+			goto st167
 		}
 		switch {
-		case data[p] < 48:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto st97
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
 			}
-		case data[p] > 57:
-			switch {
-			case data[p] > 90:
-				if 97 <= data[p] && data[p] <= 122 {
-					goto st1
-				}
-			case data[p] >= 65:
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
 				goto st1
 			}
 		default:
@@ -6567,10 +6707,10 @@ tr109:
 		}
 	st_case_168:
 		switch data[p] {
+		case 54:
+			goto st169
 		case 95:
 			goto st1
-		case 120:
-			goto st169
 		}
 		switch {
 		case data[p] < 65:
@@ -6591,10 +6731,10 @@ tr109:
 		}
 	st_case_169:
 		switch data[p] {
+		case 52:
+			goto st183
 		case 95:
 			goto st1
-		case 116:
-			goto st170
 		}
 		switch {
 		case data[p] < 65:
@@ -6615,10 +6755,10 @@ tr109:
 		}
 	st_case_170:
 		switch data[p] {
-		case 47:
-			goto st171
 		case 95:
 			goto st1
+		case 110:
+			goto st171
 		}
 		switch {
 		case data[p] < 65:
@@ -6639,6 +6779,227 @@ tr109:
 		}
 	st_case_171:
 		switch data[p] {
+		case 95:
+			goto st1
+		case 116:
+			goto st172
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
+			}
+		default:
+			goto st1
+		}
+		goto st2
+	st172:
+		if p++; p == pe {
+			goto _test_eof172
+		}
+	st_case_172:
+		switch data[p] {
+		case 95:
+			goto st1
+		case 105:
+			goto st173
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
+			}
+		default:
+			goto st1
+		}
+		goto st2
+	st173:
+		if p++; p == pe {
+			goto _test_eof173
+		}
+	st_case_173:
+		switch data[p] {
+		case 95:
+			goto st1
+		case 116:
+			goto st174
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
+			}
+		default:
+			goto st1
+		}
+		goto st2
+	st174:
+		if p++; p == pe {
+			goto _test_eof174
+		}
+	st_case_174:
+		switch data[p] {
+		case 95:
+			goto st1
+		case 121:
+			goto st175
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
+			}
+		default:
+			goto st1
+		}
+		goto st2
+	st175:
+		if p++; p == pe {
+			goto _test_eof175
+		}
+	st_case_175:
+		switch data[p] {
+		case 32:
+			goto st103
+		case 95:
+			goto st1
+		}
+		switch {
+		case data[p] < 48:
+			if 9 <= data[p] && data[p] <= 13 {
+				goto st103
+			}
+		case data[p] > 57:
+			switch {
+			case data[p] > 90:
+				if 97 <= data[p] && data[p] <= 122 {
+					goto st1
+				}
+			case data[p] >= 65:
+				goto st1
+			}
+		default:
+			goto st1
+		}
+		goto st2
+	st176:
+		if p++; p == pe {
+			goto _test_eof176
+		}
+	st_case_176:
+		switch data[p] {
+		case 95:
+			goto st1
+		case 101:
+			goto st177
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
+			}
+		default:
+			goto st1
+		}
+		goto st2
+	st177:
+		if p++; p == pe {
+			goto _test_eof177
+		}
+	st_case_177:
+		switch data[p] {
+		case 95:
+			goto st1
+		case 120:
+			goto st178
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
+			}
+		default:
+			goto st1
+		}
+		goto st2
+	st178:
+		if p++; p == pe {
+			goto _test_eof178
+		}
+	st_case_178:
+		switch data[p] {
+		case 95:
+			goto st1
+		case 116:
+			goto st179
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
+			}
+		default:
+			goto st1
+		}
+		goto st2
+	st179:
+		if p++; p == pe {
+			goto _test_eof179
+		}
+	st_case_179:
+		switch data[p] {
+		case 47:
+			goto st180
+		case 95:
+			goto st1
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
+			}
+		default:
+			goto st1
+		}
+		goto st2
+	st180:
+		if p++; p == pe {
+			goto _test_eof180
+		}
+	st_case_180:
+		switch data[p] {
 		case 33:
 			goto tr2
 		case 59:
@@ -6652,11 +7013,72 @@ tr109:
 		case 102:
 			goto tr6
 		case 104:
-			goto st36
+			goto tr185
 		case 112:
-			goto tr7
-		case 120:
 			goto tr8
+		case 120:
+			goto tr9
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
+			}
+		default:
+			goto st1
+		}
+		goto st2
+tr185:
+//line xss_130.rl:27
+
+            if !lastIsWordEle {
+                fmt.Println(lastIsWordEle)
+            } else {
+                fmt.Println("no")
+            }
+        
+	goto st181
+	st181:
+		if p++; p == pe {
+			goto _test_eof181
+		}
+	st_case_181:
+//line xss_130.go:7051
+		switch data[p] {
+		case 95:
+			goto st1
+		case 116:
+			goto st182
+		}
+		switch {
+		case data[p] < 65:
+			if 48 <= data[p] && data[p] <= 57 {
+				goto st1
+			}
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st1
+			}
+		default:
+			goto st1
+		}
+		goto st2
+	st182:
+		if p++; p == pe {
+			goto _test_eof182
+		}
+	st_case_182:
+		switch data[p] {
+		case 95:
+			goto st1
+		case 109:
+			goto st41
+		case 116:
+			goto st22
 		}
 		switch {
 		case data[p] < 65:
@@ -6691,12 +7113,12 @@ tr109:
 	_test_eof17: cs = 17; goto _test_eof
 	_test_eof18: cs = 18; goto _test_eof
 	_test_eof19: cs = 19; goto _test_eof
-	_test_eof172: cs = 172; goto _test_eof
-	_test_eof173: cs = 173; goto _test_eof
-	_test_eof174: cs = 174; goto _test_eof
-	_test_eof175: cs = 175; goto _test_eof
-	_test_eof176: cs = 176; goto _test_eof
-	_test_eof177: cs = 177; goto _test_eof
+	_test_eof183: cs = 183; goto _test_eof
+	_test_eof184: cs = 184; goto _test_eof
+	_test_eof185: cs = 185; goto _test_eof
+	_test_eof186: cs = 186; goto _test_eof
+	_test_eof187: cs = 187; goto _test_eof
+	_test_eof188: cs = 188; goto _test_eof
 	_test_eof20: cs = 20; goto _test_eof
 	_test_eof21: cs = 21; goto _test_eof
 	_test_eof22: cs = 22; goto _test_eof
@@ -6712,10 +7134,10 @@ tr109:
 	_test_eof32: cs = 32; goto _test_eof
 	_test_eof33: cs = 33; goto _test_eof
 	_test_eof34: cs = 34; goto _test_eof
-	_test_eof178: cs = 178; goto _test_eof
 	_test_eof35: cs = 35; goto _test_eof
 	_test_eof36: cs = 36; goto _test_eof
 	_test_eof37: cs = 37; goto _test_eof
+	_test_eof189: cs = 189; goto _test_eof
 	_test_eof38: cs = 38; goto _test_eof
 	_test_eof39: cs = 39; goto _test_eof
 	_test_eof40: cs = 40; goto _test_eof
@@ -6729,15 +7151,15 @@ tr109:
 	_test_eof48: cs = 48; goto _test_eof
 	_test_eof49: cs = 49; goto _test_eof
 	_test_eof50: cs = 50; goto _test_eof
-	_test_eof179: cs = 179; goto _test_eof
-	_test_eof180: cs = 180; goto _test_eof
-	_test_eof181: cs = 181; goto _test_eof
-	_test_eof182: cs = 182; goto _test_eof
-	_test_eof183: cs = 183; goto _test_eof
-	_test_eof184: cs = 184; goto _test_eof
 	_test_eof51: cs = 51; goto _test_eof
 	_test_eof52: cs = 52; goto _test_eof
 	_test_eof53: cs = 53; goto _test_eof
+	_test_eof190: cs = 190; goto _test_eof
+	_test_eof191: cs = 191; goto _test_eof
+	_test_eof192: cs = 192; goto _test_eof
+	_test_eof193: cs = 193; goto _test_eof
+	_test_eof194: cs = 194; goto _test_eof
+	_test_eof195: cs = 195; goto _test_eof
 	_test_eof54: cs = 54; goto _test_eof
 	_test_eof55: cs = 55; goto _test_eof
 	_test_eof56: cs = 56; goto _test_eof
@@ -6748,11 +7170,11 @@ tr109:
 	_test_eof61: cs = 61; goto _test_eof
 	_test_eof62: cs = 62; goto _test_eof
 	_test_eof63: cs = 63; goto _test_eof
-	_test_eof185: cs = 185; goto _test_eof
-	_test_eof186: cs = 186; goto _test_eof
 	_test_eof64: cs = 64; goto _test_eof
 	_test_eof65: cs = 65; goto _test_eof
 	_test_eof66: cs = 66; goto _test_eof
+	_test_eof196: cs = 196; goto _test_eof
+	_test_eof197: cs = 197; goto _test_eof
 	_test_eof67: cs = 67; goto _test_eof
 	_test_eof68: cs = 68; goto _test_eof
 	_test_eof69: cs = 69; goto _test_eof
@@ -6811,15 +7233,15 @@ tr109:
 	_test_eof122: cs = 122; goto _test_eof
 	_test_eof123: cs = 123; goto _test_eof
 	_test_eof124: cs = 124; goto _test_eof
-	_test_eof187: cs = 187; goto _test_eof
-	_test_eof188: cs = 188; goto _test_eof
-	_test_eof189: cs = 189; goto _test_eof
 	_test_eof125: cs = 125; goto _test_eof
 	_test_eof126: cs = 126; goto _test_eof
 	_test_eof127: cs = 127; goto _test_eof
 	_test_eof128: cs = 128; goto _test_eof
 	_test_eof129: cs = 129; goto _test_eof
 	_test_eof130: cs = 130; goto _test_eof
+	_test_eof198: cs = 198; goto _test_eof
+	_test_eof199: cs = 199; goto _test_eof
+	_test_eof200: cs = 200; goto _test_eof
 	_test_eof131: cs = 131; goto _test_eof
 	_test_eof132: cs = 132; goto _test_eof
 	_test_eof133: cs = 133; goto _test_eof
@@ -6861,16 +7283,27 @@ tr109:
 	_test_eof169: cs = 169; goto _test_eof
 	_test_eof170: cs = 170; goto _test_eof
 	_test_eof171: cs = 171; goto _test_eof
+	_test_eof172: cs = 172; goto _test_eof
+	_test_eof173: cs = 173; goto _test_eof
+	_test_eof174: cs = 174; goto _test_eof
+	_test_eof175: cs = 175; goto _test_eof
+	_test_eof176: cs = 176; goto _test_eof
+	_test_eof177: cs = 177; goto _test_eof
+	_test_eof178: cs = 178; goto _test_eof
+	_test_eof179: cs = 179; goto _test_eof
+	_test_eof180: cs = 180; goto _test_eof
+	_test_eof181: cs = 181; goto _test_eof
+	_test_eof182: cs = 182; goto _test_eof
 
 	_test_eof: {}
 	if p == eof {
 		switch cs {
-		case 172, 178, 179, 185, 187:
+		case 183, 189, 190, 196, 198:
 //line xss_130.rl:35
 
             return true
         
-//line xss_130.go:6874
+//line xss_130.go:7307
 		}
 	}
 

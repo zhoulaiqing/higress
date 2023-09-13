@@ -15,6 +15,13 @@ func TestExperiment(t *testing.T) {
 	}
 
 	testGroup := map[string]testCase{
+
+		// 921130
+		"case921130-1": {"/?lang=foobar%3Cmeta%20http-equiv%3D%22Refresh%22%20content%3D%220%3B%20url%3Dhttp%3A%2F%2Fwww.hacker.com%2F%22%3E", true},
+		"case921130-2": {"oreo=munchmuch%0d%0a%0d%0a<HTML><title></title></HTML>", true},
+		"case921130-3": {"/?arg1=GET%20http%3A%2F%2Fwww.foo.bar%20HTTP%2F1.2", true},
+		"case921130-4": {"/?arg1=GET%20http%3A%2F%2Fwww.foo.bar%20HTTP%2F3.2", true},
+
 		// 941110
 		"case941110-1": {"xyz=<script >alert(1);</script>", true},
 		"case941110-2": {"/?x=<script+>alert(1);</script>", true},

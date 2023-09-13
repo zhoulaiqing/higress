@@ -5,6 +5,7 @@ import (
 )
 
 func matchXss(value string) bool {
+	//fmt.Printf("Try to match : %s \n", value)
 	if doMatchXssOriginal(value) {
 		return true
 	}

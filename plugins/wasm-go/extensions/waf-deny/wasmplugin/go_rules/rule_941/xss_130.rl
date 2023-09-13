@@ -45,7 +45,7 @@ func matchXSS130(data []byte) bool {
         pattern_tag = 'pattern' word_bound word_ele* '=';
         entity_tag = '!entity' space+ ('%' space+)? identifier+ space+ ('system' | 'public');
         x_tag = any+ (not_word_ele)+ ('xlink:href' | 'xhtml' | 'xmlns' | 'data:text/html' | 'formaction'
-            | '@import' | ';base64' | pattern_tag | entity_tag) >enterMatch  %/setMatched word_bound @setMatched;
+            | '@import' | ';base64' | 'http' | pattern_tag | entity_tag) >enterMatch  %/setMatched word_bound @setMatched;
 
         main := x_tag;
         write init;

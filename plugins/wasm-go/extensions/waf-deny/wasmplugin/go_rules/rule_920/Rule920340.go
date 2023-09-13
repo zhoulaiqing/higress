@@ -25,7 +25,8 @@ func (r *Rule920340) Evaluate(tx *core.Transaction) int {
 		return rule_tasks.PASS
 	}
 
-	if len(tx.Variables.RequestHeaders["content-type"]) == 0 {
+	contentType, ok := tx.Variables.RequestHeaders["content-type"]
+	if !ok || len(contentType) == 0 {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.NOTICE_ANOMALY_SCORE
 		return rule_tasks.BLOCK
 	}
