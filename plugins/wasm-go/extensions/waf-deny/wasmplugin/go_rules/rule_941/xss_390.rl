@@ -6,36 +6,40 @@ import (
     "golang.org/x/exp/slices"
 )
 
-var builder390 strings.Builder
+type machine390 struct {
+    Builder strings.Builder
+    matchedWord bool
+}
+
 var keys390 = []string{"eval", "settimeout", "setinterval", "newfunction", "alert", "atob", "btoa"}
 
-func appendWord390(s string) {
-    builder390.WriteString(s)
+func (m *machine390) appendWord(s string) {
+    m.Builder.WriteString(s)
 }
 
-func reset390 () {
-    builder390.Reset()
-    matchedWord = false
+func (m *machine390) reset() {
+    m.Builder.Reset()
+    m.matchedWord = false
 }
 
-func checkSpace390() {
-    if matchedWord {
+func (m *machine390) checkSpace() {
+    if m.matchedWord {
         return
     }
 
-    if checkWord390() >= 0 {
+    if m.checkWord() >= 0 {
         return
     }
 
-    reset390()
+    m.reset()
 }
 
-func checkWord390() int {
-    s := builder390.String()
+func (m *machine390) checkWord() int {
+    s := m.Builder.String()
     fmt.Println(s)
 
     if slices.Contains(keys390, s) {
-        matchedWord = true
+        m.matchedWord = true
         return 1
     } else if s == "new" {
         return 0
@@ -44,28 +48,28 @@ func checkWord390() int {
     return -1
 }
 
-func checkFinish390() bool {
-    if matchedWord {
+func (m *machine390) checkFinish() bool {
+    if m.matchedWord {
         return true
     }
 
-    if checkWord390() > 0 {
+    if m.checkWord() > 0 {
         return true
     }
 
     return false
 }
 
-var matchedWord = false
-
 func matchXSS390(data []byte) bool {
-%% machine xss;
+%% machine xss390;
 %% write data;
     cs, p, pe, eof := 0, 0, len(data), len(data)
         _ = eof
 
     var ts, te, act int
         _ = act
+
+    m := &machine390{}
 
     %%{
         action setMatched {
@@ -74,21 +78,21 @@ func matchXSS390(data []byte) bool {
 
         main :=  |*
             alpha+ => {
-                appendWord390(string(data[ts:te]))
+                m.appendWord(string(data[ts:te]))
             };
 
             '(' => {
-                if checkFinish390() {
+                if m.checkFinish() {
                     return true
                 }
             };
 
             space => {
-                checkSpace390()
+                m.checkSpace()
             };
 
             any => {
-                reset390()
+                m.reset()
             };
         *|;
 

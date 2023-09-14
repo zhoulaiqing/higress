@@ -6,14 +6,6 @@ import (
     "golang.org/x/exp/slices"
 )
 
-type Machine struct {
-
-}
-
-type XssChecker struct {
-
-}
-
 var riskTags = []string {
     "script", "style", "svg", "set", "form", "html", "marquee", "meta", "link", "object", "embed", "applet", "audio", "animate",
     "param", "iframe", "frame", "base", "body", "bindings", "image", "img", "video", "importimplementation",
@@ -36,7 +28,7 @@ func isRiskAttr(attr string) bool {
 }
 
 func matchExp(data []byte) bool {
-%% machine xss;
+%% machine xss1;
 %% write data;
     cs, p, pe, eof := 0, 0, len(data), len(data)
         _ = eof

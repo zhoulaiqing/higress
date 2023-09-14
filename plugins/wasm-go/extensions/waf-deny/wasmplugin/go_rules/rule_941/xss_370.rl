@@ -5,56 +5,58 @@ import (
     "strings"
     "golang.org/x/exp/slices"
 )
-var builder370 strings.Builder
+
+type machine370 struct {
+    Builder strings.Builder
+    // 0. None; 1. Passed word; 2. Passed left;
+    step int
+}
 
 var keys370 = []string{"self", "document", "this", "top", "window"}
 
-// 0. None; 1. Passed word; 2. Passed left;
-var step370 = 0
-
-func appendWord370(s string) {
-    builder370.WriteString(s)
+func (m *machine370) appendWord(s string) {
+    m.Builder.WriteString(s)
 }
 
-func checkWord370() {
-    if step370 >= 1 {
+func (m *machine370) checkWord() {
+    if m.step >= 1 {
         return
     }
 
-    s := builder370.String()
+    s := m.Builder.String()
     fmt.Println(s)
 
     if slices.Contains(keys370, s) {
-        step370 = 1
+        m.step = 1
     } else {
-        builder370.Reset()
+        m.Builder.Reset()
     }
 }
 
-func checkLeft370() {
-    if step370 >= 1 {
-        step370 = 2
+func (m *machine370) checkLeft() {
+    if m.step >= 1 {
+        m.step = 2
     } else {
-        checkWord370()
-        if step370 >= 1 {
-            step370 = 2
+        m.checkWord()
+        if m.step >= 1 {
+            m.step = 2
         } else {
-            builder370.Reset()
+            m.Builder.Reset()
         }
     }
 }
 
-func checkRight370() bool {
-    if step370 == 2 {
+func (m *machine370) checkRight() bool {
+    if m.step == 2 {
         return true
     } else {
-        builder370.Reset()
+        m.Builder.Reset()
         return false
     }
 }
 
 func matchXSS370(data []byte) bool {
-%% machine xss;
+%% machine xss370;
 %% write data;
     cs, p, pe, eof := 0, 0, len(data), len(data)
         _ = eof
@@ -62,30 +64,32 @@ func matchXSS370(data []byte) bool {
     var ts, te, act int
             _ = act
 
+    m := &machine370{}
+
     %%{
 
         main := |*
             alpha+ => {
-                appendWord370(string(data[ts:te]))
+                m.appendWord(string(data[ts:te]))
             };
 
             '/*' | '[' | ')' => {
-                checkLeft370()
+                m.checkLeft()
             };
 
             ']' | '*/' => {
-                if checkRight370() {
+                if m.checkRight() {
                     return true
                 }
             };
 
             space => {
-                checkWord370()
+                m.checkWord()
             };
 
             any => {
-                if step370 < 2 {
-                    builder370.Reset()
+                if m.step < 2 {
+                    m.Builder.Reset()
                 }
 
             };

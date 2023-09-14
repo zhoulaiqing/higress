@@ -8,902 +8,249 @@ func matchXSS140(data []byte) bool {
 //line xss_140.rl:6
 
 //line xss_140.go:11
-const xss_start int = 0
-const xss_first_final int = 25
-const xss_error int = -1
+var _xss140_actions []byte = []byte{
+	0, 1, 0, 
+}
 
-const xss_en_main int = 0
+var _xss140_key_offsets []byte = []byte{
+	0, 2, 5, 9, 13, 16, 19, 23, 
+	27, 31, 35, 40, 45, 50, 54, 59, 
+	64, 69, 74, 79, 84, 89, 94, 99, 
+	103, 107, 111, 114, 118, 122, 126, 130, 
+	135, 140, 145, 149, 154, 159, 164, 169, 
+	174, 179, 184, 189, 194, 
+}
+
+var _xss140_trans_keys []byte = []byte{
+	97, 122, 61, 97, 122, 58, 61, 97, 
+	122, 58, 61, 97, 122, 117, 97, 122, 
+	59, 97, 122, 58, 61, 97, 122, 58, 
+	61, 97, 122, 59, 117, 97, 122, 59, 
+	61, 97, 122, 59, 61, 114, 97, 122, 
+	59, 61, 108, 97, 122, 40, 59, 61, 
+	97, 122, 59, 106, 97, 122, 59, 61, 
+	97, 98, 122, 59, 61, 118, 97, 122, 
+	59, 61, 97, 98, 122, 59, 61, 115, 
+	97, 122, 59, 61, 99, 97, 122, 59, 
+	61, 114, 97, 122, 59, 61, 105, 97, 
+	122, 59, 61, 112, 97, 122, 59, 61, 
+	116, 97, 122, 58, 61, 97, 122, 58, 
+	61, 97, 122, 59, 61, 97, 122, 59, 
+	97, 122, 58, 61, 97, 122, 58, 61, 
+	97, 122, 59, 117, 97, 122, 59, 61, 
+	97, 122, 59, 61, 114, 97, 122, 59, 
+	61, 108, 97, 122, 40, 59, 61, 97, 
+	122, 59, 106, 97, 122, 59, 61, 97, 
+	98, 122, 59, 61, 118, 97, 122, 59, 
+	61, 97, 98, 122, 59, 61, 115, 97, 
+	122, 59, 61, 99, 97, 122, 59, 61, 
+	114, 97, 122, 59, 61, 105, 97, 122, 
+	59, 61, 112, 97, 122, 59, 61, 116, 
+	97, 122, 58, 61, 97, 122, 
+}
+
+var _xss140_single_lengths []byte = []byte{
+	0, 1, 2, 2, 1, 1, 2, 2, 
+	2, 2, 3, 3, 3, 2, 3, 3, 
+	3, 3, 3, 3, 3, 3, 3, 2, 
+	2, 2, 1, 2, 2, 2, 2, 3, 
+	3, 3, 2, 3, 3, 3, 3, 3, 
+	3, 3, 3, 3, 2, 
+}
+
+var _xss140_range_lengths []byte = []byte{
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 
+}
+
+var _xss140_index_offsets []byte = []byte{
+	0, 2, 5, 9, 13, 16, 19, 23, 
+	27, 31, 35, 40, 45, 50, 54, 59, 
+	64, 69, 74, 79, 84, 89, 94, 99, 
+	103, 107, 111, 114, 118, 122, 126, 130, 
+	135, 140, 145, 149, 154, 159, 164, 169, 
+	174, 179, 184, 189, 194, 
+}
+
+var _xss140_indicies []byte = []byte{
+	1, 0, 2, 1, 0, 0, 0, 4, 
+	3, 5, 0, 4, 3, 8, 7, 6, 
+	9, 7, 6, 6, 6, 11, 10, 12, 
+	6, 11, 10, 9, 8, 7, 6, 9, 
+	9, 7, 6, 9, 9, 13, 7, 6, 
+	9, 9, 14, 7, 6, 15, 9, 9, 
+	7, 6, 9, 16, 7, 6, 9, 9, 
+	17, 7, 6, 9, 9, 18, 7, 6, 
+	9, 9, 19, 7, 6, 9, 9, 20, 
+	7, 6, 9, 9, 21, 7, 6, 9, 
+	9, 22, 7, 6, 9, 9, 23, 7, 
+	6, 9, 9, 24, 7, 6, 9, 9, 
+	25, 7, 6, 12, 9, 11, 10, 5, 
+	2, 4, 3, 27, 27, 28, 26, 30, 
+	31, 29, 29, 29, 33, 32, 34, 29, 
+	33, 32, 30, 35, 31, 29, 30, 30, 
+	31, 29, 30, 30, 36, 31, 29, 30, 
+	30, 37, 31, 29, 38, 30, 30, 31, 
+	29, 30, 39, 31, 29, 30, 30, 40, 
+	31, 29, 30, 30, 41, 31, 29, 30, 
+	30, 42, 31, 29, 30, 30, 43, 31, 
+	29, 30, 30, 44, 31, 29, 30, 30, 
+	45, 31, 29, 30, 30, 46, 31, 29, 
+	30, 30, 47, 31, 29, 30, 30, 25, 
+	31, 29, 34, 30, 33, 32, 
+}
+
+var _xss140_trans_targs []byte = []byte{
+	0, 1, 2, 3, 24, 4, 5, 9, 
+	10, 6, 7, 23, 8, 11, 12, 13, 
+	14, 15, 16, 17, 18, 19, 20, 21, 
+	22, 25, 26, 27, 30, 26, 27, 30, 
+	28, 44, 29, 31, 32, 33, 34, 35, 
+	36, 37, 38, 39, 40, 41, 42, 43, 
+}
+
+var _xss140_trans_actions []byte = []byte{
+	0, 0, 0, 0, 0, 0, 0, 0, 
+	0, 0, 0, 0, 0, 0, 0, 0, 
+	0, 0, 0, 0, 0, 0, 0, 0, 
+	0, 0, 1, 1, 1, 0, 0, 0, 
+	0, 0, 0, 0, 0, 0, 0, 0, 
+	0, 0, 0, 0, 0, 0, 0, 0, 
+}
+
+var _xss140_eof_actions []byte = []byte{
+	0, 0, 0, 0, 0, 0, 0, 0, 
+	0, 0, 0, 0, 0, 0, 0, 0, 
+	0, 0, 0, 0, 0, 0, 0, 0, 
+	0, 1, 0, 0, 0, 0, 0, 0, 
+	0, 0, 0, 0, 0, 0, 0, 0, 
+	0, 0, 0, 0, 0, 
+}
+
+const xss140_start int = 0
+const xss140_first_final int = 25
+const xss140_error int = -1
+
+const xss140_en_main int = 0
 
 
 //line xss_140.rl:7
     cs, p, pe, eof := 0, 0, len(data), len(data)
         _ = eof
     
-//line xss_140.go:23
+//line xss_140.go:146
 	{
-	cs = xss_start
+	cs = xss140_start
 	}
 
-//line xss_140.go:28
+//line xss_140.go:151
 	{
+	var _klen int
+	var _trans int
+	var _acts int
+	var _nacts uint
+	var _keys int
 	if p == pe {
 		goto _test_eof
 	}
-	switch cs {
-	case 0:
-		goto st_case_0
-	case 1:
-		goto st_case_1
-	case 2:
-		goto st_case_2
-	case 3:
-		goto st_case_3
-	case 4:
-		goto st_case_4
-	case 5:
-		goto st_case_5
-	case 6:
-		goto st_case_6
-	case 7:
-		goto st_case_7
-	case 8:
-		goto st_case_8
-	case 9:
-		goto st_case_9
-	case 10:
-		goto st_case_10
-	case 11:
-		goto st_case_11
-	case 12:
-		goto st_case_12
-	case 13:
-		goto st_case_13
-	case 14:
-		goto st_case_14
-	case 15:
-		goto st_case_15
-	case 16:
-		goto st_case_16
-	case 17:
-		goto st_case_17
-	case 18:
-		goto st_case_18
-	case 19:
-		goto st_case_19
-	case 20:
-		goto st_case_20
-	case 21:
-		goto st_case_21
-	case 22:
-		goto st_case_22
-	case 25:
-		goto st_case_25
-	case 26:
-		goto st_case_26
-	case 27:
-		goto st_case_27
-	case 28:
-		goto st_case_28
-	case 29:
-		goto st_case_29
-	case 30:
-		goto st_case_30
-	case 31:
-		goto st_case_31
-	case 32:
-		goto st_case_32
-	case 33:
-		goto st_case_33
-	case 34:
-		goto st_case_34
-	case 35:
-		goto st_case_35
-	case 36:
-		goto st_case_36
-	case 37:
-		goto st_case_37
-	case 38:
-		goto st_case_38
-	case 39:
-		goto st_case_39
-	case 40:
-		goto st_case_40
-	case 41:
-		goto st_case_41
-	case 42:
-		goto st_case_42
-	case 43:
-		goto st_case_43
-	case 44:
-		goto st_case_44
-	case 23:
-		goto st_case_23
-	case 24:
-		goto st_case_24
+_resume:
+	_keys = int(_xss140_key_offsets[cs])
+	_trans = int(_xss140_index_offsets[cs])
+
+	_klen = int(_xss140_single_lengths[cs])
+	if _klen > 0 {
+		_lower := int(_keys)
+		var _mid int
+		_upper := int(_keys + _klen - 1)
+		for {
+			if _upper < _lower {
+				break
+			}
+
+			_mid = _lower + ((_upper - _lower) >> 1)
+			switch {
+			case data[p] < _xss140_trans_keys[_mid]:
+				_upper = _mid - 1
+			case data[p] > _xss140_trans_keys[_mid]:
+				_lower = _mid + 1
+			default:
+				_trans += int(_mid - int(_keys))
+				goto _match
+			}
+		}
+		_keys += _klen
+		_trans += _klen
 	}
-	goto st_out
-	st0:
-		if p++; p == pe {
-			goto _test_eof0
-		}
-	st_case_0:
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st1
-		}
-		goto st0
-	st1:
-		if p++; p == pe {
-			goto _test_eof1
-		}
-	st_case_1:
-		if data[p] == 61 {
-			goto st2
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st1
-		}
-		goto st0
-	st2:
-		if p++; p == pe {
-			goto _test_eof2
-		}
-	st_case_2:
-		switch data[p] {
-		case 58:
-			goto st0
-		case 61:
-			goto st0
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st24
-		}
-		goto st3
-	st3:
-		if p++; p == pe {
-			goto _test_eof3
-		}
-	st_case_3:
-		switch data[p] {
-		case 58:
-			goto st4
-		case 61:
-			goto st0
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st24
-		}
-		goto st3
-	st4:
-		if p++; p == pe {
-			goto _test_eof4
-		}
-	st_case_4:
-		if data[p] == 117 {
-			goto st10
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st5:
-		if p++; p == pe {
-			goto _test_eof5
-		}
-	st_case_5:
-		if data[p] == 59 {
-			goto st6
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st6:
-		if p++; p == pe {
-			goto _test_eof6
-		}
-	st_case_6:
-		switch data[p] {
-		case 58:
-			goto st5
-		case 61:
-			goto st5
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st23
-		}
-		goto st7
-	st7:
-		if p++; p == pe {
-			goto _test_eof7
-		}
-	st_case_7:
-		switch data[p] {
-		case 58:
-			goto st8
-		case 61:
-			goto st5
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st23
-		}
-		goto st7
-	st8:
-		if p++; p == pe {
-			goto _test_eof8
-		}
-	st_case_8:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 117:
-			goto st10
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st9:
-		if p++; p == pe {
-			goto _test_eof9
-		}
-	st_case_9:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st10:
-		if p++; p == pe {
-			goto _test_eof10
-		}
-	st_case_10:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		case 114:
-			goto st11
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st11:
-		if p++; p == pe {
-			goto _test_eof11
-		}
-	st_case_11:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		case 108:
-			goto st12
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st12:
-		if p++; p == pe {
-			goto _test_eof12
-		}
-	st_case_12:
-		switch data[p] {
-		case 40:
-			goto st13
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st13:
-		if p++; p == pe {
-			goto _test_eof13
-		}
-	st_case_13:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 106:
-			goto st14
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st14:
-		if p++; p == pe {
-			goto _test_eof14
-		}
-	st_case_14:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		case 97:
-			goto st15
-		}
-		if 98 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st15:
-		if p++; p == pe {
-			goto _test_eof15
-		}
-	st_case_15:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		case 118:
-			goto st16
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st16:
-		if p++; p == pe {
-			goto _test_eof16
-		}
-	st_case_16:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		case 97:
-			goto st17
-		}
-		if 98 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st17:
-		if p++; p == pe {
-			goto _test_eof17
-		}
-	st_case_17:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		case 115:
-			goto st18
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st18:
-		if p++; p == pe {
-			goto _test_eof18
-		}
-	st_case_18:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		case 99:
-			goto st19
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st19:
-		if p++; p == pe {
-			goto _test_eof19
-		}
-	st_case_19:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		case 114:
-			goto st20
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st20:
-		if p++; p == pe {
-			goto _test_eof20
-		}
-	st_case_20:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		case 105:
-			goto st21
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st21:
-		if p++; p == pe {
-			goto _test_eof21
-		}
-	st_case_21:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		case 112:
-			goto st22
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st22:
-		if p++; p == pe {
-			goto _test_eof22
-		}
-	st_case_22:
-		switch data[p] {
-		case 59:
-			goto st6
-		case 61:
-			goto st6
-		case 116:
-			goto st25
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st9
-		}
-		goto st5
-	st25:
-		if p++; p == pe {
-			goto _test_eof25
-		}
-	st_case_25:
-		switch data[p] {
-		case 59:
-			goto tr27
-		case 61:
-			goto tr27
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto tr28
-		}
-		goto tr26
-tr26:
+
+	_klen = int(_xss140_range_lengths[cs])
+	if _klen > 0 {
+		_lower := int(_keys)
+		var _mid int
+		_upper := int(_keys + (_klen << 1) - 2)
+		for {
+			if _upper < _lower {
+				break
+			}
+
+			_mid = _lower + (((_upper - _lower) >> 1) & ^1)
+			switch {
+			case data[p] < _xss140_trans_keys[_mid]:
+				_upper = _mid - 2
+			case data[p] > _xss140_trans_keys[_mid + 1]:
+				_lower = _mid + 2
+			default:
+				_trans += int((_mid - int(_keys)) >> 1)
+				goto _match
+			}
+		}
+		_trans += _klen
+	}
+
+_match:
+	_trans = int(_xss140_indicies[_trans])
+	cs = int(_xss140_trans_targs[_trans])
+
+	if _xss140_trans_actions[_trans] == 0 {
+		goto _again
+	}
+
+	_acts = int(_xss140_trans_actions[_trans])
+	_nacts = uint(_xss140_actions[_acts]); _acts++
+	for ; _nacts > 0; _nacts-- {
+		_acts++
+		switch _xss140_actions[_acts-1] {
+		case 0:
 //line xss_140.rl:10
 
             return true
         
-	goto st26
-	st26:
-		if p++; p == pe {
-			goto _test_eof26
+//line xss_140.go:232
 		}
-	st_case_26:
-//line xss_140.go:506
-		if data[p] == 59 {
-			goto st27
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-tr27:
-//line xss_140.rl:10
+	}
 
-            return true
-        
-	goto st27
-	st27:
-		if p++; p == pe {
-			goto _test_eof27
-		}
-	st_case_27:
-//line xss_140.go:525
-		switch data[p] {
-		case 58:
-			goto st26
-		case 61:
-			goto st26
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st44
-		}
-		goto st28
-	st28:
-		if p++; p == pe {
-			goto _test_eof28
-		}
-	st_case_28:
-		switch data[p] {
-		case 58:
-			goto st29
-		case 61:
-			goto st26
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st44
-		}
-		goto st28
-	st29:
-		if p++; p == pe {
-			goto _test_eof29
-		}
-	st_case_29:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 117:
-			goto st31
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-tr28:
-//line xss_140.rl:10
-
-            return true
-        
-	goto st30
-	st30:
-		if p++; p == pe {
-			goto _test_eof30
-		}
-	st_case_30:
-//line xss_140.go:577
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st31:
-		if p++; p == pe {
-			goto _test_eof31
-		}
-	st_case_31:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		case 114:
-			goto st32
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st32:
-		if p++; p == pe {
-			goto _test_eof32
-		}
-	st_case_32:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		case 108:
-			goto st33
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st33:
-		if p++; p == pe {
-			goto _test_eof33
-		}
-	st_case_33:
-		switch data[p] {
-		case 40:
-			goto st34
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st34:
-		if p++; p == pe {
-			goto _test_eof34
-		}
-	st_case_34:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 106:
-			goto st35
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st35:
-		if p++; p == pe {
-			goto _test_eof35
-		}
-	st_case_35:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		case 97:
-			goto st36
-		}
-		if 98 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st36:
-		if p++; p == pe {
-			goto _test_eof36
-		}
-	st_case_36:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		case 118:
-			goto st37
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st37:
-		if p++; p == pe {
-			goto _test_eof37
-		}
-	st_case_37:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		case 97:
-			goto st38
-		}
-		if 98 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st38:
-		if p++; p == pe {
-			goto _test_eof38
-		}
-	st_case_38:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		case 115:
-			goto st39
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st39:
-		if p++; p == pe {
-			goto _test_eof39
-		}
-	st_case_39:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		case 99:
-			goto st40
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st40:
-		if p++; p == pe {
-			goto _test_eof40
-		}
-	st_case_40:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		case 114:
-			goto st41
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st41:
-		if p++; p == pe {
-			goto _test_eof41
-		}
-	st_case_41:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		case 105:
-			goto st42
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st42:
-		if p++; p == pe {
-			goto _test_eof42
-		}
-	st_case_42:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		case 112:
-			goto st43
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st43:
-		if p++; p == pe {
-			goto _test_eof43
-		}
-	st_case_43:
-		switch data[p] {
-		case 59:
-			goto st27
-		case 61:
-			goto st27
-		case 116:
-			goto st25
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st30
-		}
-		goto st26
-	st44:
-		if p++; p == pe {
-			goto _test_eof44
-		}
-	st_case_44:
-		switch data[p] {
-		case 58:
-			goto st29
-		case 61:
-			goto st27
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st44
-		}
-		goto st28
-	st23:
-		if p++; p == pe {
-			goto _test_eof23
-		}
-	st_case_23:
-		switch data[p] {
-		case 58:
-			goto st8
-		case 61:
-			goto st6
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st23
-		}
-		goto st7
-	st24:
-		if p++; p == pe {
-			goto _test_eof24
-		}
-	st_case_24:
-		switch data[p] {
-		case 58:
-			goto st4
-		case 61:
-			goto st2
-		}
-		if 97 <= data[p] && data[p] <= 122 {
-			goto st24
-		}
-		goto st3
-	st_out:
-	_test_eof0: cs = 0; goto _test_eof
-	_test_eof1: cs = 1; goto _test_eof
-	_test_eof2: cs = 2; goto _test_eof
-	_test_eof3: cs = 3; goto _test_eof
-	_test_eof4: cs = 4; goto _test_eof
-	_test_eof5: cs = 5; goto _test_eof
-	_test_eof6: cs = 6; goto _test_eof
-	_test_eof7: cs = 7; goto _test_eof
-	_test_eof8: cs = 8; goto _test_eof
-	_test_eof9: cs = 9; goto _test_eof
-	_test_eof10: cs = 10; goto _test_eof
-	_test_eof11: cs = 11; goto _test_eof
-	_test_eof12: cs = 12; goto _test_eof
-	_test_eof13: cs = 13; goto _test_eof
-	_test_eof14: cs = 14; goto _test_eof
-	_test_eof15: cs = 15; goto _test_eof
-	_test_eof16: cs = 16; goto _test_eof
-	_test_eof17: cs = 17; goto _test_eof
-	_test_eof18: cs = 18; goto _test_eof
-	_test_eof19: cs = 19; goto _test_eof
-	_test_eof20: cs = 20; goto _test_eof
-	_test_eof21: cs = 21; goto _test_eof
-	_test_eof22: cs = 22; goto _test_eof
-	_test_eof25: cs = 25; goto _test_eof
-	_test_eof26: cs = 26; goto _test_eof
-	_test_eof27: cs = 27; goto _test_eof
-	_test_eof28: cs = 28; goto _test_eof
-	_test_eof29: cs = 29; goto _test_eof
-	_test_eof30: cs = 30; goto _test_eof
-	_test_eof31: cs = 31; goto _test_eof
-	_test_eof32: cs = 32; goto _test_eof
-	_test_eof33: cs = 33; goto _test_eof
-	_test_eof34: cs = 34; goto _test_eof
-	_test_eof35: cs = 35; goto _test_eof
-	_test_eof36: cs = 36; goto _test_eof
-	_test_eof37: cs = 37; goto _test_eof
-	_test_eof38: cs = 38; goto _test_eof
-	_test_eof39: cs = 39; goto _test_eof
-	_test_eof40: cs = 40; goto _test_eof
-	_test_eof41: cs = 41; goto _test_eof
-	_test_eof42: cs = 42; goto _test_eof
-	_test_eof43: cs = 43; goto _test_eof
-	_test_eof44: cs = 44; goto _test_eof
-	_test_eof23: cs = 23; goto _test_eof
-	_test_eof24: cs = 24; goto _test_eof
-
+_again:
+	p++
+	if p != pe {
+		goto _resume
+	}
 	_test_eof: {}
 	if p == eof {
-		switch cs {
-		case 25:
+		__acts := _xss140_eof_actions[cs]
+		__nacts := uint(_xss140_actions[__acts]); __acts++
+		for ; __nacts > 0; __nacts-- {
+			__acts++
+			switch _xss140_actions[__acts-1] {
+			case 0:
 //line xss_140.rl:10
 
             return true
         
-//line xss_140.go:907
+//line xss_140.go:253
+			}
 		}
 	}
 

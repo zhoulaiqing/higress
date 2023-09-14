@@ -5,7 +5,7 @@ import (
 )
 
 func matchXSS400(data []byte) bool {
-%% machine xss;
+%% machine xss400;
 %% write data;
     cs, p, pe, eof := 0, 0, len(data), len(data)
         _ = eof

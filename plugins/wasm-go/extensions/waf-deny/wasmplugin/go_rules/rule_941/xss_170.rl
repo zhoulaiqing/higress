@@ -1,34 +1,55 @@
 package rule_941
 
-
 func matchXSS170(data []byte) bool {
-%% machine xss;
+%% machine xss170;
 %% write data;
     cs, p, pe, eof := 0, 0, len(data), len(data)
         _ = eof
 
-
+    var ts, te, act int
+    _, _, _ = ts, te, act
 
     %%{
 
-        action setMatched {
-            return true
-        }
+        word = [_0-9a-z];
+        word_plus = (word | '+' | '-');
+        iden = [a-z]word*;
 
-        word_ele = [_0-9A-Za-z] ;
-        not_word_ele = ^word_ele;
-        identifier = [_a-z][_0-9a-z]+;
+        data_suffix1 = iden '/' word word_plus+ word [;,];
+        data_suffix2 = [^/;]* ';' any* ^word ('base64' | 'charset=');
+        data_suffix3 = [^/,]* ',' any* '<' any* word any* '>';
 
-        word_bound = (any* not_word_ele)?;
-        not_word = not_word_ele*;
+        data = 'data:' ( data_suffix1 | data_suffix2 | data_suffix3 );
 
-        data_suffix1 = (identifier '/' word_ele ( word_ele | '+' | '-' )+ word_ele)? [;,];
-        data_suffix2 = any* ';' word_bound ('base64'|'charset=');
-        data_suffix3 = any* ',' any* '<' any* word_ele any* '>';
+        temp = [!+ ];
+        ptn360 = '!' temp '[' ']';
 
-        data = 'data:' (data_suffix1 | data_suffix2 | data_suffix3) %/setMatched not_word_ele @setMatched;
+        lt = '<';
+        alt = '+adw-';
+        rt = '>';
+        art = '+ad4-';
 
-        main := word_bound data ;
+        main := |*
+            lt any* art => {
+                return true
+            };
+
+            alt any* (rt | art) => {
+                return true
+            };
+
+            data => {
+                return true
+            };
+
+            ptn360 => {
+                return true
+            };
+
+
+            any;
+
+        *|;
 
         write init;
         write exec;

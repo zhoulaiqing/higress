@@ -1,249 +1,313 @@
-
 //line xss_370.rl:1
 package rule_941
 
 import (
-    "fmt"
-    "strings"
-    "golang.org/x/exp/slices"
+	"fmt"
+	"golang.org/x/exp/slices"
+	"strings"
 )
-var builder370 strings.Builder
+
+type machine370 struct {
+	Builder strings.Builder
+	// 0. None; 1. Passed word; 2. Passed left;
+	step int
+}
 
 var keys370 = []string{"self", "document", "this", "top", "window"}
 
-// 0. None; 1. Passed word; 2. Passed left;
-var step370 = 0
-
-func appendWord370(s string) {
-    builder370.WriteString(s)
+func (m *machine370) appendWord(s string) {
+	m.Builder.WriteString(s)
 }
 
-func checkWord370() {
-    if step370 >= 1 {
-        return
-    }
+func (m *machine370) checkWord() {
+	if m.step >= 1 {
+		return
+	}
 
-    s := builder370.String()
-    fmt.Println(s)
+	s := m.Builder.String()
+	fmt.Println(s)
 
-    if slices.Contains(keys370, s) {
-        step370 = 1
-    } else {
-        builder370.Reset()
-    }
+	if slices.Contains(keys370, s) {
+		m.step = 1
+	} else {
+		m.Builder.Reset()
+	}
 }
 
-func checkLeft370() {
-    if step370 >= 1 {
-        step370 = 2
-    } else {
-        checkWord370()
-        if step370 >= 1 {
-            step370 = 2
-        } else {
-            builder370.Reset()
-        }
-    }
+func (m *machine370) checkLeft() {
+	if m.step >= 1 {
+		m.step = 2
+	} else {
+		m.checkWord()
+		if m.step >= 1 {
+			m.step = 2
+		} else {
+			m.Builder.Reset()
+		}
+	}
 }
 
-func checkRight370() bool {
-    if step370 == 2 {
-        return true
-    } else {
-        builder370.Reset()
-        return false
-    }
+func (m *machine370) checkRight() bool {
+	if m.step == 2 {
+		return true
+	} else {
+		m.Builder.Reset()
+		return false
+	}
 }
 
 func matchXSS370(data []byte) bool {
 
-//line xss_370.rl:58
+	//line xss_370.rl:60
 
-//line xss_370.go:63
-const xss_start int = 0
-const xss_first_final int = 0
-const xss_error int = -1
+	//line xss_370.go:65
+	var _xss370_actions []byte = []byte{
+		0, 1, 0, 1, 1, 1, 2, 1, 3,
+		1, 4, 1, 5, 1, 6, 1, 7,
+	}
 
-const xss_en_main int = 0
+	var _xss370_key_offsets []byte = []byte{
+		0, 12, 13, 14,
+	}
 
+	var _xss370_trans_keys []byte = []byte{
+		32, 41, 42, 47, 91, 93, 9, 13,
+		65, 90, 97, 122, 47, 42, 65, 90,
+		97, 122,
+	}
 
-//line xss_370.rl:59
-    cs, p, pe, eof := 0, 0, len(data), len(data)
-        _ = eof
+	var _xss370_single_lengths []byte = []byte{
+		6, 1, 1, 0,
+	}
 
-    var ts, te, act int
-            _ = act
+	var _xss370_range_lengths []byte = []byte{
+		3, 0, 0, 2,
+	}
 
-    
-//line xss_370.go:79
+	var _xss370_index_offsets []byte = []byte{
+		0, 10, 12, 14,
+	}
+
+	var _xss370_trans_targs []byte = []byte{
+		0, 0, 1, 2, 0, 0, 0, 3,
+		3, 0, 0, 0, 0, 0, 3, 3,
+		0, 0, 0, 0,
+	}
+
+	var _xss370_trans_actions []byte = []byte{
+		9, 5, 0, 0, 5, 7, 9, 0,
+		0, 11, 7, 15, 5, 15, 0, 0,
+		13, 15, 15, 13,
+	}
+
+	var _xss370_to_state_actions []byte = []byte{
+		1, 0, 0, 0,
+	}
+
+	var _xss370_from_state_actions []byte = []byte{
+		3, 0, 0, 0,
+	}
+
+	var _xss370_eof_trans []byte = []byte{
+		0, 19, 19, 20,
+	}
+
+	const xss370_start int = 0
+	const xss370_first_final int = 0
+	const xss370_error int = -1
+
+	const xss370_en_main int = 0
+
+	//line xss_370.rl:61
+	cs, p, pe, eof := 0, 0, len(data), len(data)
+	_ = eof
+
+	var ts, te, act int
+	_ = act
+
+	m := &machine370{}
+
+	//line xss_370.go:134
 	{
-	cs = xss_start
-	ts = 0
-	te = 0
-	act = 0
+		cs = xss370_start
+		ts = 0
+		te = 0
+		act = 0
 	}
 
-//line xss_370.go:87
+	//line xss_370.go:142
 	{
-	if p == pe {
-		goto _test_eof
-	}
-	switch cs {
-	case 0:
-		goto st_case_0
-	case 1:
-		goto st_case_1
-	case 2:
-		goto st_case_2
-	case 3:
-		goto st_case_3
-	}
-	goto st_out
-tr0:
-//line xss_370.rl:86
-te = p+1
-{
-                if step370 < 2 {
-                    builder370.Reset()
-                }
-
-            }
-	goto st0
-tr1:
-//line xss_370.rl:82
-te = p+1
-{
-                checkWord370()
-            }
-	goto st0
-tr2:
-//line xss_370.rl:72
-te = p+1
-{
-                checkLeft370()
-            }
-	goto st0
-tr6:
-//line xss_370.rl:76
-te = p+1
-{
-                if checkRight370() {
-                    return true
-                }
-            }
-	goto st0
-tr7:
-//line xss_370.rl:86
-te = p
-p--
-{
-                if step370 < 2 {
-                    builder370.Reset()
-                }
-
-            }
-	goto st0
-tr8:
-//line xss_370.rl:68
-te = p
-p--
-{
-                appendWord370(string(data[ts:te]))
-            }
-	goto st0
-	st0:
-//line NONE:1
-ts = 0
-
-		if p++; p == pe {
-			goto _test_eof0
+		var _klen int
+		var _trans int
+		var _acts int
+		var _nacts uint
+		var _keys int
+		if p == pe {
+			goto _test_eof
 		}
-	st_case_0:
-//line NONE:1
-ts = p
+	_resume:
+		_acts = int(_xss370_from_state_actions[cs])
+		_nacts = uint(_xss370_actions[_acts])
+		_acts++
+		for ; _nacts > 0; _nacts-- {
+			_acts++
+			switch _xss370_actions[_acts-1] {
+			case 1:
+				//line NONE:1
+				ts = p
 
-//line xss_370.go:166
-		switch data[p] {
-		case 32:
-			goto tr1
-		case 41:
-			goto tr2
-		case 42:
-			goto st1
-		case 47:
-			goto st2
-		case 91:
-			goto tr2
-		case 93:
-			goto tr6
-		}
-		switch {
-		case data[p] < 65:
-			if 9 <= data[p] && data[p] <= 13 {
-				goto tr1
+				//line xss_370.go:162
 			}
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st3
-			}
-		default:
-			goto st3
 		}
-		goto tr0
-	st1:
-		if p++; p == pe {
-			goto _test_eof1
-		}
-	st_case_1:
-		if data[p] == 47 {
-			goto tr6
-		}
-		goto tr7
-	st2:
-		if p++; p == pe {
-			goto _test_eof2
-		}
-	st_case_2:
-		if data[p] == 42 {
-			goto tr2
-		}
-		goto tr7
-	st3:
-		if p++; p == pe {
-			goto _test_eof3
-		}
-	st_case_3:
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st3
-			}
-		case data[p] >= 65:
-			goto st3
-		}
-		goto tr8
-	st_out:
-	_test_eof0: cs = 0; goto _test_eof
-	_test_eof1: cs = 1; goto _test_eof
-	_test_eof2: cs = 2; goto _test_eof
-	_test_eof3: cs = 3; goto _test_eof
 
-	_test_eof: {}
-	if p == eof {
-		switch cs {
-		case 1:
-			goto tr7
-		case 2:
-			goto tr7
-		case 3:
-			goto tr8
+		_keys = int(_xss370_key_offsets[cs])
+		_trans = int(_xss370_index_offsets[cs])
+
+		_klen = int(_xss370_single_lengths[cs])
+		if _klen > 0 {
+			_lower := int(_keys)
+			var _mid int
+			_upper := int(_keys + _klen - 1)
+			for {
+				if _upper < _lower {
+					break
+				}
+
+				_mid = _lower + ((_upper - _lower) >> 1)
+				switch {
+				case data[p] < _xss370_trans_keys[_mid]:
+					_upper = _mid - 1
+				case data[p] > _xss370_trans_keys[_mid]:
+					_lower = _mid + 1
+				default:
+					_trans += int(_mid - int(_keys))
+					goto _match
+				}
+			}
+			_keys += _klen
+			_trans += _klen
 		}
+
+		_klen = int(_xss370_range_lengths[cs])
+		if _klen > 0 {
+			_lower := int(_keys)
+			var _mid int
+			_upper := int(_keys + (_klen << 1) - 2)
+			for {
+				if _upper < _lower {
+					break
+				}
+
+				_mid = _lower + (((_upper - _lower) >> 1) & ^1)
+				switch {
+				case data[p] < _xss370_trans_keys[_mid]:
+					_upper = _mid - 2
+				case data[p] > _xss370_trans_keys[_mid+1]:
+					_lower = _mid + 2
+				default:
+					_trans += int((_mid - int(_keys)) >> 1)
+					goto _match
+				}
+			}
+			_trans += _klen
+		}
+
+	_match:
+	_eof_trans:
+		cs = int(_xss370_trans_targs[_trans])
+
+		if _xss370_trans_actions[_trans] == 0 {
+			goto _again
+		}
+
+		_acts = int(_xss370_trans_actions[_trans])
+		_nacts = uint(_xss370_actions[_acts])
+		_acts++
+		for ; _nacts > 0; _nacts-- {
+			_acts++
+			switch _xss370_actions[_acts-1] {
+			case 2:
+				//line xss_370.rl:76
+				te = p + 1
+				{
+					m.checkLeft()
+				}
+			case 3:
+				//line xss_370.rl:80
+				te = p + 1
+				{
+					if m.checkRight() {
+						return true
+					}
+				}
+			case 4:
+				//line xss_370.rl:86
+				te = p + 1
+				{
+					m.checkWord()
+				}
+			case 5:
+				//line xss_370.rl:90
+				te = p + 1
+				{
+					if m.step < 2 {
+						m.Builder.Reset()
+					}
+
+				}
+			case 6:
+				//line xss_370.rl:72
+				te = p
+				p--
+				{
+					m.appendWord(string(data[ts:te]))
+				}
+			case 7:
+				//line xss_370.rl:90
+				te = p
+				p--
+				{
+					if m.step < 2 {
+						m.Builder.Reset()
+					}
+
+				}
+				//line xss_370.go:277
+			}
+		}
+
+	_again:
+		_acts = int(_xss370_to_state_actions[cs])
+		_nacts = uint(_xss370_actions[_acts])
+		_acts++
+		for ; _nacts > 0; _nacts-- {
+			_acts++
+			switch _xss370_actions[_acts-1] {
+			case 0:
+				//line NONE:1
+				ts = 0
+
+				//line xss_370.go:291
+			}
+		}
+
+		p++
+		if p != pe {
+			goto _resume
+		}
+	_test_eof:
+		{
+		}
+		if p == eof {
+			if _xss370_eof_trans[cs] > 0 {
+				_trans = int(_xss370_eof_trans[cs] - 1)
+				goto _eof_trans
+			}
+		}
+
 	}
 
-	}
+	//line xss_370.rl:100
 
-//line xss_370.rl:96
-
-
-    return false
+	return false
 }

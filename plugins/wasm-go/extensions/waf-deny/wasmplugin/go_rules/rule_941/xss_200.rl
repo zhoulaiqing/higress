@@ -2,7 +2,7 @@ package rule_941
 
 
 func matchXSS200(data []byte) bool {
-%% machine xss;
+%% machine xss200;
 %% write data;
     cs, p, pe, eof := 0, 0, len(data), len(data)
         _ = eof

@@ -4,46 +4,50 @@ import (
     "fmt"
     "strings"
 )
-var builder210 strings.Builder
 
-func checkColon() bool {
-    s := builder210.String()
+type machine210 struct {
+    Builder strings.Builder
+}
+
+func (m *machine210) checkColon() bool {
+    s := m.Builder.String()
     fmt.Println(s)
 
     if s == "javascript" || s == "vbscript" {
-        fmt.Println("here")
-        builder210.Reset()
+        m.Builder.Reset()
         return true
     }
-    builder210.Reset()
+    m.Builder.Reset()
     return false
 }
 
-func checkHtmlSpace(word string) bool {
+func (m *machine210) checkHtmlSpace(word string) bool {
     fmt.Println(word)
 
     if word == "&newline;" || word == "&tab;" {
         return false
-    } else if word == "&colon" {
-        return checkColon()
+    } else if word == "&colon;" {
+        return m.checkColon()
     }
 
-    builder210.Reset()
+    m.Builder.Reset()
     return false
 }
 
-func appendWord(s string) {
-    builder210.WriteString(s)
+func (m *machine210) appendWord(s string) {
+    m.Builder.WriteString(s)
 }
 
 func matchXSS210(data []byte) bool {
-%% machine xss;
+%% machine xss210;
 %% write data;
     cs, p, pe, eof := 0, 0, len(data), len(data)
         _ = eof
 
     var ts, te, act int
         _ = act
+
+    m := &machine210{}
 
     %%{
         action setMatched {
@@ -53,17 +57,17 @@ func matchXSS210(data []byte) bool {
         main := |*
 
             '&' alpha+ ';' => {
-                if checkHtmlSpace(string(data[ts:te])) {
+                if m.checkHtmlSpace(string(data[ts:te])) {
                     return true
                 }
             };
 
             alpha+ => {
-                appendWord(string(data[ts:te]))
+                m.appendWord(string(data[ts:te]))
             };
 
             ':' => {
-                if checkColon() {
+                if m.checkColon() {
                     return true
                 }
             };
@@ -72,11 +76,11 @@ func matchXSS210(data []byte) bool {
             };
 
             0 => {
-                builder210.Reset()
+                m.Builder.Reset()
             };
 
             any => {
-                builder210.Reset()
+                m.Builder.Reset()
             };
 
         *|;
