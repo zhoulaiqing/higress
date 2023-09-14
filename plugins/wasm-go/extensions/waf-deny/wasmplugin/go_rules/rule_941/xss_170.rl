@@ -8,6 +8,7 @@ func matchXSS170(data []byte) bool {
         _ = eof
 
 
+
     %%{
 
         action setMatched {

@@ -75,9 +75,10 @@ func TestExperiment(t *testing.T) {
 		// 941170
 		"case941170-1": {"/char_test?mime=text/xml&body=%3Cx:script%20xmlns:x=%22http://www.w3.org/1999/xhtml%22%20src=%22data:,alert(1)%22%20/%3E", true},
 		"case941170-2": {"payload=javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/\\\"/+/onmouseover=1/+/[*/[]/+alert(1)//'></a>", true},
-		"case941170-3": {"/?var=javascript:%20%5C%5C%5C%5Ct", true},
-		"case941170-4": {"/?var=javascript:%5C%5C%5C%5Cu0020", true},
-		"case941170-5": {"/?test=%20data%3A%20%2C%20%3Cx%3E", true},
+		"case941170-3": {"javascript:%20%5C%5C%5C%5Ct", true},
+		"case941170-4": {"javascript:%5C%5C%5C%5Cu0020", true},
+		"case941170-5": {"%20data%3A%20%2C%20%3Cx%3E", true},
+
 		// 941190
 		"case941190-1": {"941190-1=<STYLE>@import'http://xss.rocks/xss.css';</STYLE>", true},
 		"case941190-2": {"x=<STYLE>@im\\\\port'\\\\ja\\vasc\\\\ript:alert('XSS')';</STYLE>", true},

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 	"strings"
 )
 
@@ -40,8 +41,22 @@ func (r *Rule941) EvaluatePhase1(tx *core.Transaction) int {
 		}
 	}
 	//fmt.Printf("RequestUriRaw: %s \n", tx.Variables.RequestUriRaw)
-	if r.matchValue(tx.Variables.RequestUriRaw, false) {
-		return r.block(tx)
+	//if r.matchValue(tx.Variables.RequestUriRaw, false) {
+	//	return r.block(tx)
+	//}
+
+	for _, argMap := range tx.Variables.Args {
+		for k, v := range *argMap {
+			proxywasm.LogInfof("arg key: %s", k)
+			if r.matchValue(k, false) {
+				return r.block(tx)
+			}
+
+			proxywasm.LogInfof("arg value: %s", v)
+			if r.matchValue(v, false) {
+				return r.block(tx)
+			}
+		}
 	}
 
 	ua := tx.Variables.RequestHeaders["user-agent"]
