@@ -216,7 +216,7 @@ _eof_trans:
 te = p+1
 
 		case 3:
-//line xss_210.rl:59
+//line xss_210.rl:56
 te = p+1
 {
                 if m.checkHtmlSpace(string(data[ts:te])) {
@@ -224,7 +224,7 @@ te = p+1
                 }
             }
 		case 4:
-//line xss_210.rl:69
+//line xss_210.rl:66
 te = p+1
 {
                 if m.checkColon() {
@@ -232,38 +232,38 @@ te = p+1
                 }
             }
 		case 5:
-//line xss_210.rl:75
+//line xss_210.rl:72
 te = p+1
 {
             }
 		case 6:
-//line xss_210.rl:78
+//line xss_210.rl:75
 te = p+1
 {
                 m.Builder.Reset()
             }
 		case 7:
-//line xss_210.rl:82
+//line xss_210.rl:79
 te = p+1
 {
                 m.Builder.Reset()
             }
 		case 8:
-//line xss_210.rl:65
+//line xss_210.rl:62
 te = p
 p--
 {
                 m.appendWord(string(data[ts:te]))
             }
 		case 9:
-//line xss_210.rl:82
+//line xss_210.rl:79
 te = p
 p--
 {
                 m.Builder.Reset()
             }
 		case 10:
-//line xss_210.rl:82
+//line xss_210.rl:79
 p = (te) - 1
 {
                 m.Builder.Reset()
@@ -300,7 +300,7 @@ ts = 0
 
 	}
 
-//line xss_210.rl:91
+//line xss_210.rl:88
 
 
     return false

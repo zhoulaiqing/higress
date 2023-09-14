@@ -16,9 +16,6 @@ func matchXSS400(data []byte) bool {
     step := 0
 
     %%{
-        action setMatched {
-            return true
-        }
 
         part11 = '[' any* ']' [^.]* ;
         part12 = 'reflect' [^.]* ;

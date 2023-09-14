@@ -229,23 +229,23 @@ _eof_trans:
 te = p+1
 
 		case 3:
-//line xss_400.rl:31
+//line xss_400.rl:28
 act = 1;
 		case 4:
-//line xss_400.rl:36
+//line xss_400.rl:33
 act = 2;
 		case 5:
-//line xss_400.rl:46
+//line xss_400.rl:43
 act = 3;
 		case 6:
-//line xss_400.rl:56
+//line xss_400.rl:53
 act = 4;
 		case 7:
-//line xss_400.rl:56
+//line xss_400.rl:53
 te = p+1
 
 		case 8:
-//line xss_400.rl:31
+//line xss_400.rl:28
 te = p
 p--
 {
@@ -253,7 +253,7 @@ p--
                 step = 1
             }
 		case 9:
-//line xss_400.rl:46
+//line xss_400.rl:43
 te = p
 p--
 {
@@ -266,12 +266,12 @@ p--
                 }
             }
 		case 10:
-//line xss_400.rl:56
+//line xss_400.rl:53
 te = p
 p--
 
 		case 11:
-//line xss_400.rl:56
+//line xss_400.rl:53
 p = (te) - 1
 
 		case 12:
@@ -342,7 +342,7 @@ ts = 0
 
 	}
 
-//line xss_400.rl:61
+//line xss_400.rl:58
 
 
     return false

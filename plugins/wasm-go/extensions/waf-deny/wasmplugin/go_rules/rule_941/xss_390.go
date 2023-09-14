@@ -230,7 +230,7 @@ _eof_trans:
 		_acts++
 		switch _xss390_actions[_acts-1] {
 		case 2:
-//line xss_390.rl:84
+//line xss_390.rl:81
 te = p+1
 {
                 if m.checkFinish() {
@@ -238,19 +238,19 @@ te = p+1
                 }
             }
 		case 3:
-//line xss_390.rl:90
+//line xss_390.rl:87
 te = p+1
 {
                 m.checkSpace()
             }
 		case 4:
-//line xss_390.rl:94
+//line xss_390.rl:91
 te = p+1
 {
                 m.reset()
             }
 		case 5:
-//line xss_390.rl:80
+//line xss_390.rl:77
 te = p
 p--
 {
@@ -288,7 +288,7 @@ ts = 0
 
 	}
 
-//line xss_390.rl:101
+//line xss_390.rl:98
 
 
     return false

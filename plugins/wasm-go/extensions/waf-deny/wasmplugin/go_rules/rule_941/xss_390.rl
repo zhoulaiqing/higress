@@ -72,9 +72,6 @@ func matchXSS390(data []byte) bool {
     m := &machine390{}
 
     %%{
-        action setMatched {
-            return true
-        }
 
         main :=  |*
             alpha+ => {
