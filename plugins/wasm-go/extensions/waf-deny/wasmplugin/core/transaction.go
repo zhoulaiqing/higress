@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/url_util"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
+	"github.com/wasilibs/go-re2"
 	"io"
 	"math"
 	"net/url"
@@ -94,6 +95,8 @@ type TransactionVariables struct {
 
 const ARG_LIMIT = 1000
 
+var xmlContentTypeReg = re2.MustCompile(`^(?:application(?:/soap\+|/)|text/)xml`)
+
 func (tx *Transaction) AddRequestHeader(key string, value string) {
 	if len(key) == 0 {
 		return
@@ -109,6 +112,10 @@ func (tx *Transaction) AddRequestHeader(key string, value string) {
 			tx.Variables.ReqBodyProcessor = "URLENCODED"
 		} else if strings.HasPrefix(val, "multipart/form-data") {
 			tx.Variables.ReqBodyProcessor = "MULTIPART"
+		} else if strings.HasPrefix(val, "application/json") {
+			tx.Variables.ReqBodyProcessor = "JSON"
+		} else if xmlContentTypeReg.MatchString(val) {
+			tx.Variables.ReqBodyProcessor = "XML"
 		}
 	case "cookie":
 		values := url_util.ParseQuery(value, ';')
