@@ -97,7 +97,7 @@ func (ctx *httpContext) OnHttpRequestHeaders(numHeaders int, endOfStream bool) t
 		return types.ActionContinue
 	}
 
-	ctx.tx.AddRequestHeader("host", authority)
+	_ = ctx.tx.AddRequestHeader("host", authority)
 
 	srcIP, srcPort := retrieveAddressInfo("source")
 	dstIP, dstPort := retrieveAddressInfo("destination")
@@ -120,7 +120,11 @@ func (ctx *httpContext) OnHttpRequestHeaders(numHeaders int, endOfStream bool) t
 	}
 
 	ctx.httpProtocol = string(protocol)
-	ctx.tx.ProcessURI(uri, method, ctx.httpProtocol)
+	err = ctx.tx.ProcessURI(uri, method, ctx.httpProtocol)
+	if err == core.ErrorIllegalCRLF {
+		_ = proxywasm.SendHttpResponse(403, nil, []byte("denied by waf"), -1)
+		return types.ActionContinue
+	}
 
 	hs, err := proxywasm.GetHttpRequestHeaders()
 	if err != nil {
@@ -130,7 +134,11 @@ func (ctx *httpContext) OnHttpRequestHeaders(numHeaders int, endOfStream bool) t
 
 	for _, h := range hs {
 		proxywasm.LogInfof("Add Request Header, header key: %s, value: %s", h[0], h[1])
-		ctx.tx.AddRequestHeader(strings.ToLower(h[0]), h[1])
+		err = ctx.tx.AddRequestHeader(strings.ToLower(h[0]), h[1])
+		if err == core.ErrorIllegalCRLF {
+			_ = proxywasm.SendHttpResponse(403, nil, []byte("denied by waf"), -1)
+			return types.ActionContinue
+		}
 	}
 
 	res := go_rules.ProcessRequestHeaderRules(&ctx.tx)
@@ -162,10 +170,15 @@ func (ctx *httpContext) OnHttpRequestBody(bodySize int, endOfStream bool) types.
 
 	if endOfStream {
 		ctx.bodyReadIndex = 0
-		r, _ := tx.ProcessRequestBody()
-		if !r {
+		_, err := tx.ProcessRequestBody()
+		if err != nil {
+			if err == core.ErrorIllegalCRLF {
+				_ = proxywasm.SendHttpResponse(403, nil, []byte("denied by waf"), -1)
+				return types.ActionContinue
+			}
 			proxywasm.LogError("Failed to process request body")
 		}
+
 		res := go_rules.ProcessRequestBodyRules(&ctx.tx)
 		if !res {
 			_ = proxywasm.SendHttpResponse(403, nil, []byte("denied by waf"), -1)

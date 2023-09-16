@@ -17,6 +17,12 @@ func (js *jsonBodyProcessor) ProcessRequest(reader io.Reader, tx *Transaction, _
 		return err
 	}
 
+	for k, _ := range data {
+		if strings.ContainsAny(k, "\r\n") {
+			return ErrorIllegalCRLF
+		}
+	}
+
 	tx.Variables.ArgsPost = data
 	return nil
 }

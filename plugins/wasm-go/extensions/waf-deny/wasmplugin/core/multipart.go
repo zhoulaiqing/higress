@@ -31,6 +31,11 @@ func (mbp *multipartBodyProcessor) ProcessRequest(reader io.Reader, tx *Transact
 			return err
 		}
 		partName := p.FormName()
+
+		if strings.ContainsAny(partName, "\r\n") {
+			return ErrorIllegalCRLF
+		}
+
 		for key, values := range p.Header {
 			for _, value := range values {
 				tx.Variables.MultipartPartHeaders[partName] = append(tx.Variables.MultipartPartHeaders[partName],

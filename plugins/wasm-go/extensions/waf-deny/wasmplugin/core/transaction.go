@@ -13,6 +13,10 @@ import (
 	"strings"
 )
 
+var (
+	ErrorIllegalCRLF = errors.New("contains illegal cr/lf ")
+)
+
 type Transaction struct {
 	id                 string
 	Variables          TransactionVariables
@@ -97,9 +101,13 @@ const ARG_LIMIT = 1000
 
 var xmlContentTypeReg = re2.MustCompile(`^(?:application(?:/soap\+|/)|text/)xml`)
 
-func (tx *Transaction) AddRequestHeader(key string, value string) {
+func (tx *Transaction) AddRequestHeader(key string, value string) error {
 	if len(key) == 0 {
-		return
+		return nil
+	}
+
+	if strings.ContainsAny(key, "\r\n") || strings.ContainsAny(value, "\r\n") {
+		return ErrorIllegalCRLF
 	}
 
 	keyl := strings.ToLower(key)
@@ -127,36 +135,34 @@ func (tx *Transaction) AddRequestHeader(key string, value string) {
 		}
 	}
 
+	return nil
 }
 
-func (tx *Transaction) ExtractGetArguments(uri string) {
+func (tx *Transaction) ExtractGetArguments(uri string) error {
 	data := url_util.ParseQuery(uri, '&')
 	for k, vs := range data {
 		for _, v := range vs {
-			tx.AddGetRequestArgument(k, v)
+			err := tx.AddGetRequestArgument(k, v)
+			if err != nil {
+				return err
+			}
 		}
 	}
+
+	return nil
 }
 
-func (tx *Transaction) AddGetRequestArgument(key string, value string) {
+func (tx *Transaction) AddGetRequestArgument(key string, value string) error {
 	if !tx.checkArgumentLimit() {
-		return
+		return nil
 	}
+
+	if strings.ContainsAny(key, "\r\n") {
+		return ErrorIllegalCRLF
+	}
+
 	tx.Variables.ArgsGet[key] = value
-}
-
-func (tx *Transaction) AddPostRequestArgument(key string, value string) {
-	if !tx.checkArgumentLimit() {
-		return
-	}
-	tx.Variables.ArgsPost[key] = value
-}
-
-func (tx *Transaction) AddPathRequestArgument(key string, value string) {
-	if !tx.checkArgumentLimit() {
-		return
-	}
-	tx.Variables.ArgsPath[key] = value
+	return nil
 }
 
 func (tx *Transaction) checkArgumentLimit() bool {
@@ -164,7 +170,7 @@ func (tx *Transaction) checkArgumentLimit() bool {
 	return argLen <= ARG_LIMIT
 }
 
-func (tx *Transaction) ProcessURI(uri string, method string, httpVersion string) {
+func (tx *Transaction) ProcessURI(uri string, method string, httpVersion string) error {
 	tx.Variables.RequestMethod = method
 	tx.Variables.RequestProtocol = httpVersion
 	tx.Variables.RequestUriRaw = uri
@@ -183,10 +189,17 @@ func (tx *Transaction) ProcessURI(uri string, method string, httpVersion string)
 		path = uri
 		tx.Variables.RequestUri = uri
 	} else {
-		tx.ExtractGetArguments(parsedURL.RawQuery)
+		err = tx.ExtractGetArguments(parsedURL.RawQuery)
+		if err == ErrorIllegalCRLF {
+			return err
+		}
 		tx.Variables.RequestUri = parsedURL.String()
 		path = parsedURL.Path
 		query = parsedURL.RawQuery
+	}
+
+	if strings.ContainsAny(path, "\r\n") {
+		return ErrorIllegalCRLF
 	}
 
 	offset := strings.LastIndexAny(path, "/\\")
@@ -198,6 +211,7 @@ func (tx *Transaction) ProcessURI(uri string, method string, httpVersion string)
 
 	tx.Variables.RequestFileName = path
 	tx.Variables.QueryString = query
+	return nil
 }
 
 func (tx *Transaction) ProcessConnection(client string, cPort int, server string, sPort int) {
@@ -255,7 +269,7 @@ func (tx *Transaction) ProcessRequestBody() (bool, error) {
 		return false, err
 	}
 
-	// todo 注意这里暂时没有启用 XML 和 JSON 的解析逻辑，后续可以根据需要使用。参考 coraza.conf-recommended.conf
+	// 启用 XML 和 JSON 的解析逻辑参考 coraza.conf-recommended.conf
 	rbp := strings.ToLower(tx.Variables.ReqBodyProcessor)
 	if len(rbp) == 0 {
 		return true, nil
@@ -266,7 +280,11 @@ func (tx *Transaction) ProcessRequestBody() (bool, error) {
 		return false, errors.New("invalid body processor")
 	}
 
-	if err := bodyprocessor.ProcessRequest(reader, tx, mime); err != nil {
+	if err = bodyprocessor.ProcessRequest(reader, tx, mime); err != nil {
+		if err == ErrorIllegalCRLF {
+			return false, err
+		}
+
 		return false, errors.New("failed to process request body")
 	}
 

@@ -18,6 +18,11 @@ func (*urlencodedBodyProcessor) ProcessRequest(reader io.Reader, tx *Transaction
 	b := buf.String()
 	values := url_util.ParseQuery(b, '&')
 	for k, vals := range values {
+
+		if strings.ContainsAny(k, "\r\n") {
+			return ErrorIllegalCRLF
+		}
+
 		for _, v := range vals {
 			tx.Variables.ArgsPost[k] = v
 		}
