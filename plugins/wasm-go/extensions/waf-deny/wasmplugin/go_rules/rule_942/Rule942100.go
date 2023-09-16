@@ -3,7 +3,7 @@ package rule_942
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
-	"github.com/corazawaf/libinjection-go"
+	libinjection2 "github.com/wasilibs/go-libinjection"
 )
 
 type Rule942100 struct {
@@ -24,7 +24,7 @@ func (r *Rule942100) doEvaluate(tx *core.Transaction, value *string) bool {
 	emptyString := ""
 	r.Rule942.doEvaluate(tx, &emptyString)
 
-	m, _ := libinjection.IsSQLi(*value)
+	m, _ := libinjection2.IsSQLi(*value)
 	if m {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.SqlInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
@@ -32,7 +32,7 @@ func (r *Rule942100) doEvaluate(tx *core.Transaction, value *string) bool {
 	}
 
 	v, _, _ := core.Utf8ToUnicode(*value)
-	m, _ = libinjection.IsSQLi(v)
+	m, _ = libinjection2.IsSQLi(v)
 	if m {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.SqlInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
@@ -40,7 +40,7 @@ func (r *Rule942100) doEvaluate(tx *core.Transaction, value *string) bool {
 	}
 
 	v, _, _ = core.UrlDecodeUni(v)
-	m, _ = libinjection.IsSQLi(v)
+	m, _ = libinjection2.IsSQLi(v)
 	if m {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.SqlInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
@@ -48,7 +48,7 @@ func (r *Rule942100) doEvaluate(tx *core.Transaction, value *string) bool {
 	}
 
 	v, _, _ = core.RemoveNulls(v)
-	m, _ = libinjection.IsSQLi(v)
+	m, _ = libinjection2.IsSQLi(v)
 	if m {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.SqlInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE

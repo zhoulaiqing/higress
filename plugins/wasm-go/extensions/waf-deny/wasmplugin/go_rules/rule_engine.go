@@ -7,8 +7,6 @@ import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_934"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_941"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_942"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_943"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_944"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 )
@@ -45,9 +43,9 @@ var (
 		//&rule_942.Rule942190{}, &rule_942.Rule942220{}, &rule_942.Rule942230{}, &rule_942.Rule942240{}, &rule_942.Rule942250{},
 		//&rule_942.Rule942270{}, &rule_942.Rule942280{}, &rule_942.Rule942290{}, &rule_942.Rule942320{}, &rule_942.Rule942350{},
 		//&rule_942.Rule942360{}, &rule_942.Rule942500{}, &rule_942.Rule942540{}, &rule_942.Rule942550{},
-		&rule_943.Rule943100{}, &rule_943.Rule943110_120{},
-		&rule_944.Rule944100{}, &rule_944.Rule944110{}, &rule_944.Rule944120{}, &rule_944.Rule944130{}, &rule_944.Rule944140{},
-		&rule_944.Rule944150{},
+		//&rule_943.Rule943100{}, &rule_943.Rule943110_120{},
+		//&rule_944.Rule944100{}, &rule_944.Rule944110{}, &rule_944.Rule944120{}, &rule_944.Rule944130{}, &rule_944.Rule944140{},
+		//&rule_944.Rule944150{},
 		//&rule_950.Rule950130{}, &rule_950.Rule950140{},
 		//&rule_951.Rule951100{}, &rule_951.Rule951110{}, &rule_951.Rule951120{}, &rule_951.Rule951130{}, &rule_951.Rule951140{},
 		//&rule_951.Rule951150{}, &rule_951.Rule951160{}, &rule_951.Rule951170{}, &rule_951.Rule951180{}, &rule_951.Rule951190{},

@@ -1,7 +1,7 @@
 package core
 
 import (
-	ahocorasick "github.com/petar-dambovaliev/aho-corasick"
+	ahocorasick "github.com/wasilibs/go-aho-corasick"
 )
 
 func PmEvaluate(matcher ahocorasick.AhoCorasick, value string, isCapture bool) (bool, []string) {

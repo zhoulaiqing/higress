@@ -1,7 +1,7 @@
 package rule_tasks
 
 import (
-	ahocorasick "github.com/petar-dambovaliev/aho-corasick"
+	ahocorasick "github.com/wasilibs/go-aho-corasick"
 	"github.com/wasilibs/go-re2"
 )
 

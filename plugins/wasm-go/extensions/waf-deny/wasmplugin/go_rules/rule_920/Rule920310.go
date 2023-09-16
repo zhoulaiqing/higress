@@ -3,7 +3,7 @@ package rule_920
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
-	ahocorasick "github.com/petar-dambovaliev/aho-corasick"
+	ahocorasick "github.com/wasilibs/go-aho-corasick"
 )
 
 // Include 920311

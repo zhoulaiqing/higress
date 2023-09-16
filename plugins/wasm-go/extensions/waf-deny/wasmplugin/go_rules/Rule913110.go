@@ -3,7 +3,7 @@ package go_rules
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
-	ahocorasick "github.com/petar-dambovaliev/aho-corasick"
+	ahocorasick "github.com/wasilibs/go-aho-corasick"
 )
 
 var SCANNERS_HEADERS = []string{

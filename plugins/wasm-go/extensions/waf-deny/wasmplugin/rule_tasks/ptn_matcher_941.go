@@ -2,7 +2,7 @@ package rule_tasks
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	ahocorasick "github.com/petar-dambovaliev/aho-corasick"
+	ahocorasick "github.com/wasilibs/go-aho-corasick"
 )
 
 var ValidateByteRange941010 *core.ValidateByteRange

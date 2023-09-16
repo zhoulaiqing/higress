@@ -1,7 +1,7 @@
 package rule_941
 
 import (
-	"github.com/corazawaf/libinjection-go"
+	libinjection2 "github.com/wasilibs/go-libinjection"
 )
 
 func matchXss(value string) bool {
@@ -24,41 +24,41 @@ func matchXss(value string) bool {
 }
 
 func doMatchXssOriginal(value string) bool {
-	data := []byte(value)
+	//data := []byte(value)
 
-	if libinjection.IsXSS(value) {
-		return true
-	}
-
-	if matchExp(data) {
+	if libinjection2.IsXSS(value) {
 		return true
 	}
 
-	if matchXSS130(data) {
-		return true
-	}
-	if matchXSS140(data) {
-		return true
-	}
-	if matchXSS170(data) {
-		return true
-	}
-	if matchXSS200(data) {
-		return true
-	}
-	if matchXSS210(data) {
-		return true
-	}
-
-	if matchXSS370(data) {
-		return true
-	}
-	if matchXSS390(data) {
-		return true
-	}
-	if matchXSS400(data) {
-		return true
-	}
+	//if matchExp(data) {
+	//	return true
+	//}
+	//
+	//if matchXSS130(data) {
+	//	return true
+	//}
+	//if matchXSS140(data) {
+	//	return true
+	//}
+	//if matchXSS170(data) {
+	//	return true
+	//}
+	//if matchXSS200(data) {
+	//	return true
+	//}
+	//if matchXSS210(data) {
+	//	return true
+	//}
+	//
+	//if matchXSS370(data) {
+	//	return true
+	//}
+	//if matchXSS390(data) {
+	//	return true
+	//}
+	//if matchXSS400(data) {
+	//	return true
+	//}
 
 	return false
 }

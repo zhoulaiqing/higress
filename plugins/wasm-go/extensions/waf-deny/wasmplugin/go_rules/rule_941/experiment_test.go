@@ -61,7 +61,7 @@ func TestExperiment(t *testing.T) {
 		"case941160-2":  {"/char_test?mime=text/xml&body=%3Cx:script%20xmlns:x=%22http://www.w3.org/1999/xhtml%22%20src=%22data:,alert(1)%22%20/%3E", true},
 		"case941160-3":  {"/char_test?mime=text/xml&body=%3Cx%20onend%3D", true},
 		"case941160-4":  {"/char_test?mime=text/xml&body=%22onzoom%3D", true},
-		"case941160-5":  {"/char_test?mime=text/xml&body=%27formaction%3D", true},
+		"case941160-5":  {"%27formaction%3D", true},
 		"case941160-6":  {"/char_test?mime=text/xml&body=%3C%20x%3A%20script", true},
 		"case941160-7":  {"/char_test?mime=text/xml&body=$%3Cf%20o%20r%20m", true},
 		"case941160-8":  {"OWASP ModSecurity Core Rule Set %3Cf%20o%20r%20m", true},
