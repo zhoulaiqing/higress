@@ -7,20 +7,11 @@ func matchLdapInjection(data []byte) bool {
 //line ldap_injection.rl:5
 
 //line ldap_injection.go:10
-var _ldapInjection_actions []byte = []byte{
-	0, 1, 0, 
-}
+const ldapInjection_start int = 5
+const ldapInjection_first_final int = 5
+const ldapInjection_error int = -1
 
-var _ldapInjection_eof_actions []byte = []byte{
-	0, 0, 0, 0, 0, 0, 0, 1, 
-	0, 0, 0, 1, 1, 1, 1, 
-}
-
-const ldapInjection_start int = 1
-const ldapInjection_first_final int = 7
-const ldapInjection_error int = 0
-
-const ldapInjection_en_main int = 1
+const ldapInjection_en_main int = 5
 
 
 //line ldap_injection.rl:6
@@ -28,334 +19,565 @@ const ldapInjection_en_main int = 1
         _ = eof
 
 
+    var ts, te, act int
+    _, _, _ = ts, te, act
+
+    startWithRightPart := false
+
     
-//line ldap_injection.go:33
+//line ldap_injection.go:29
 	{
 	cs = ldapInjection_start
+	ts = 0
+	te = 0
+	act = 0
 	}
 
-//line ldap_injection.go:38
+//line ldap_injection.go:37
 	{
-	var _acts int
-	var _nacts uint
-
 	if p == pe {
 		goto _test_eof
 	}
-	if cs == 0 {
-		goto _out
-	}
-_resume:
 	switch cs {
-	case 1:
-		switch data[p] {
-		case 33:
-			goto tr1;
-		case 38:
-			goto tr1;
-		case 40:
-			goto tr1;
-		case 41:
-			goto tr2;
-		case 58:
-			goto tr1;
-		case 60:
-			goto tr1;
-		case 62:
-			goto tr1;
-		case 124:
-			goto tr1;
-		case 126:
-			goto tr1;
-		}
-		goto tr0;
-	case 0:
-		goto _out
-	case 2:
-		switch data[p] {
-		case 32:
-			goto tr3;
-		case 33:
-			goto tr4;
-		case 38:
-			goto tr5;
-		case 40:
-			goto tr6;
-		case 41:
-			goto tr7;
-		case 124:
-			goto tr5;
-		}
-		if 9 <= data[p] && data[p] <= 13 {
-			goto tr3;
-		}
-		goto tr1;
-	case 3:
-		switch data[p] {
-		case 32:
-			goto tr3;
-		case 41:
-			goto tr7;
-		}
-		if 9 <= data[p] && data[p] <= 13 {
-			goto tr3;
-		}
-		goto tr1;
-	case 4:
-		switch data[p] {
-		case 33:
-			goto tr4;
-		case 38:
-			goto tr5;
-		case 40:
-			goto tr6;
-		case 124:
-			goto tr5;
-		}
-		goto tr1;
 	case 5:
+		goto st_case_5
+	case 6:
+		goto st_case_6
+	case 0:
+		goto st_case_0
+	case 7:
+		goto st_case_7
+	case 1:
+		goto st_case_1
+	case 8:
+		goto st_case_8
+	case 2:
+		goto st_case_2
+	case 9:
+		goto st_case_9
+	case 3:
+		goto st_case_3
+	case 4:
+		goto st_case_4
+	case 10:
+		goto st_case_10
+	case 11:
+		goto st_case_11
+	case 12:
+		goto st_case_12
+	case 13:
+		goto st_case_13
+	case 14:
+		goto st_case_14
+	}
+	goto st_out
+tr0:
+//line ldap_injection.rl:46
+p = (te) - 1
+
+	goto st5
+tr3:
+//line ldap_injection.rl:40
+p = (te) - 1
+{
+                if !startWithRightPart {
+                    startWithRightPart = true
+                }
+            }
+	goto st5
+tr5:
+//line ldap_injection.rl:40
+te = p+1
+{
+                if !startWithRightPart {
+                    startWithRightPart = true
+                }
+            }
+	goto st5
+tr8:
+//line ldap_injection.rl:32
+p = (te) - 1
+{
+                if startWithRightPart {
+                    return true
+                } else {
+                    return false
+                }
+            }
+	goto st5
+tr15:
+//line ldap_injection.rl:46
+te = p+1
+
+	goto st5
+tr16:
+//line ldap_injection.rl:46
+te = p
+p--
+
+	goto st5
+tr17:
+//line ldap_injection.rl:40
+te = p
+p--
+{
+                if !startWithRightPart {
+                    startWithRightPart = true
+                }
+            }
+	goto st5
+tr18:
+//line ldap_injection.rl:32
+te = p
+p--
+{
+                if startWithRightPart {
+                    return true
+                } else {
+                    return false
+                }
+            }
+	goto st5
+	st5:
+//line NONE:1
+ts = 0
+
+		if p++; p == pe {
+			goto _test_eof5
+		}
+	st_case_5:
+//line NONE:1
+ts = p
+
+//line ldap_injection.go:153
+		switch data[p] {
+		case 33:
+			goto tr13
+		case 38:
+			goto st14
+		case 40:
+			goto tr7
+		case 41:
+			goto tr2
+		case 58:
+			goto tr15
+		case 60:
+			goto tr15
+		case 62:
+			goto tr15
+		case 124:
+			goto st14
+		case 126:
+			goto tr15
+		}
+		goto tr12
+tr12:
+//line NONE:1
+te = p+1
+
+	goto st6
+	st6:
+		if p++; p == pe {
+			goto _test_eof6
+		}
+	st_case_6:
+//line ldap_injection.go:185
+		switch data[p] {
+		case 33:
+			goto tr16
+		case 38:
+			goto tr16
+		case 40:
+			goto tr16
+		case 41:
+			goto tr2
+		case 58:
+			goto tr16
+		case 60:
+			goto tr16
+		case 62:
+			goto tr16
+		case 124:
+			goto tr16
+		case 126:
+			goto tr16
+		}
+		goto st0
+	st0:
+		if p++; p == pe {
+			goto _test_eof0
+		}
+	st_case_0:
+		switch data[p] {
+		case 33:
+			goto tr0
+		case 38:
+			goto tr0
+		case 40:
+			goto tr0
+		case 41:
+			goto tr2
+		case 58:
+			goto tr0
+		case 60:
+			goto tr0
+		case 62:
+			goto tr0
+		case 124:
+			goto tr0
+		case 126:
+			goto tr0
+		}
+		goto st0
+tr2:
+//line NONE:1
+te = p+1
+
+	goto st7
+	st7:
+		if p++; p == pe {
+			goto _test_eof7
+		}
+	st_case_7:
+//line ldap_injection.go:243
 		switch data[p] {
 		case 32:
-			goto tr4;
-		case 40:
-			goto tr6;
+			goto st1
+		case 41:
+			goto tr5
 		}
 		if 9 <= data[p] && data[p] <= 13 {
-			goto tr4;
+			goto st1
 		}
-		goto tr1;
-	case 7:
+		goto tr17
+	st1:
+		if p++; p == pe {
+			goto _test_eof1
+		}
+	st_case_1:
+		switch data[p] {
+		case 32:
+			goto st1
+		case 41:
+			goto tr5
+		}
+		if 9 <= data[p] && data[p] <= 13 {
+			goto st1
+		}
+		goto tr3
+tr13:
+//line NONE:1
+te = p+1
+
+	goto st8
+	st8:
+		if p++; p == pe {
+			goto _test_eof8
+		}
+	st_case_8:
+//line ldap_injection.go:279
+		switch data[p] {
+		case 32:
+			goto st2
+		case 40:
+			goto tr7
+		}
+		if 9 <= data[p] && data[p] <= 13 {
+			goto st2
+		}
+		goto tr16
+	st2:
+		if p++; p == pe {
+			goto _test_eof2
+		}
+	st_case_2:
+		switch data[p] {
+		case 32:
+			goto st2
+		case 40:
+			goto tr7
+		}
+		if 9 <= data[p] && data[p] <= 13 {
+			goto st2
+		}
+		goto tr0
+tr7:
+//line NONE:1
+te = p+1
+
+	goto st9
+	st9:
+		if p++; p == pe {
+			goto _test_eof9
+		}
+	st_case_9:
+//line ldap_injection.go:315
 		switch data[p] {
 		case 33:
-			goto tr9;
+			goto tr19
 		case 38:
-			goto tr10;
+			goto tr20
 		case 44:
-			goto tr11;
+			goto tr18
 		case 58:
-			goto tr11;
+			goto tr18
 		case 124:
-			goto tr10;
+			goto tr20
 		case 126:
-			goto tr11;
+			goto tr18
 		}
 		switch {
 		case data[p] > 41:
 			if 60 <= data[p] && data[p] <= 62 {
-				goto tr11;
+				goto tr18
 			}
 		case data[p] >= 40:
-			goto tr11;
+			goto tr18
 		}
-		goto tr8;
-	case 8:
+		goto st3
+	st3:
+		if p++; p == pe {
+			goto _test_eof3
+		}
+	st_case_3:
 		switch data[p] {
 		case 33:
-			goto tr11;
+			goto tr8
 		case 38:
-			goto tr11;
+			goto tr8
 		case 44:
-			goto tr11;
+			goto tr8
 		case 58:
-			goto tr11;
+			goto tr8
 		case 61:
-			goto tr13;
+			goto st10
 		case 124:
-			goto tr11;
+			goto tr8
 		case 126:
-			goto tr12;
+			goto st4
 		}
 		switch {
 		case data[p] > 41:
 			if 60 <= data[p] && data[p] <= 62 {
-				goto tr12;
+				goto st4
 			}
 		case data[p] >= 40:
-			goto tr11;
+			goto tr8
 		}
-		goto tr8;
-	case 9:
-		goto tr11;
-	case 10:
+		goto st3
+	st4:
+		if p++; p == pe {
+			goto _test_eof4
+		}
+	st_case_4:
 		if data[p] == 61 {
-			goto tr13;
+			goto st10
 		}
-		goto tr11;
-	case 11:
+		goto tr8
+	st10:
+		if p++; p == pe {
+			goto _test_eof10
+		}
+	st_case_10:
 		switch data[p] {
 		case 33:
-			goto tr11;
+			goto tr18
 		case 38:
-			goto tr11;
+			goto tr18
 		case 58:
-			goto tr11;
+			goto tr18
 		case 60:
-			goto tr11;
+			goto tr18
 		case 62:
-			goto tr11;
+			goto tr18
 		case 124:
-			goto tr11;
+			goto tr18
 		case 126:
-			goto tr11;
+			goto tr18
 		}
 		if 40 <= data[p] && data[p] <= 41 {
-			goto tr11;
+			goto tr18
 		}
-		goto tr13;
-	case 12:
+		goto st10
+tr19:
+//line NONE:1
+te = p+1
+
+	goto st11
+	st11:
+		if p++; p == pe {
+			goto _test_eof11
+		}
+	st_case_11:
+//line ldap_injection.go:413
 		switch data[p] {
 		case 32:
-			goto tr14;
+			goto tr21
 		case 33:
-			goto tr11;
+			goto tr18
 		case 38:
-			goto tr11;
+			goto tr18
 		case 44:
-			goto tr11;
+			goto tr18
 		case 58:
-			goto tr11;
+			goto tr18
 		case 124:
-			goto tr11;
+			goto tr18
 		case 126:
-			goto tr11;
+			goto tr18
 		}
 		switch {
 		case data[p] < 40:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto tr14;
+				goto tr21
 			}
 		case data[p] > 41:
 			if 60 <= data[p] && data[p] <= 62 {
-				goto tr11;
+				goto tr18
 			}
 		default:
-			goto tr11;
+			goto tr18
 		}
-		goto tr8;
-	case 13:
+		goto st3
+tr21:
+//line NONE:1
+te = p+1
+
+	goto st12
+	st12:
+		if p++; p == pe {
+			goto _test_eof12
+		}
+	st_case_12:
+//line ldap_injection.go:453
 		switch data[p] {
 		case 32:
-			goto tr14;
+			goto tr21
 		case 33:
-			goto tr11;
+			goto tr18
 		case 38:
-			goto tr11;
+			goto tr18
 		case 44:
-			goto tr11;
+			goto tr18
 		case 58:
-			goto tr11;
+			goto tr18
 		case 61:
-			goto tr13;
+			goto st10
 		case 124:
-			goto tr11;
+			goto tr18
 		case 126:
-			goto tr12;
+			goto st4
 		}
 		switch {
 		case data[p] < 40:
 			if 9 <= data[p] && data[p] <= 13 {
-				goto tr14;
+				goto tr21
 			}
 		case data[p] > 41:
 			if 60 <= data[p] && data[p] <= 62 {
-				goto tr12;
+				goto st4
 			}
 		default:
-			goto tr11;
+			goto tr18
 		}
-		goto tr8;
-	case 14:
+		goto st3
+tr20:
+//line NONE:1
+te = p+1
+
+	goto st13
+	st13:
+		if p++; p == pe {
+			goto _test_eof13
+		}
+	st_case_13:
+//line ldap_injection.go:495
 		switch data[p] {
 		case 33:
-			goto tr11;
+			goto tr18
 		case 38:
-			goto tr11;
+			goto tr18
 		case 44:
-			goto tr11;
+			goto tr18
 		case 58:
-			goto tr11;
+			goto tr18
 		case 124:
-			goto tr11;
+			goto tr18
 		case 126:
-			goto tr11;
+			goto tr18
 		}
 		switch {
 		case data[p] > 41:
 			if 60 <= data[p] && data[p] <= 62 {
-				goto tr11;
+				goto tr18
 			}
 		case data[p] >= 40:
-			goto tr11;
+			goto tr18
 		}
-		goto tr8;
-	case 6:
+		goto st3
+	st14:
+		if p++; p == pe {
+			goto _test_eof14
+		}
+	st_case_14:
 		if data[p] == 40 {
-			goto tr6;
+			goto tr7
 		}
-		goto tr1;
-	}
+		goto tr16
+	st_out:
+	_test_eof5: cs = 5; goto _test_eof
+	_test_eof6: cs = 6; goto _test_eof
+	_test_eof0: cs = 0; goto _test_eof
+	_test_eof7: cs = 7; goto _test_eof
+	_test_eof1: cs = 1; goto _test_eof
+	_test_eof8: cs = 8; goto _test_eof
+	_test_eof2: cs = 2; goto _test_eof
+	_test_eof9: cs = 9; goto _test_eof
+	_test_eof3: cs = 3; goto _test_eof
+	_test_eof4: cs = 4; goto _test_eof
+	_test_eof10: cs = 10; goto _test_eof
+	_test_eof11: cs = 11; goto _test_eof
+	_test_eof12: cs = 12; goto _test_eof
+	_test_eof13: cs = 13; goto _test_eof
+	_test_eof14: cs = 14; goto _test_eof
 
-	tr1: cs = 0; goto _again
-	tr0: cs = 1; goto _again
-	tr2: cs = 2; goto _again
-	tr3: cs = 3; goto _again
-	tr7: cs = 4; goto _again
-	tr4: cs = 5; goto _again
-	tr5: cs = 6; goto _again
-	tr6: cs = 7; goto _again
-	tr8: cs = 8; goto f0
-	tr11: cs = 9; goto f0
-	tr12: cs = 10; goto f0
-	tr13: cs = 11; goto f0
-	tr9: cs = 12; goto f0
-	tr14: cs = 13; goto f0
-	tr10: cs = 14; goto f0
-
-	f0: _acts = 1; goto execFuncs
-
-execFuncs:
-	_nacts = uint(_ldapInjection_actions[_acts]); _acts++
-	for ; _nacts > 0; _nacts-- {
-		_acts++
-		switch _ldapInjection_actions[_acts - 1] {
-		case 0:
-//line ldap_injection.rl:12
-
-            return true
-        
-//line ldap_injection.go:327
-		}
-	}
-	goto _again
-
-_again:
-	if cs == 0 {
-		goto _out
-	}
-	if p++; p != pe {
-		goto _resume
-	}
 	_test_eof: {}
 	if p == eof {
-		__acts := int(_ldapInjection_eof_actions[cs])
-		__nacts := uint(_ldapInjection_actions[__acts]); __acts++
-		for ; __nacts > 0; __nacts-- {
-			__acts++
-			switch _ldapInjection_actions[__acts - 1] {
-			case 0:
-//line ldap_injection.rl:12
-
-            return true
-        
-//line ldap_injection.go:351
-			}
+		switch cs {
+		case 6:
+			goto tr16
+		case 0:
+			goto tr0
+		case 7:
+			goto tr17
+		case 1:
+			goto tr3
+		case 8:
+			goto tr16
+		case 2:
+			goto tr0
+		case 9:
+			goto tr18
+		case 3:
+			goto tr8
+		case 4:
+			goto tr8
+		case 10:
+			goto tr18
+		case 11:
+			goto tr18
+		case 12:
+			goto tr18
+		case 13:
+			goto tr18
+		case 14:
+			goto tr16
 		}
 	}
 
-	_out: {}
 	}
 
-//line ldap_injection.rl:31
+//line ldap_injection.rl:53
 
         return false
 }
