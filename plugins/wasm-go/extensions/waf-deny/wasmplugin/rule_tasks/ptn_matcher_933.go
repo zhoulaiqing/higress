@@ -564,7 +564,6 @@ var PHP_CONFIG_DIRECTIVES = []string{
 	"zookeeper.sess_lock_wait",
 	"zookeeper.session_lock",
 }
-var Rule933120Matcher ahocorasick.AhoCorasick
 
 var PHP_VARIABLES = []string{
 	"$GLOBALS",
@@ -589,7 +588,6 @@ var PHP_VARIABLES = []string{
 	"$HTTP_REQUEST_VARS",
 	"$HTTP_SERVER_VARS",
 }
-var Rule933130Matcher ahocorasick.AhoCorasick
 
 var PHP_FUNCTIONS_NAMES_933150 = []string{
 	"__halt_compiler",
@@ -639,6 +637,8 @@ var PHP_FUNCTIONS_NAMES_933150 = []string{
 }
 var Rule933150Matcher ahocorasick.AhoCorasick
 
+var Rule933Matcher ahocorasick.AhoCorasick
+
 var FILE_NAME_HEADERS = []string{
 	"x-filename", "x_filename", "x.filename", "x-file-name",
 }
@@ -653,7 +653,6 @@ func init() {
 	Re933180, _ = re2.Compile(PTN_933180)
 	Re933210, _ = re2.Compile(PTN_933210)
 
-	Rule933120Matcher = AHO_CORASICK_BUILDER.Build(PHP_CONFIG_DIRECTIVES)
-	Rule933130Matcher = AHO_CORASICK_BUILDER.Build(PHP_VARIABLES)
+	Rule933Matcher = AHO_CORASICK_BUILDER.Build(append(append(PHP_CONFIG_DIRECTIVES, PHP_VARIABLES...), PHP_FUNCTIONS_NAMES_933150...))
 	Rule933150Matcher = AHO_CORASICK_BUILDER.Build(PHP_FUNCTIONS_NAMES_933150)
 }

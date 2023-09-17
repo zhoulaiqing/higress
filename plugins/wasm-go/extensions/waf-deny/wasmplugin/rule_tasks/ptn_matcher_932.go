@@ -458,7 +458,6 @@ var WINDOWS_POWERSHELL_COMMANDS = []string{
 	"Write-Verbose",
 	"Write-Warning",
 }
-var Rule932120Matcher ahocorasick.AhoCorasick
 
 var UNIX_SHELLS = []string{
 	"${CDPATH}",
@@ -1081,7 +1080,6 @@ var UNIX_SHELLS = []string{
 	"sbin/service",
 	"sbin/start-stop-daemon",
 }
-var Rule932160Matcher ahocorasick.AhoCorasick
 
 var RESTRICTED_UPLOAD = []string{
 	".htaccess",
@@ -1102,12 +1100,12 @@ var RESTRICTED_UPLOAD = []string{
 	"local.xml",
 	".env",
 }
-var Rule932180Matcher ahocorasick.AhoCorasick
+
+var Rule932Matcher ahocorasick.AhoCorasick
 
 func init() {
-	Rule932120Matcher = AHO_CORASICK_BUILDER.Build(WINDOWS_POWERSHELL_COMMANDS)
-	Rule932160Matcher = AHO_CORASICK_BUILDER.Build(UNIX_SHELLS)
-	Rule932180Matcher = AHO_CORASICK_BUILDER.Build(RESTRICTED_UPLOAD)
+
+	Rule932Matcher = AHO_CORASICK_BUILDER.Build(append(append(WINDOWS_POWERSHELL_COMMANDS, UNIX_SHELLS...), RESTRICTED_UPLOAD...))
 
 	Re932230, _ = re2.Compile(PTN_932230)
 	Re932235, _ = re2.Compile(PTN_932235)
