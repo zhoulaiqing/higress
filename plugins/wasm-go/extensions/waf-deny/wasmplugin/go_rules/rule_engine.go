@@ -2,6 +2,7 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/protocol_attack"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_932"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_933"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_934"
@@ -12,6 +13,7 @@ import (
 )
 
 var Rule941 = &rule_941.Rule941{}
+var Rule921 = &protocol_attack.Rule921{}
 
 var (
 	RULES = []Rule{
@@ -23,8 +25,7 @@ var (
 		//&rule_920.Rule920330{}, &rule_920.Rule920340{}, &rule_920.Rule920350{}, &rule_920.Rule920420{}, &rule_920.Rule920430{},
 		//&rule_920.Rule920440{}, &rule_920.Rule920450{}, &rule_920.Rule920470{}, &rule_920.Rule920480{}, &rule_920.Rule920500{},
 		//&rule_920.Rule920520{}, &rule_920.Rule920530{}, &rule_920.Rule920540{}, &rule_920.Rule920600{}, &rule_920.Rule920610{},
-		&Rule921110{}, &Rule921120{},
-		&Rule921160{}, &Rule921200{}, &Rule921240{}, &Rule921421{},
+		Rule921,
 		&Rule922100{}, &Rule922110_120{},
 		&Rule930100{}, &Rule930110{}, &Rule930120{}, &Rule930130{},
 		&Rule931100{}, &Rule931110{}, &Rule931120{},
@@ -70,7 +71,12 @@ func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
 	}
 
 	if phase == 1 {
-		r := Rule941.EvaluatePhase1(tx)
+		r := Rule921.EvaluatePhase1(tx)
+		if !checkBlock(tx, r, Rule921) {
+			return false
+		}
+
+		r = Rule941.EvaluatePhase1(tx)
 		if !checkBlock(tx, r, Rule941) {
 			return false
 		}
