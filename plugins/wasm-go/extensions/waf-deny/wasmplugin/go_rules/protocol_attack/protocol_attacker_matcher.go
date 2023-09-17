@@ -2,8 +2,11 @@ package protocol_attack
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/wasilibs/go-re2"
 	"strings"
 )
+
+var re921200 = re2.MustCompile(`^[^:\(\)\&\|\!\<\>\~]*\)\s*(?:\((?:[^,\(\)\=\&\|\!\<\>\~]+[><~]?=|\s*[&!|]\s*(?:\)|\()?\s*)|\)\s*\(\s*[\&\|\!]\s*|[&!|]\s*\([^\(\)\=\&\|\!\<\>\~]+[><~]?=[^:\(\)\&\|\!\<\>\~]*)`)
 
 func matchDefaultRisk(value string) bool {
 
@@ -12,7 +15,7 @@ func matchDefaultRisk(value string) bool {
 		return true
 	}
 
-	if matchLdapInjection(data) {
+	if re921200.MatchString(value) {
 		return true
 	}
 
@@ -25,7 +28,7 @@ func matchArgGet(value string) bool {
 		return true
 	}
 
-	if matchLdapInjection(data) {
+	if re921200.MatchString(value) {
 		return true
 	}
 
