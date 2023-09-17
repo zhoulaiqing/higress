@@ -14,6 +14,7 @@ import (
 
 var Rule941 = &rule_941.Rule941{}
 var Rule921 = &protocol_attack.Rule921{}
+var Rule934100 = &generic_attack.Rule934100{}
 
 var (
 	RULES = []Rule{
@@ -36,7 +37,7 @@ var (
 		&rule_933.Rule933100{}, &rule_933.Rule933110{}, &rule_933.Rule933140{},
 		&rule_933.Rule933150{}, &rule_933.Rule933160{}, &rule_933.Rule933170{}, &rule_933.Rule933180{}, &rule_933.Rule933200{},
 		&rule_933.Rule933210{},
-		&generic_attack.Rule934100{}, &generic_attack.Rule934101{}, &generic_attack.Rule934110{}, &generic_attack.Rule934130{}, &generic_attack.Rule934150{},
+		Rule934100, &generic_attack.Rule934110{}, &generic_attack.Rule934130{},
 		&generic_attack.Rule934160{}, &generic_attack.Rule934170{},
 		&rule_941.Rule941010{}, Rule941,
 		&rule_942.Rule942100{},
@@ -72,6 +73,11 @@ func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
 
 	if phase == 1 {
 		r := Rule921.EvaluatePhase1(tx)
+		if !checkBlock(tx, r, Rule921) {
+			return false
+		}
+
+		r = Rule934100.EvaluatePhase1(tx)
 		if !checkBlock(tx, r, Rule921) {
 			return false
 		}
