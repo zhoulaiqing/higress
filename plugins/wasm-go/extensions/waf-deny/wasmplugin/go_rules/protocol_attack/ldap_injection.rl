@@ -7,11 +7,6 @@ func matchLdapInjection(data []byte) bool {
         _ = eof
 
 
-    var ts, te, act int
-    _, _, _ = ts, te, act
-
-    startWithRightPart := false
-
     %%{
 
         action setMatched {
@@ -28,24 +23,7 @@ func matchLdapInjection(data []byte) bool {
 
         lpart =  logic? '(' logic? (attr simple ^kwd*)?;
 
-        main := |*
-            lpart => {
-                if startWithRightPart {
-                    return true
-                } else {
-                    return false
-                }
-            };
-
-            rpart => {
-                if !startWithRightPart {
-                    startWithRightPart = true
-                }
-            };
-
-            any;
-
-        *|;
+        main := rpart lpart %/setMatched any* @setMatched;
 
 
         write init;

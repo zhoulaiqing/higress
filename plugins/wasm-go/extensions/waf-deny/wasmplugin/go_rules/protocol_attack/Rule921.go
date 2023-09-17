@@ -58,11 +58,11 @@ func (r *Rule921) EvaluatePhase1(tx *core.Transaction) int {
 				continue
 			}
 
-			if matchDefaultRisk(k) {
+			if matchDefaultRisk(transformDefault(k)) {
 				return r.block(tx)
 			}
 
-			if matchDefaultRisk(v) {
+			if matchDefaultRisk(transformDefault(v)) {
 				return r.block(tx)
 			}
 		}
@@ -72,7 +72,7 @@ func (r *Rule921) EvaluatePhase1(tx *core.Transaction) int {
 		for _, v := range *argMap {
 
 			proxywasm.LogInfof("arg value: %s", v)
-			if matchArgGet(v) {
+			if matchArgGet(transformDefault(v)) {
 				return r.block(tx)
 			}
 		}
