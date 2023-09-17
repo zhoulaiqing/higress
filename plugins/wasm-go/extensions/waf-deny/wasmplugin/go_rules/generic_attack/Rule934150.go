@@ -1,26 +1,21 @@
-package rule_934
+package generic_attack
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 )
 
-type Rule934170 struct {
+type Rule934150 struct {
 	*Rule934
 }
 
-func (r *Rule934170) Id() string {
-	return "934170"
+func (r *Rule934150) Id() string {
+	return "934150"
 }
 
-func (r *Rule934170) validateFileName() bool {
-	return true
-}
+func (r *Rule934150) doEvaluate(tx *core.Transaction, value string) bool {
 
-func (r *Rule934170) doEvaluate(tx *core.Transaction, value string) bool {
-
-	v, _, _ := core.UrlDecodeUni(value)
-	m := rule_tasks.Re934170.MatchString(v)
+	m := rule_tasks.Re934150.MatchString(value)
 	if m {
 		tx.Variables.RceScore += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE

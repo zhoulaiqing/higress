@@ -1,4 +1,4 @@
-package rule_934
+package generic_attack
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"

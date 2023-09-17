@@ -2,10 +2,10 @@ package go_rules
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/generic_attack"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/protocol_attack"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_932"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_933"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_934"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_941"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_942"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
@@ -36,8 +36,8 @@ var (
 		&rule_933.Rule933100{}, &rule_933.Rule933110{}, &rule_933.Rule933140{},
 		&rule_933.Rule933150{}, &rule_933.Rule933160{}, &rule_933.Rule933170{}, &rule_933.Rule933180{}, &rule_933.Rule933200{},
 		&rule_933.Rule933210{},
-		&rule_934.Rule934100{}, &rule_934.Rule934101{}, &rule_934.Rule934110{}, &rule_934.Rule934130{}, &rule_934.Rule934150{},
-		&rule_934.Rule934160{}, &rule_934.Rule934170{},
+		&generic_attack.Rule934100{}, &generic_attack.Rule934101{}, &generic_attack.Rule934110{}, &generic_attack.Rule934130{}, &generic_attack.Rule934150{},
+		&generic_attack.Rule934160{}, &generic_attack.Rule934170{},
 		&rule_941.Rule941010{}, Rule941,
 		&rule_942.Rule942100{},
 		&RuleFinal{},
