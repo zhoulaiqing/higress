@@ -1,4 +1,4 @@
-package rule_933
+package php_attack
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"

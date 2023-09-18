@@ -1,19 +1,19 @@
-package rule_933
+package php_attack
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 )
 
-type Rule933180 struct {
+type Rule933210 struct {
 	*Rule933
 }
 
-func (r *Rule933180) Id() string {
-	return "933180"
+func (r *Rule933210) Id() string {
+	return "933210"
 }
 
-func (r *Rule933180) Evaluate(tx *core.Transaction) int {
+func (r *Rule933210) Evaluate(tx *core.Transaction) int {
 	r933 := r.Rule933.Evaluate(tx)
 	if r933 == rule_tasks.BLOCK {
 		return r933
@@ -26,8 +26,12 @@ func (r *Rule933180) Evaluate(tx *core.Transaction) int {
 	return rule_tasks.PASS
 }
 
-func (r *Rule933180) doEvaluate(tx *core.Transaction, value string) bool {
-	m := rule_tasks.Re933180.MatchString(value)
+func (r *Rule933210) doEvaluate(tx *core.Transaction, value string) bool {
+	v, _, _ := core.UrlDecode(value)
+	v, _, _ = core.ReplaceComments(value)
+	v, _, _ = core.RemoveWhitespace(value)
+
+	m := rule_tasks.Re933210.MatchString(v)
 	if !m {
 		tx.Variables.PhpInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE

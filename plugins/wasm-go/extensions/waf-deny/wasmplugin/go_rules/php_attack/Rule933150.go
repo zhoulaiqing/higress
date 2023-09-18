@@ -1,4 +1,4 @@
-package rule_933
+package php_attack
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
@@ -50,7 +50,7 @@ func (r *Rule933150) Evaluate(tx *core.Transaction) int {
 		}
 	}
 
-	if r.doEvaluate(tx, tx.Variables.RequestFileName) {
+	if r.doEvaluateFileName(tx, tx.Variables.RequestFileName) {
 		return rule_tasks.BLOCK
 	}
 
