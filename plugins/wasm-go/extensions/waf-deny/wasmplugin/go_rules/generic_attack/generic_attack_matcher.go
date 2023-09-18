@@ -16,6 +16,7 @@ func matchDefault(value string) bool {
 	tv := transformDefault(value)
 	tvd := transformWithBase64Decode(tv)
 	tv = strings.ToLower(tv)
+	data := []byte(tv)
 
 	//在调用 insecure_unserialize 之前需要去除空格
 	vrw, _, _ := core.RemoveWhitespace(tv)
@@ -41,6 +42,10 @@ func matchDefault(value string) bool {
 	}
 
 	if multiMatch(matchNodejsDos, dataRc, dataRcDecode) {
+		return true
+	}
+
+	if matchPhpDataScheme(data) {
 		return true
 	}
 

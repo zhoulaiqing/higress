@@ -73,6 +73,9 @@ func TestMatchDefault(t *testing.T) {
 		"case934160-26": {"while(!undefined);", true},
 		"case934160-27": {"while(!NaN)", true},
 		"case934160-28": {"while((true)))", true},
+
+		"case934170-1": {"data:text/plain;base64,SSBsb3ZlIFBIUAo=", true},
+		"case934170-2": {"data://text/plain;base64,SSBsb3ZlIFBIUAo=", false},
 	}
 
 	for key, v := range testGroup { //遍历
