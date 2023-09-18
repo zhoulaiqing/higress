@@ -21,6 +21,7 @@ func matchPhpInjection(data []byte) bool {
         wrapper = 'bzip2' | 'expect' | 'glob' | 'ogg' | 'phar' |'rar' | ssh2 | 'zip' | 'zlib';
         phpWrapper = wrapper '://';
 
+        objectInjection = ('o' | 'c') ':' digit+ ':"' (any+ -- '"') '":' digit+ ':{' (any* -- '}') '}';
 
         main := |*
 
@@ -33,6 +34,10 @@ func matchPhpInjection(data []byte) bool {
             };
 
             phpWrapper => {
+                return true
+            };
+
+            objectInjection => {
                 return true
             };
 

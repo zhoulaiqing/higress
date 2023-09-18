@@ -21,6 +21,8 @@ func TestMatchDefault(t *testing.T) {
 		"case933160-12": {`eval%0D%28%24foo%29`, true},
 		"case933160-14": {`fopen%20%20%28blah%29`, true},
 		"case933160-19": {`strREV%28%24x%29`, true},
+
+		"case933170-1": {`O%3A8%3A%22stdClass%22%3A0%3A%7B%7D`, true},
 	}
 
 	for key, v := range testGroup { //遍历
