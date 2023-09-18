@@ -2,19 +2,7 @@ package rule_tasks
 
 import (
 	ahocorasick "github.com/wasilibs/go-aho-corasick"
-	"github.com/wasilibs/go-re2"
 )
-
-const (
-	PTN_934100 = "_(?:\\$\\$ND_FUNC\\$\\$_|_js_function)|(?:\\beval|new[\\s\\v]+Function[\\s\\v]*)\\(|String\\.fromCharCode|function\\(\\)\\{|this\\.constructor|module\\.exports=|\\([\\s\\v]*[^0-9A-Z_a-z]child_process[^0-9A-Z_a-z][\\s\\v]*\\)|process(?:\\.(?:(?:a(?:ccess|ppendfile|rgv|vailability)|c(?:aveats|h(?:mod|own)|(?:los|opyfil)e|p|reate(?:read|write)stream)|ex(?:ec(?:file)?|ists)|f(?:ch(?:mod|own)|data(?:sync)?|s(?:tat|ync)|utimes)|inodes|l(?:chmod|ink|stat|utimes)|mkd(?:ir|temp)|open(?:dir)?|r(?:e(?:ad(?:dir|file|link|v)?|name)|m)|s(?:pawn(?:file)?|tat|ymlink)|truncate|u(?:n(?:link|watchfile)|times)|w(?:atchfile|rite(?:file|v)?))(?:sync)?(?:\\.call)?\\(|binding|constructor|env|global|main(?:Module)?|process|require)|\\[[\\\"'`](?:(?:a(?:ccess|ppendfile|rgv|vailability)|c(?:aveats|h(?:mod|own)|(?:los|opyfil)e|p|reate(?:read|write)stream)|ex(?:ec(?:file)?|ists)|f(?:ch(?:mod|own)|data(?:sync)?|s(?:tat|ync)|utimes)|inodes|l(?:chmod|ink|stat|utimes)|mkd(?:ir|temp)|open(?:dir)?|r(?:e(?:ad(?:dir|file|link|v)?|name)|m)|s(?:pawn(?:file)?|tat|ymlink)|truncate|u(?:n(?:link|watchfile)|times)|w(?:atchfile|rite(?:file|v)?))(?:sync)?|binding|constructor|env|global|main(?:Module)?|process|require)[\\\"'`]\\])|(?:binding|constructor|env|global|main(?:Module)?|process|require)\\[|console(?:\\.(?:debug|error|info|trace|warn)(?:\\.call)?\\(|\\[[\\\"'`](?:debug|error|info|trace|warn)[\\\"'`]\\])|require(?:\\.(?:resolve(?:\\.call)?\\(|main|extensions|cache)|\\[[\\\"'`](?:(?:resolv|cach)e|main|extensions)[\\\"'`]\\])"
-	PTN_934101 = "(?:close|exists|fork|(?:ope|spaw)n|re(?:ad|quire)|w(?:atch|rite))[\\s\\v]*\\("
-	PTN_934130 = `(?:__proto__|constructor\s*(?:\.|\[)\s*prototype)`
-	PTN_934150 = `Process[\s\v]*\.[\s\v]*spawn[\s\v]*\(`
-	PTN_934160 = "while[\\s\\v]*\\([\\s\\v\\(]*(?:!+(?:false|null|undefined|NaN|[\\+\\-]?0|\\\"{2}|'{2}|`{2})|(?:!!)*(?:(?:t(?:rue|his)|[\\+\\-]?(?:Infinity|[1-9][0-9]*)|new [A-Za-z][0-9A-Z_a-z]*|window|String|(?:Boolea|Functio)n|Object|Array)\\b|\\{.*\\}|\\[.*\\]|\\\"[^\\\"]+\\\"|'[^']+'|`[^`]+`)).*\\)"
-	PTN_934170 = "^data:(?:(?:\\*|[^!-\\\"\\(-\\),/:-\\?\\[-\\]\\{\\}]+)/(?:\\*|[^!-\\\"\\(-\\),/:-\\?\\[-\\]\\{\\}]+)|\\*)(?:[\\s\\v]*;[\\s\\v]*(?:charset[\\s\\v]*=[\\s\\v]*\\\"?(?:iso-8859-15?|utf-8|windows-1252)\\b\\\"?|(?:[^\\s\\v -\\\"\\(-\\),/:-\\?\\[-\\]c\\{\\}]|c(?:[^!-\\\"\\(-\\),/:-\\?\\[-\\]h\\{\\}]|h(?:[^!-\\\"\\(-\\),/:-\\?\\[-\\]a\\{\\}]|a(?:[^!-\\\"\\(-\\),/:-\\?\\[-\\]r\\{\\}]|r(?:[^!-\\\"\\(-\\),/:-\\?\\[-\\]s\\{\\}]|s(?:[^!-\\\"\\(-\\),/:-\\?\\[-\\]e\\{\\}]|e[^!-\\\"\\(-\\),/:-\\?\\[-\\]t\\{\\}]))))))[^!-\\\"\\(-\\),/:-\\?\\[-\\]\\{\\}]*[\\s\\v]*=[\\s\\v]*[^!\\(-\\),/:-\\?\\[-\\]\\{\\}]+);?)*(?:[\\s\\v]*,[\\s\\v]*(?:(?:\\*|[^!-\\\"\\(-\\),/:-\\?\\[-\\]\\{\\}]+)/(?:\\*|[^!-\\\"\\(-\\),/:-\\?\\[-\\]\\{\\}]+)|\\*)(?:[\\s\\v]*;[\\s\\v]*(?:charset[\\s\\v]*=[\\s\\v]*\\\"?(?:iso-8859-15?|utf-8|windows-1252)\\b\\\"?|(?:[^\\s\\v -\\\"\\(-\\),/:-\\?\\[-\\]c\\{\\}]|c(?:[^!-\\\"\\(-\\),/:-\\?\\[-\\]h\\{\\}]|h(?:[^!-\\\"\\(-\\),/:-\\?\\[-\\]a\\{\\}]|a(?:[^!-\\\"\\(-\\),/:-\\?\\[-\\]r\\{\\}]|r(?:[^!-\\\"\\(-\\),/:-\\?\\[-\\]s\\{\\}]|s(?:[^!-\\\"\\(-\\),/:-\\?\\[-\\]e\\{\\}]|e[^!-\\\"\\(-\\),/:-\\?\\[-\\]t\\{\\}]))))))[^!-\\\"\\(-\\),/:-\\?\\[-\\]\\{\\}]*[\\s\\v]*=[\\s\\v]*[^!\\(-\\),/:-\\?\\[-\\]\\{\\}]+);?)*)*"
-)
-
-var Re934100, Re934101, Re934130, Re934150, Re934160, Re934170 *re2.Regexp
 
 var SSRF = []string{
 	"http://instance-data/latest/",
@@ -93,12 +81,6 @@ var SSRF = []string{
 var Rule934110Matcher ahocorasick.AhoCorasick
 
 func init() {
-	Re934100, _ = re2.Compile(PTN_934100)
-	Re934101, _ = re2.Compile(PTN_934101)
-	Re934130, _ = re2.Compile(PTN_934130)
-	Re934150, _ = re2.Compile(PTN_934150)
-	Re934160, _ = re2.Compile(PTN_934160)
-	Re934170, _ = re2.Compile(PTN_934170)
 
 	Rule934110Matcher = AHO_CORASICK_BUILDER.Build(SSRF)
 }

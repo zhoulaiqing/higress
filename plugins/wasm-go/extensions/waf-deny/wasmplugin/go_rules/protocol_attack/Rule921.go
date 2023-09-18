@@ -43,12 +43,12 @@ func (r *Rule921) Evaluate(tx *core.Transaction) int {
 var re921240 = re2.MustCompile(`unix:[^|]*\|`)
 
 func (r *Rule921) EvaluatePhase1(tx *core.Transaction) int {
-	if r.checkContentType(strings.ToLower(tx.Variables.RequestHeaders["content-type"])) {
-		return rule_tasks.BLOCK
+	if !r.checkContentType(strings.ToLower(tx.Variables.RequestHeaders["content-type"])) {
+		return r.block(tx)
 	}
 
 	if re921240.MatchString(strings.ToLower(tx.Variables.RequestUri)) {
-		return rule_tasks.BLOCK
+		return r.block(tx)
 	}
 
 	_, ok := tx.Variables.RequestHeaders["cookie"]

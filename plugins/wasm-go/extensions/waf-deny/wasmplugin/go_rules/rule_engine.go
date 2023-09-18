@@ -77,7 +77,7 @@ func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
 		}
 
 		r = Rule934.EvaluatePhase1(tx)
-		if !checkBlock(tx, r, Rule921) {
+		if !checkBlock(tx, r, Rule934) {
 			return false
 		}
 
@@ -91,12 +91,8 @@ func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
 }
 
 func checkBlock(tx *core.Transaction, r int, rule Rule) bool {
-	finalRule := RULES[len(RULES)-1]
 	if r == rule_tasks.BLOCK {
 		proxywasm.LogInfof("Blocked at Rule %s ", rule.Id())
-		r = finalRule.Evaluate(tx)
-	}
-	if r == rule_tasks.DENY {
 		tx.Variables.Interrupted = true
 		return false
 	}
