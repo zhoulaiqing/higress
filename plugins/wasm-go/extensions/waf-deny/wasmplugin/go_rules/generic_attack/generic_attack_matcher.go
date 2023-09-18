@@ -3,10 +3,15 @@ package generic_attack
 import (
 	"bytes"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"strings"
 )
 
 func matchDefault(value string, valueDecode string) bool {
+
+	if m, _ := core.PmEvaluate(rule_tasks.Rule934110Matcher, value, false); m {
+		return true
+	}
 
 	//在调用 insecure_unserialize 之前需要去除空格
 	vrw, _, _ := core.RemoveWhitespace(value)

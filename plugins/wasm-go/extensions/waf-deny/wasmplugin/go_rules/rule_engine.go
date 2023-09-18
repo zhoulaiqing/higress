@@ -14,7 +14,7 @@ import (
 
 var Rule941 = &xss.Rule941{}
 var Rule921 = &protocol_attack.Rule921{}
-var Rule934100 = &generic_attack.Rule934100{}
+var Rule934 = &generic_attack.Rule934{}
 
 var (
 	RULES = []Rule{
@@ -37,8 +37,7 @@ var (
 		&rule_933.Rule933100{}, &rule_933.Rule933110{}, &rule_933.Rule933140{},
 		&rule_933.Rule933150{}, &rule_933.Rule933160{}, &rule_933.Rule933170{}, &rule_933.Rule933180{}, &rule_933.Rule933200{},
 		&rule_933.Rule933210{},
-		Rule934100, &generic_attack.Rule934110{}, &generic_attack.Rule934130{},
-		&generic_attack.Rule934160{}, &generic_attack.Rule934170{},
+		Rule934,
 		&xss.Rule941010{}, Rule941,
 		&sqli.Rule942100{},
 		&RuleFinal{},
@@ -77,7 +76,7 @@ func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
 			return false
 		}
 
-		r = Rule934100.EvaluatePhase1(tx)
+		r = Rule934.EvaluatePhase1(tx)
 		if !checkBlock(tx, r, Rule921) {
 			return false
 		}
