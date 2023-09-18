@@ -45,6 +45,8 @@ func checkPattern1(value string) bool {
 	    return snippets[1] == "fromcharcode"
 	case "module":
 		return snippets[1] == "exports"
+    case "constructor":
+        return snippets[1] == "prototype"
 	case "console":
 		return slices.Contains(fnsForConsole, snippets[1])
 	case "require":
@@ -79,24 +81,24 @@ func checkPattern2(value string) bool {
 
 func matchInsecureUnserialize(data []byte) bool {
 
-//line insecure_unserialize.rl:80
+//line insecure_unserialize.rl:82
 
-//line insecure_unserialize.go:85
-const insecure_unserialize_start int = 100
-const insecure_unserialize_first_final int = 100
+//line insecure_unserialize.go:87
+const insecure_unserialize_start int = 105
+const insecure_unserialize_first_final int = 105
 const insecure_unserialize_error int = -1
 
-const insecure_unserialize_en_main int = 100
+const insecure_unserialize_en_main int = 105
 
 
-//line insecure_unserialize.rl:81
+//line insecure_unserialize.rl:83
     cs, p, pe, eof := 0, 0, len(data), len(data)
 
     var ts, te, act int
     _ = act
 
     
-//line insecure_unserialize.go:100
+//line insecure_unserialize.go:102
 	{
 	cs = insecure_unserialize_start
 	ts = 0
@@ -104,16 +106,16 @@ const insecure_unserialize_en_main int = 100
 	act = 0
 	}
 
-//line insecure_unserialize.go:108
+//line insecure_unserialize.go:110
 	{
 	if p == pe {
 		goto _test_eof
 	}
 	switch cs {
-	case 100:
-		goto st_case_100
-	case 101:
-		goto st_case_101
+	case 105:
+		goto st_case_105
+	case 106:
+		goto st_case_106
 	case 0:
 		goto st_case_0
 	case 1:
@@ -144,12 +146,12 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_13
 	case 14:
 		goto st_case_14
-	case 102:
-		goto st_case_102
+	case 107:
+		goto st_case_107
 	case 15:
 		goto st_case_15
-	case 103:
-		goto st_case_103
+	case 108:
+		goto st_case_108
 	case 16:
 		goto st_case_16
 	case 17:
@@ -158,10 +160,10 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_18
 	case 19:
 		goto st_case_19
-	case 104:
-		goto st_case_104
-	case 105:
-		goto st_case_105
+	case 109:
+		goto st_case_109
+	case 110:
+		goto st_case_110
 	case 20:
 		goto st_case_20
 	case 21:
@@ -206,8 +208,6 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_40
 	case 41:
 		goto st_case_41
-	case 106:
-		goto st_case_106
 	case 42:
 		goto st_case_42
 	case 43:
@@ -218,12 +218,10 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_45
 	case 46:
 		goto st_case_46
+	case 111:
+		goto st_case_111
 	case 47:
 		goto st_case_47
-	case 107:
-		goto st_case_107
-	case 108:
-		goto st_case_108
 	case 48:
 		goto st_case_48
 	case 49:
@@ -234,6 +232,10 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_51
 	case 52:
 		goto st_case_52
+	case 112:
+		goto st_case_112
+	case 113:
+		goto st_case_113
 	case 53:
 		goto st_case_53
 	case 54:
@@ -242,8 +244,6 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_55
 	case 56:
 		goto st_case_56
-	case 109:
-		goto st_case_109
 	case 57:
 		goto st_case_57
 	case 58:
@@ -252,10 +252,10 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_59
 	case 60:
 		goto st_case_60
-	case 110:
-		goto st_case_110
 	case 61:
 		goto st_case_61
+	case 114:
+		goto st_case_114
 	case 62:
 		goto st_case_62
 	case 63:
@@ -264,6 +264,8 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_64
 	case 65:
 		goto st_case_65
+	case 115:
+		goto st_case_115
 	case 66:
 		goto st_case_66
 	case 67:
@@ -272,8 +274,6 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_68
 	case 69:
 		goto st_case_69
-	case 111:
-		goto st_case_111
 	case 70:
 		goto st_case_70
 	case 71:
@@ -282,10 +282,10 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_72
 	case 73:
 		goto st_case_73
-	case 112:
-		goto st_case_112
 	case 74:
 		goto st_case_74
+	case 116:
+		goto st_case_116
 	case 75:
 		goto st_case_75
 	case 76:
@@ -294,14 +294,14 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_77
 	case 78:
 		goto st_case_78
+	case 117:
+		goto st_case_117
 	case 79:
 		goto st_case_79
 	case 80:
 		goto st_case_80
 	case 81:
 		goto st_case_81
-	case 113:
-		goto st_case_113
 	case 82:
 		goto st_case_82
 	case 83:
@@ -312,6 +312,8 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_85
 	case 86:
 		goto st_case_86
+	case 118:
+		goto st_case_118
 	case 87:
 		goto st_case_87
 	case 88:
@@ -320,8 +322,6 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_89
 	case 90:
 		goto st_case_90
-	case 114:
-		goto st_case_114
 	case 91:
 		goto st_case_91
 	case 92:
@@ -332,8 +332,8 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_94
 	case 95:
 		goto st_case_95
-	case 115:
-		goto st_case_115
+	case 119:
+		goto st_case_119
 	case 96:
 		goto st_case_96
 	case 97:
@@ -342,20 +342,32 @@ const insecure_unserialize_en_main int = 100
 		goto st_case_98
 	case 99:
 		goto st_case_99
+	case 100:
+		goto st_case_100
+	case 120:
+		goto st_case_120
+	case 101:
+		goto st_case_101
+	case 102:
+		goto st_case_102
+	case 103:
+		goto st_case_103
+	case 104:
+		goto st_case_104
 	}
 	goto st_out
 tr0:
-//line insecure_unserialize.rl:124
+//line insecure_unserialize.rl:126
 p = (te) - 1
 
-	goto st100
+	goto st105
 tr15:
-//line insecure_unserialize.rl:108
+//line insecure_unserialize.rl:110
 te = p+1
 {
                 return true
             }
-	goto st100
+	goto st105
 tr16:
 //line NONE:1
 	switch act {
@@ -376,20 +388,20 @@ tr16:
 }
 	}
 	
-	goto st100
-tr93:
-//line insecure_unserialize.rl:124
+	goto st105
+tr98:
+//line insecure_unserialize.rl:126
 te = p+1
 
-	goto st100
-tr106:
-//line insecure_unserialize.rl:124
+	goto st105
+tr111:
+//line insecure_unserialize.rl:126
 te = p
 p--
 
-	goto st100
-tr108:
-//line insecure_unserialize.rl:112
+	goto st105
+tr113:
+//line insecure_unserialize.rl:114
 te = p
 p--
 {
@@ -397,9 +409,9 @@ p--
                     return true
                 }
             }
-	goto st100
-tr109:
-//line insecure_unserialize.rl:118
+	goto st105
+tr114:
+//line insecure_unserialize.rl:120
 te = p
 p--
 {
@@ -407,91 +419,91 @@ p--
                     return true
                 }
             }
-	goto st100
-tr110:
-//line insecure_unserialize.rl:118
+	goto st105
+tr115:
+//line insecure_unserialize.rl:120
 te = p+1
 {
                 if checkPattern2(string(data[ts:te])) {
                     return true
                 }
             }
-	goto st100
-tr114:
-//line insecure_unserialize.rl:108
+	goto st105
+tr119:
+//line insecure_unserialize.rl:110
 te = p
 p--
 {
                 return true
             }
-	goto st100
-	st100:
+	goto st105
+	st105:
 //line NONE:1
 ts = 0
 
 		if p++; p == pe {
-			goto _test_eof100
+			goto _test_eof105
 		}
-	st_case_100:
+	st_case_105:
 //line NONE:1
 ts = p
 
-//line insecure_unserialize.go:440
+//line insecure_unserialize.go:452
 		switch data[p] {
 		case 40:
-			goto tr94
-		case 95:
-			goto tr96
-		case 98:
-			goto tr97
-		case 99:
-			goto tr98
-		case 101:
 			goto tr99
-		case 102:
-			goto tr100
-		case 103:
+		case 95:
 			goto tr101
-		case 109:
+		case 98:
 			goto tr102
-		case 110:
+		case 99:
 			goto tr103
-		case 112:
+		case 101:
 			goto tr104
-		case 114:
+		case 102:
 			goto tr105
+		case 103:
+			goto tr106
+		case 109:
+			goto tr107
+		case 110:
+			goto tr108
+		case 112:
+			goto tr109
+		case 114:
+			goto tr110
 		}
 		switch {
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr95
+				goto tr100
 			}
 		case data[p] >= 65:
-			goto tr95
+			goto tr100
 		}
-		goto tr93
-tr94:
+		goto tr98
+tr99:
 //line NONE:1
 te = p+1
 
-	goto st101
-	st101:
+	goto st106
+	st106:
 		if p++; p == pe {
-			goto _test_eof101
+			goto _test_eof106
 		}
-	st_case_101:
-//line insecure_unserialize.go:484
+	st_case_106:
+//line insecure_unserialize.go:496
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
-				goto tr106
+				goto tr111
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr106
+				goto tr111
 			}
 		default:
-			goto tr106
+			goto tr111
 		}
 		goto st0
 	st0:
@@ -638,19 +650,19 @@ te = p+1
 			goto tr15
 		}
 		goto tr0
-tr95:
+tr100:
 //line NONE:1
 te = p+1
 
-//line insecure_unserialize.rl:124
+//line insecure_unserialize.rl:126
 act = 4;
-	goto st102
-	st102:
+	goto st107
+	st107:
 		if p++; p == pe {
-			goto _test_eof102
+			goto _test_eof107
 		}
-	st_case_102:
-//line insecure_unserialize.go:654
+	st_case_107:
+//line insecure_unserialize.go:666
 		switch data[p] {
 		case 46:
 			goto st15
@@ -665,7 +677,7 @@ act = 4;
 		case data[p] >= 65:
 			goto st16
 		}
-		goto tr106
+		goto tr111
 	st15:
 		if p++; p == pe {
 			goto _test_eof15
@@ -684,15 +696,15 @@ tr17:
 //line NONE:1
 te = p+1
 
-//line insecure_unserialize.rl:112
+//line insecure_unserialize.rl:114
 act = 2;
-	goto st103
-	st103:
+	goto st108
+	st108:
 		if p++; p == pe {
-			goto _test_eof103
+			goto _test_eof108
 		}
-	st_case_103:
-//line insecure_unserialize.go:696
+	st_case_108:
+//line insecure_unserialize.go:708
 		if data[p] == 46 {
 			goto st15
 		}
@@ -704,7 +716,7 @@ act = 2;
 		case data[p] >= 65:
 			goto tr17
 		}
-		goto tr108
+		goto tr113
 	st16:
 		if p++; p == pe {
 			goto _test_eof16
@@ -760,11 +772,11 @@ act = 2;
 	st_case_19:
 		switch data[p] {
 		case 34:
-			goto st104
+			goto st109
 		case 39:
-			goto st104
+			goto st109
 		case 96:
-			goto st104
+			goto st109
 		}
 		switch {
 		case data[p] > 90:
@@ -775,33 +787,33 @@ act = 2;
 			goto st19
 		}
 		goto tr16
-	st104:
+	st109:
 		if p++; p == pe {
-			goto _test_eof104
+			goto _test_eof109
 		}
-	st_case_104:
+	st_case_109:
 		if data[p] == 93 {
-			goto tr110
+			goto tr115
 		}
-		goto tr109
-tr96:
+		goto tr114
+tr101:
 //line NONE:1
 te = p+1
 
-	goto st105
-	st105:
+	goto st110
+	st110:
 		if p++; p == pe {
-			goto _test_eof105
+			goto _test_eof110
 		}
-	st_case_105:
-//line insecure_unserialize.go:798
+	st_case_110:
+//line insecure_unserialize.go:810
 		switch data[p] {
 		case 36:
 			goto st20
 		case 95:
 			goto st31
 		}
-		goto tr106
+		goto tr111
 	st20:
 		if p++; p == pe {
 			goto _test_eof20
@@ -906,8 +918,11 @@ te = p+1
 			goto _test_eof31
 		}
 	st_case_31:
-		if data[p] == 106 {
+		switch data[p] {
+		case 106:
 			goto st32
+		case 112:
+			goto st42
 		}
 		goto tr0
 	st32:
@@ -1000,56 +1015,13 @@ te = p+1
 			goto tr15
 		}
 		goto tr0
-tr97:
-//line NONE:1
-te = p+1
-
-//line insecure_unserialize.rl:124
-act = 4;
-	goto st106
-	st106:
-		if p++; p == pe {
-			goto _test_eof106
-		}
-	st_case_106:
-//line insecure_unserialize.go:1016
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
-			goto st17
-		case 105:
-			goto st42
-		}
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
-		}
-		goto tr106
 	st42:
 		if p++; p == pe {
 			goto _test_eof42
 		}
 	st_case_42:
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
-			goto st17
-		case 110:
+		if data[p] == 114 {
 			goto st43
-		}
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
 		}
 		goto tr0
 	st43:
@@ -1057,21 +1029,8 @@ act = 4;
 			goto _test_eof43
 		}
 	st_case_43:
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
-			goto st17
-		case 100:
+		if data[p] == 111 {
 			goto st44
-		}
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
 		}
 		goto tr0
 	st44:
@@ -1079,21 +1038,8 @@ act = 4;
 			goto _test_eof44
 		}
 	st_case_44:
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
-			goto st17
-		case 105:
+		if data[p] == 116 {
 			goto st45
-		}
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
 		}
 		goto tr0
 	st45:
@@ -1101,21 +1047,8 @@ act = 4;
 			goto _test_eof45
 		}
 	st_case_45:
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
-			goto st17
-		case 110:
+		if data[p] == 111 {
 			goto st46
-		}
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
 		}
 		goto tr0
 	st46:
@@ -1123,12 +1056,29 @@ act = 4;
 			goto _test_eof46
 		}
 	st_case_46:
+		if data[p] == 95 {
+			goto st30
+		}
+		goto tr0
+tr102:
+//line NONE:1
+te = p+1
+
+//line insecure_unserialize.rl:126
+act = 4;
+	goto st111
+	st111:
+		if p++; p == pe {
+			goto _test_eof111
+		}
+	st_case_111:
+//line insecure_unserialize.go:1076
 		switch data[p] {
 		case 46:
 			goto st15
 		case 91:
 			goto st17
-		case 103:
+		case 105:
 			goto st47
 		}
 		switch {
@@ -1139,7 +1089,7 @@ act = 4;
 		case data[p] >= 65:
 			goto st16
 		}
-		goto tr0
+		goto tr111
 	st47:
 		if p++; p == pe {
 			goto _test_eof47
@@ -1149,58 +1099,8 @@ act = 4;
 		case 46:
 			goto st15
 		case 91:
-			goto tr49
-		}
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
-		}
-		goto tr0
-tr49:
-//line NONE:1
-te = p+1
-
-//line insecure_unserialize.rl:108
-act = 1;
-	goto st107
-	st107:
-		if p++; p == pe {
-			goto _test_eof107
-		}
-	st_case_107:
-//line insecure_unserialize.go:1176
-		switch data[p] {
-		case 34:
-			goto st18
-		case 39:
-			goto st18
-		case 96:
-			goto st18
-		}
-		goto tr114
-tr98:
-//line NONE:1
-te = p+1
-
-//line insecure_unserialize.rl:124
-act = 4;
-	goto st108
-	st108:
-		if p++; p == pe {
-			goto _test_eof108
-		}
-	st_case_108:
-//line insecure_unserialize.go:1198
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
 			goto st17
-		case 111:
+		case 110:
 			goto st48
 		}
 		switch {
@@ -1211,7 +1111,7 @@ act = 4;
 		case data[p] >= 65:
 			goto st16
 		}
-		goto tr106
+		goto tr0
 	st48:
 		if p++; p == pe {
 			goto _test_eof48
@@ -1222,7 +1122,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 110:
+		case 100:
 			goto st49
 		}
 		switch {
@@ -1244,7 +1144,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 115:
+		case 105:
 			goto st50
 		}
 		switch {
@@ -1266,7 +1166,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 116:
+		case 110:
 			goto st51
 		}
 		switch {
@@ -1288,7 +1188,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 114:
+		case 103:
 			goto st52
 		}
 		switch {
@@ -1309,9 +1209,7 @@ act = 4;
 		case 46:
 			goto st15
 		case 91:
-			goto st17
-		case 117:
-			goto st53
+			goto tr54
 		}
 		switch {
 		case data[p] > 90:
@@ -1322,6 +1220,58 @@ act = 4;
 			goto st16
 		}
 		goto tr0
+tr54:
+//line NONE:1
+te = p+1
+
+//line insecure_unserialize.rl:110
+act = 1;
+	goto st112
+	st112:
+		if p++; p == pe {
+			goto _test_eof112
+		}
+	st_case_112:
+//line insecure_unserialize.go:1236
+		switch data[p] {
+		case 34:
+			goto st18
+		case 39:
+			goto st18
+		case 96:
+			goto st18
+		}
+		goto tr119
+tr103:
+//line NONE:1
+te = p+1
+
+//line insecure_unserialize.rl:126
+act = 4;
+	goto st113
+	st113:
+		if p++; p == pe {
+			goto _test_eof113
+		}
+	st_case_113:
+//line insecure_unserialize.go:1258
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
+		case 111:
+			goto st53
+		}
+		switch {
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
+		}
+		goto tr111
 	st53:
 		if p++; p == pe {
 			goto _test_eof53
@@ -1332,7 +1282,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 99:
+		case 110:
 			goto st54
 		}
 		switch {
@@ -1354,7 +1304,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 116:
+		case 115:
 			goto st55
 		}
 		switch {
@@ -1376,7 +1326,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 111:
+		case 116:
 			goto st56
 		}
 		switch {
@@ -1399,7 +1349,7 @@ act = 4;
 		case 91:
 			goto st17
 		case 114:
-			goto st47
+			goto st57
 		}
 		switch {
 		case data[p] > 90:
@@ -1410,38 +1360,6 @@ act = 4;
 			goto st16
 		}
 		goto tr0
-tr99:
-//line NONE:1
-te = p+1
-
-//line insecure_unserialize.rl:124
-act = 4;
-	goto st109
-	st109:
-		if p++; p == pe {
-			goto _test_eof109
-		}
-	st_case_109:
-//line insecure_unserialize.go:1426
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
-			goto st17
-		case 110:
-			goto st57
-		case 118:
-			goto st58
-		}
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
-		}
-		goto tr106
 	st57:
 		if p++; p == pe {
 			goto _test_eof57
@@ -1452,8 +1370,8 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 118:
-			goto st47
+		case 117:
+			goto st58
 		}
 		switch {
 		case data[p] > 90:
@@ -1474,12 +1392,12 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 97:
+		case 99:
 			goto st59
 		}
 		switch {
 		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
+			if 97 <= data[p] && data[p] <= 122 {
 				goto st16
 			}
 		case data[p] >= 65:
@@ -1496,7 +1414,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 108:
+		case 116:
 			goto st60
 		}
 		switch {
@@ -1514,41 +1432,11 @@ act = 4;
 		}
 	st_case_60:
 		switch data[p] {
-		case 40:
-			goto tr15
 		case 46:
 			goto st15
 		case 91:
 			goto st17
-		}
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
-		}
-		goto tr0
-tr100:
-//line NONE:1
-te = p+1
-
-//line insecure_unserialize.rl:124
-act = 4;
-	goto st110
-	st110:
-		if p++; p == pe {
-			goto _test_eof110
-		}
-	st_case_110:
-//line insecure_unserialize.go:1546
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
-			goto st17
-		case 117:
+		case 111:
 			goto st61
 		}
 		switch {
@@ -1559,7 +1447,7 @@ act = 4;
 		case data[p] >= 65:
 			goto st16
 		}
-		goto tr106
+		goto tr0
 	st61:
 		if p++; p == pe {
 			goto _test_eof61
@@ -1570,8 +1458,8 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 110:
-			goto st62
+		case 114:
+			goto st52
 		}
 		switch {
 		case data[p] > 90:
@@ -1582,6 +1470,38 @@ act = 4;
 			goto st16
 		}
 		goto tr0
+tr104:
+//line NONE:1
+te = p+1
+
+//line insecure_unserialize.rl:126
+act = 4;
+	goto st114
+	st114:
+		if p++; p == pe {
+			goto _test_eof114
+		}
+	st_case_114:
+//line insecure_unserialize.go:1486
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
+		case 110:
+			goto st62
+		case 118:
+			goto st63
+		}
+		switch {
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
+		}
+		goto tr111
 	st62:
 		if p++; p == pe {
 			goto _test_eof62
@@ -1592,8 +1512,8 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 99:
-			goto st63
+		case 118:
+			goto st52
 		}
 		switch {
 		case data[p] > 90:
@@ -1614,12 +1534,12 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 116:
+		case 97:
 			goto st64
 		}
 		switch {
 		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
+			if 98 <= data[p] && data[p] <= 122 {
 				goto st16
 			}
 		case data[p] >= 65:
@@ -1636,7 +1556,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 105:
+		case 108:
 			goto st65
 		}
 		switch {
@@ -1654,12 +1574,12 @@ act = 4;
 		}
 	st_case_65:
 		switch data[p] {
+		case 40:
+			goto tr15
 		case 46:
 			goto st15
 		case 91:
 			goto st17
-		case 111:
-			goto st66
 		}
 		switch {
 		case data[p] > 90:
@@ -1670,6 +1590,36 @@ act = 4;
 			goto st16
 		}
 		goto tr0
+tr105:
+//line NONE:1
+te = p+1
+
+//line insecure_unserialize.rl:126
+act = 4;
+	goto st115
+	st115:
+		if p++; p == pe {
+			goto _test_eof115
+		}
+	st_case_115:
+//line insecure_unserialize.go:1606
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
+		case 117:
+			goto st66
+		}
+		switch {
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
+		}
+		goto tr111
 	st66:
 		if p++; p == pe {
 			goto _test_eof66
@@ -1698,12 +1648,12 @@ act = 4;
 		}
 	st_case_67:
 		switch data[p] {
-		case 40:
-			goto st68
 		case 46:
 			goto st15
 		case 91:
 			goto st17
+		case 99:
+			goto st68
 		}
 		switch {
 		case data[p] > 90:
@@ -1719,8 +1669,21 @@ act = 4;
 			goto _test_eof68
 		}
 	st_case_68:
-		if data[p] == 41 {
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
+		case 116:
 			goto st69
+		}
+		switch {
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
 		}
 		goto tr0
 	st69:
@@ -1728,29 +1691,12 @@ act = 4;
 			goto _test_eof69
 		}
 	st_case_69:
-		if data[p] == 123 {
-			goto tr15
-		}
-		goto tr0
-tr101:
-//line NONE:1
-te = p+1
-
-//line insecure_unserialize.rl:124
-act = 4;
-	goto st111
-	st111:
-		if p++; p == pe {
-			goto _test_eof111
-		}
-	st_case_111:
-//line insecure_unserialize.go:1748
 		switch data[p] {
 		case 46:
 			goto st15
 		case 91:
 			goto st17
-		case 108:
+		case 105:
 			goto st70
 		}
 		switch {
@@ -1761,7 +1707,7 @@ act = 4;
 		case data[p] >= 65:
 			goto st16
 		}
-		goto tr106
+		goto tr0
 	st70:
 		if p++; p == pe {
 			goto _test_eof70
@@ -1794,7 +1740,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 98:
+		case 110:
 			goto st72
 		}
 		switch {
@@ -1812,16 +1758,16 @@ act = 4;
 		}
 	st_case_72:
 		switch data[p] {
+		case 40:
+			goto st73
 		case 46:
 			goto st15
 		case 91:
 			goto st17
-		case 97:
-			goto st73
 		}
 		switch {
 		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
+			if 97 <= data[p] && data[p] <= 122 {
 				goto st16
 			}
 		case data[p] >= 65:
@@ -1833,64 +1779,38 @@ act = 4;
 			goto _test_eof73
 		}
 	st_case_73:
+		if data[p] == 41 {
+			goto st74
+		}
+		goto tr0
+	st74:
+		if p++; p == pe {
+			goto _test_eof74
+		}
+	st_case_74:
+		if data[p] == 123 {
+			goto tr15
+		}
+		goto tr0
+tr106:
+//line NONE:1
+te = p+1
+
+//line insecure_unserialize.rl:126
+act = 4;
+	goto st116
+	st116:
+		if p++; p == pe {
+			goto _test_eof116
+		}
+	st_case_116:
+//line insecure_unserialize.go:1808
 		switch data[p] {
 		case 46:
 			goto st15
 		case 91:
 			goto st17
 		case 108:
-			goto st47
-		}
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
-		}
-		goto tr0
-tr102:
-//line NONE:1
-te = p+1
-
-//line insecure_unserialize.rl:124
-act = 4;
-	goto st112
-	st112:
-		if p++; p == pe {
-			goto _test_eof112
-		}
-	st_case_112:
-//line insecure_unserialize.go:1866
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
-			goto st17
-		case 97:
-			goto st74
-		}
-		switch {
-		case data[p] > 90:
-			if 98 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
-		}
-		goto tr106
-	st74:
-		if p++; p == pe {
-			goto _test_eof74
-		}
-	st_case_74:
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
-			goto st17
-		case 105:
 			goto st75
 		}
 		switch {
@@ -1901,7 +1821,7 @@ act = 4;
 		case data[p] >= 65:
 			goto st16
 		}
-		goto tr0
+		goto tr111
 	st75:
 		if p++; p == pe {
 			goto _test_eof75
@@ -1912,7 +1832,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 110:
+		case 111:
 			goto st76
 		}
 		switch {
@@ -1933,8 +1853,8 @@ act = 4;
 		case 46:
 			goto st15
 		case 91:
-			goto tr49
-		case 109:
+			goto st17
+		case 98:
 			goto st77
 		}
 		switch {
@@ -1956,12 +1876,12 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 111:
+		case 97:
 			goto st78
 		}
 		switch {
 		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
+			if 98 <= data[p] && data[p] <= 122 {
 				goto st16
 			}
 		case data[p] >= 65:
@@ -1978,8 +1898,8 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 100:
-			goto st79
+		case 108:
+			goto st52
 		}
 		switch {
 		case data[p] > 90:
@@ -1990,6 +1910,36 @@ act = 4;
 			goto st16
 		}
 		goto tr0
+tr107:
+//line NONE:1
+te = p+1
+
+//line insecure_unserialize.rl:126
+act = 4;
+	goto st117
+	st117:
+		if p++; p == pe {
+			goto _test_eof117
+		}
+	st_case_117:
+//line insecure_unserialize.go:1926
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
+		case 97:
+			goto st79
+		}
+		switch {
+		case data[p] > 90:
+			if 98 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
+		}
+		goto tr111
 	st79:
 		if p++; p == pe {
 			goto _test_eof79
@@ -2000,7 +1950,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 117:
+		case 105:
 			goto st80
 		}
 		switch {
@@ -2022,7 +1972,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 108:
+		case 110:
 			goto st81
 		}
 		switch {
@@ -2043,38 +1993,8 @@ act = 4;
 		case 46:
 			goto st15
 		case 91:
-			goto st17
-		case 101:
-			goto st47
-		}
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
-		}
-		goto tr0
-tr103:
-//line NONE:1
-te = p+1
-
-//line insecure_unserialize.rl:124
-act = 4;
-	goto st113
-	st113:
-		if p++; p == pe {
-			goto _test_eof113
-		}
-	st_case_113:
-//line insecure_unserialize.go:2072
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
-			goto st17
-		case 101:
+			goto tr54
+		case 109:
 			goto st82
 		}
 		switch {
@@ -2085,7 +2005,7 @@ act = 4;
 		case data[p] >= 65:
 			goto st16
 		}
-		goto tr106
+		goto tr0
 	st82:
 		if p++; p == pe {
 			goto _test_eof82
@@ -2096,7 +2016,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 119:
+		case 111:
 			goto st83
 		}
 		switch {
@@ -2118,7 +2038,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 102:
+		case 100:
 			goto st84
 		}
 		switch {
@@ -2162,7 +2082,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 110:
+		case 108:
 			goto st86
 		}
 		switch {
@@ -2184,8 +2104,8 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 99:
-			goto st87
+		case 101:
+			goto st52
 		}
 		switch {
 		case data[p] > 90:
@@ -2196,6 +2116,36 @@ act = 4;
 			goto st16
 		}
 		goto tr0
+tr108:
+//line NONE:1
+te = p+1
+
+//line insecure_unserialize.rl:126
+act = 4;
+	goto st118
+	st118:
+		if p++; p == pe {
+			goto _test_eof118
+		}
+	st_case_118:
+//line insecure_unserialize.go:2132
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
+		case 101:
+			goto st87
+		}
+		switch {
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
+		}
+		goto tr111
 	st87:
 		if p++; p == pe {
 			goto _test_eof87
@@ -2206,7 +2156,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 116:
+		case 119:
 			goto st88
 		}
 		switch {
@@ -2228,7 +2178,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 105:
+		case 102:
 			goto st89
 		}
 		switch {
@@ -2250,7 +2200,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 111:
+		case 117:
 			goto st90
 		}
 		switch {
@@ -2273,36 +2223,6 @@ act = 4;
 		case 91:
 			goto st17
 		case 110:
-			goto st60
-		}
-		switch {
-		case data[p] > 90:
-			if 97 <= data[p] && data[p] <= 122 {
-				goto st16
-			}
-		case data[p] >= 65:
-			goto st16
-		}
-		goto tr0
-tr104:
-//line NONE:1
-te = p+1
-
-//line insecure_unserialize.rl:124
-act = 4;
-	goto st114
-	st114:
-		if p++; p == pe {
-			goto _test_eof114
-		}
-	st_case_114:
-//line insecure_unserialize.go:2300
-		switch data[p] {
-		case 46:
-			goto st15
-		case 91:
-			goto st17
-		case 114:
 			goto st91
 		}
 		switch {
@@ -2313,7 +2233,7 @@ act = 4;
 		case data[p] >= 65:
 			goto st16
 		}
-		goto tr106
+		goto tr0
 	st91:
 		if p++; p == pe {
 			goto _test_eof91
@@ -2324,7 +2244,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 111:
+		case 99:
 			goto st92
 		}
 		switch {
@@ -2346,7 +2266,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 99:
+		case 116:
 			goto st93
 		}
 		switch {
@@ -2368,7 +2288,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 101:
+		case 105:
 			goto st94
 		}
 		switch {
@@ -2390,7 +2310,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 115:
+		case 111:
 			goto st95
 		}
 		switch {
@@ -2412,8 +2332,8 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 115:
-			goto st47
+		case 110:
+			goto st65
 		}
 		switch {
 		case data[p] > 90:
@@ -2424,25 +2344,25 @@ act = 4;
 			goto st16
 		}
 		goto tr0
-tr105:
+tr109:
 //line NONE:1
 te = p+1
 
-//line insecure_unserialize.rl:124
+//line insecure_unserialize.rl:126
 act = 4;
-	goto st115
-	st115:
+	goto st119
+	st119:
 		if p++; p == pe {
-			goto _test_eof115
+			goto _test_eof119
 		}
-	st_case_115:
-//line insecure_unserialize.go:2440
+	st_case_119:
+//line insecure_unserialize.go:2360
 		switch data[p] {
 		case 46:
 			goto st15
 		case 91:
 			goto st17
-		case 101:
+		case 114:
 			goto st96
 		}
 		switch {
@@ -2453,7 +2373,7 @@ act = 4;
 		case data[p] >= 65:
 			goto st16
 		}
-		goto tr106
+		goto tr111
 	st96:
 		if p++; p == pe {
 			goto _test_eof96
@@ -2464,7 +2384,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 113:
+		case 111:
 			goto st97
 		}
 		switch {
@@ -2486,7 +2406,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 117:
+		case 99:
 			goto st98
 		}
 		switch {
@@ -2508,7 +2428,7 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
-		case 105:
+		case 101:
 			goto st99
 		}
 		switch {
@@ -2530,8 +2450,148 @@ act = 4;
 			goto st15
 		case 91:
 			goto st17
+		case 115:
+			goto st100
+		}
+		switch {
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
+		}
+		goto tr0
+	st100:
+		if p++; p == pe {
+			goto _test_eof100
+		}
+	st_case_100:
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
+		case 115:
+			goto st52
+		}
+		switch {
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
+		}
+		goto tr0
+tr110:
+//line NONE:1
+te = p+1
+
+//line insecure_unserialize.rl:126
+act = 4;
+	goto st120
+	st120:
+		if p++; p == pe {
+			goto _test_eof120
+		}
+	st_case_120:
+//line insecure_unserialize.go:2500
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
+		case 101:
+			goto st101
+		}
+		switch {
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
+		}
+		goto tr111
+	st101:
+		if p++; p == pe {
+			goto _test_eof101
+		}
+	st_case_101:
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
+		case 113:
+			goto st102
+		}
+		switch {
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
+		}
+		goto tr0
+	st102:
+		if p++; p == pe {
+			goto _test_eof102
+		}
+	st_case_102:
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
+		case 117:
+			goto st103
+		}
+		switch {
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
+		}
+		goto tr0
+	st103:
+		if p++; p == pe {
+			goto _test_eof103
+		}
+	st_case_103:
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
+		case 105:
+			goto st104
+		}
+		switch {
+		case data[p] > 90:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto st16
+			}
+		case data[p] >= 65:
+			goto st16
+		}
+		goto tr0
+	st104:
+		if p++; p == pe {
+			goto _test_eof104
+		}
+	st_case_104:
+		switch data[p] {
+		case 46:
+			goto st15
+		case 91:
+			goto st17
 		case 114:
-			goto st81
+			goto st86
 		}
 		switch {
 		case data[p] > 90:
@@ -2543,8 +2603,8 @@ act = 4;
 		}
 		goto tr0
 	st_out:
-	_test_eof100: cs = 100; goto _test_eof
-	_test_eof101: cs = 101; goto _test_eof
+	_test_eof105: cs = 105; goto _test_eof
+	_test_eof106: cs = 106; goto _test_eof
 	_test_eof0: cs = 0; goto _test_eof
 	_test_eof1: cs = 1; goto _test_eof
 	_test_eof2: cs = 2; goto _test_eof
@@ -2560,15 +2620,15 @@ act = 4;
 	_test_eof12: cs = 12; goto _test_eof
 	_test_eof13: cs = 13; goto _test_eof
 	_test_eof14: cs = 14; goto _test_eof
-	_test_eof102: cs = 102; goto _test_eof
+	_test_eof107: cs = 107; goto _test_eof
 	_test_eof15: cs = 15; goto _test_eof
-	_test_eof103: cs = 103; goto _test_eof
+	_test_eof108: cs = 108; goto _test_eof
 	_test_eof16: cs = 16; goto _test_eof
 	_test_eof17: cs = 17; goto _test_eof
 	_test_eof18: cs = 18; goto _test_eof
 	_test_eof19: cs = 19; goto _test_eof
-	_test_eof104: cs = 104; goto _test_eof
-	_test_eof105: cs = 105; goto _test_eof
+	_test_eof109: cs = 109; goto _test_eof
+	_test_eof110: cs = 110; goto _test_eof
 	_test_eof20: cs = 20; goto _test_eof
 	_test_eof21: cs = 21; goto _test_eof
 	_test_eof22: cs = 22; goto _test_eof
@@ -2591,80 +2651,85 @@ act = 4;
 	_test_eof39: cs = 39; goto _test_eof
 	_test_eof40: cs = 40; goto _test_eof
 	_test_eof41: cs = 41; goto _test_eof
-	_test_eof106: cs = 106; goto _test_eof
 	_test_eof42: cs = 42; goto _test_eof
 	_test_eof43: cs = 43; goto _test_eof
 	_test_eof44: cs = 44; goto _test_eof
 	_test_eof45: cs = 45; goto _test_eof
 	_test_eof46: cs = 46; goto _test_eof
+	_test_eof111: cs = 111; goto _test_eof
 	_test_eof47: cs = 47; goto _test_eof
-	_test_eof107: cs = 107; goto _test_eof
-	_test_eof108: cs = 108; goto _test_eof
 	_test_eof48: cs = 48; goto _test_eof
 	_test_eof49: cs = 49; goto _test_eof
 	_test_eof50: cs = 50; goto _test_eof
 	_test_eof51: cs = 51; goto _test_eof
 	_test_eof52: cs = 52; goto _test_eof
+	_test_eof112: cs = 112; goto _test_eof
+	_test_eof113: cs = 113; goto _test_eof
 	_test_eof53: cs = 53; goto _test_eof
 	_test_eof54: cs = 54; goto _test_eof
 	_test_eof55: cs = 55; goto _test_eof
 	_test_eof56: cs = 56; goto _test_eof
-	_test_eof109: cs = 109; goto _test_eof
 	_test_eof57: cs = 57; goto _test_eof
 	_test_eof58: cs = 58; goto _test_eof
 	_test_eof59: cs = 59; goto _test_eof
 	_test_eof60: cs = 60; goto _test_eof
-	_test_eof110: cs = 110; goto _test_eof
 	_test_eof61: cs = 61; goto _test_eof
+	_test_eof114: cs = 114; goto _test_eof
 	_test_eof62: cs = 62; goto _test_eof
 	_test_eof63: cs = 63; goto _test_eof
 	_test_eof64: cs = 64; goto _test_eof
 	_test_eof65: cs = 65; goto _test_eof
+	_test_eof115: cs = 115; goto _test_eof
 	_test_eof66: cs = 66; goto _test_eof
 	_test_eof67: cs = 67; goto _test_eof
 	_test_eof68: cs = 68; goto _test_eof
 	_test_eof69: cs = 69; goto _test_eof
-	_test_eof111: cs = 111; goto _test_eof
 	_test_eof70: cs = 70; goto _test_eof
 	_test_eof71: cs = 71; goto _test_eof
 	_test_eof72: cs = 72; goto _test_eof
 	_test_eof73: cs = 73; goto _test_eof
-	_test_eof112: cs = 112; goto _test_eof
 	_test_eof74: cs = 74; goto _test_eof
+	_test_eof116: cs = 116; goto _test_eof
 	_test_eof75: cs = 75; goto _test_eof
 	_test_eof76: cs = 76; goto _test_eof
 	_test_eof77: cs = 77; goto _test_eof
 	_test_eof78: cs = 78; goto _test_eof
+	_test_eof117: cs = 117; goto _test_eof
 	_test_eof79: cs = 79; goto _test_eof
 	_test_eof80: cs = 80; goto _test_eof
 	_test_eof81: cs = 81; goto _test_eof
-	_test_eof113: cs = 113; goto _test_eof
 	_test_eof82: cs = 82; goto _test_eof
 	_test_eof83: cs = 83; goto _test_eof
 	_test_eof84: cs = 84; goto _test_eof
 	_test_eof85: cs = 85; goto _test_eof
 	_test_eof86: cs = 86; goto _test_eof
+	_test_eof118: cs = 118; goto _test_eof
 	_test_eof87: cs = 87; goto _test_eof
 	_test_eof88: cs = 88; goto _test_eof
 	_test_eof89: cs = 89; goto _test_eof
 	_test_eof90: cs = 90; goto _test_eof
-	_test_eof114: cs = 114; goto _test_eof
 	_test_eof91: cs = 91; goto _test_eof
 	_test_eof92: cs = 92; goto _test_eof
 	_test_eof93: cs = 93; goto _test_eof
 	_test_eof94: cs = 94; goto _test_eof
 	_test_eof95: cs = 95; goto _test_eof
-	_test_eof115: cs = 115; goto _test_eof
+	_test_eof119: cs = 119; goto _test_eof
 	_test_eof96: cs = 96; goto _test_eof
 	_test_eof97: cs = 97; goto _test_eof
 	_test_eof98: cs = 98; goto _test_eof
 	_test_eof99: cs = 99; goto _test_eof
+	_test_eof100: cs = 100; goto _test_eof
+	_test_eof120: cs = 120; goto _test_eof
+	_test_eof101: cs = 101; goto _test_eof
+	_test_eof102: cs = 102; goto _test_eof
+	_test_eof103: cs = 103; goto _test_eof
+	_test_eof104: cs = 104; goto _test_eof
 
 	_test_eof: {}
 	if p == eof {
 		switch cs {
-		case 101:
-			goto tr106
+		case 106:
+			goto tr111
 		case 0:
 			goto tr0
 		case 1:
@@ -2695,12 +2760,12 @@ act = 4;
 			goto tr0
 		case 14:
 			goto tr0
-		case 102:
-			goto tr106
+		case 107:
+			goto tr111
 		case 15:
 			goto tr16
-		case 103:
-			goto tr108
+		case 108:
+			goto tr113
 		case 16:
 			goto tr0
 		case 17:
@@ -2709,10 +2774,10 @@ act = 4;
 			goto tr16
 		case 19:
 			goto tr16
-		case 104:
-			goto tr109
-		case 105:
-			goto tr106
+		case 109:
+			goto tr114
+		case 110:
+			goto tr111
 		case 20:
 			goto tr0
 		case 21:
@@ -2757,8 +2822,6 @@ act = 4;
 			goto tr0
 		case 41:
 			goto tr0
-		case 106:
-			goto tr106
 		case 42:
 			goto tr0
 		case 43:
@@ -2769,12 +2832,10 @@ act = 4;
 			goto tr0
 		case 46:
 			goto tr0
+		case 111:
+			goto tr111
 		case 47:
 			goto tr0
-		case 107:
-			goto tr114
-		case 108:
-			goto tr106
 		case 48:
 			goto tr0
 		case 49:
@@ -2785,6 +2846,10 @@ act = 4;
 			goto tr0
 		case 52:
 			goto tr0
+		case 112:
+			goto tr119
+		case 113:
+			goto tr111
 		case 53:
 			goto tr0
 		case 54:
@@ -2793,8 +2858,6 @@ act = 4;
 			goto tr0
 		case 56:
 			goto tr0
-		case 109:
-			goto tr106
 		case 57:
 			goto tr0
 		case 58:
@@ -2803,10 +2866,10 @@ act = 4;
 			goto tr0
 		case 60:
 			goto tr0
-		case 110:
-			goto tr106
 		case 61:
 			goto tr0
+		case 114:
+			goto tr111
 		case 62:
 			goto tr0
 		case 63:
@@ -2815,6 +2878,8 @@ act = 4;
 			goto tr0
 		case 65:
 			goto tr0
+		case 115:
+			goto tr111
 		case 66:
 			goto tr0
 		case 67:
@@ -2823,8 +2888,6 @@ act = 4;
 			goto tr0
 		case 69:
 			goto tr0
-		case 111:
-			goto tr106
 		case 70:
 			goto tr0
 		case 71:
@@ -2833,10 +2896,10 @@ act = 4;
 			goto tr0
 		case 73:
 			goto tr0
-		case 112:
-			goto tr106
 		case 74:
 			goto tr0
+		case 116:
+			goto tr111
 		case 75:
 			goto tr0
 		case 76:
@@ -2845,14 +2908,14 @@ act = 4;
 			goto tr0
 		case 78:
 			goto tr0
+		case 117:
+			goto tr111
 		case 79:
 			goto tr0
 		case 80:
 			goto tr0
 		case 81:
 			goto tr0
-		case 113:
-			goto tr106
 		case 82:
 			goto tr0
 		case 83:
@@ -2863,6 +2926,8 @@ act = 4;
 			goto tr0
 		case 86:
 			goto tr0
+		case 118:
+			goto tr111
 		case 87:
 			goto tr0
 		case 88:
@@ -2871,8 +2936,6 @@ act = 4;
 			goto tr0
 		case 90:
 			goto tr0
-		case 114:
-			goto tr106
 		case 91:
 			goto tr0
 		case 92:
@@ -2883,8 +2946,8 @@ act = 4;
 			goto tr0
 		case 95:
 			goto tr0
-		case 115:
-			goto tr106
+		case 119:
+			goto tr111
 		case 96:
 			goto tr0
 		case 97:
@@ -2893,12 +2956,24 @@ act = 4;
 			goto tr0
 		case 99:
 			goto tr0
+		case 100:
+			goto tr0
+		case 120:
+			goto tr111
+		case 101:
+			goto tr0
+		case 102:
+			goto tr0
+		case 103:
+			goto tr0
+		case 104:
+			goto tr0
 		}
 	}
 
 	}
 
-//line insecure_unserialize.rl:131
+//line insecure_unserialize.rl:133
 
         return false
 }

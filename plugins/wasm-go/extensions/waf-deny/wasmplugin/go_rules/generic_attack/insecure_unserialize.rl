@@ -43,6 +43,8 @@ func checkPattern1(value string) bool {
 	    return snippets[1] == "fromcharcode"
 	case "module":
 		return snippets[1] == "exports"
+    case "constructor":
+        return snippets[1] == "prototype"
 	case "console":
 		return slices.Contains(fnsForConsole, snippets[1])
 	case "require":
@@ -94,7 +96,7 @@ func matchInsecureUnserialize(data []byte) bool {
 
         not_word = [^0-9a-zA-Z];
 
-        libs = '_' ('$$nd_func$$_' | '_js_function');
+        libs = '_' ('$$nd_func$$_' | '_js_function' | '_proto__');
         snippet1 = ('eval' | 'newfunction') '(';
         snippet2 = 'function' '(' ')'  '{';
         snippet3 = '(' not_word 'child_process' not_word ')';

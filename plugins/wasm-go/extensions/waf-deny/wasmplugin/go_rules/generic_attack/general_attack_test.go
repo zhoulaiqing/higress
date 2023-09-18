@@ -42,6 +42,8 @@ func TestMatchDefault(t *testing.T) {
 		"case934100-30": {"XyQkXHUwMDRlXHUwMDQ0X0ZVTkMkJF9cdTAwNjZ1bmN0aW9uKCkK", true},
 		"case934100-31": {"\\u0058\\u0079QkTkRfRlVOQyQkX2Z1bmN0aW9uKCkK", true},
 		//"case934100-1":  {"", true},
+		"case934130-4": {"__proto__.test=test", true},
+		"case934130-5": {"constructor.prototype.test=test", true},
 	}
 
 	for key, v := range testGroup { //遍历

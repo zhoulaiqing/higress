@@ -1,4 +1,4 @@
-package rule_941
+package xss
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"

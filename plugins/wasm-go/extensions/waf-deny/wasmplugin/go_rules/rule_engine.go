@@ -6,13 +6,13 @@ import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/protocol_attack"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_932"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_933"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_941"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_942"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/xss"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 )
 
-var Rule941 = &rule_941.Rule941{}
+var Rule941 = &xss.Rule941{}
 var Rule921 = &protocol_attack.Rule921{}
 var Rule934100 = &generic_attack.Rule934100{}
 
@@ -39,7 +39,7 @@ var (
 		&rule_933.Rule933210{},
 		Rule934100, &generic_attack.Rule934110{}, &generic_attack.Rule934130{},
 		&generic_attack.Rule934160{}, &generic_attack.Rule934170{},
-		&rule_941.Rule941010{}, Rule941,
+		&xss.Rule941010{}, Rule941,
 		&rule_942.Rule942100{},
 		&RuleFinal{},
 	}
