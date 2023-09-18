@@ -76,6 +76,11 @@ func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
 			return false
 		}
 
+		r = Rule933.EvaluatePhase1(tx)
+		if !checkBlock(tx, r, Rule933) {
+			return false
+		}
+
 		r = Rule934.EvaluatePhase1(tx)
 		if !checkBlock(tx, r, Rule934) {
 			return false
