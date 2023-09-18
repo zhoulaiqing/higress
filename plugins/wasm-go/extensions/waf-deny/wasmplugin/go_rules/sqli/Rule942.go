@@ -1,4 +1,4 @@
-package rule_942
+package sqli
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"

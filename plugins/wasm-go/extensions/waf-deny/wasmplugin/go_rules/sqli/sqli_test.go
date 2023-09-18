@@ -1,4 +1,4 @@
-package rule_942
+package sqli
 
 import (
 	"reflect"
