@@ -2,7 +2,6 @@ package generic_attack
 
 import (
 	"reflect"
-	"strings"
 	"testing"
 )
 
@@ -42,6 +41,8 @@ func TestMatchDefault(t *testing.T) {
 		"case934100-30": {"XyQkXHUwMDRlXHUwMDQ0X0ZVTkMkJF9cdTAwNjZ1bmN0aW9uKCkK", true},
 		"case934100-31": {"\\u0058\\u0079QkTkRfRlVOQyQkX2Z1bmN0aW9uKCkK", true},
 		//"case934100-1":  {"", true},
+		"case934110-7": {"http%3A%2F%2F169.254.169.254%2Flatest", false},
+
 		"case934130-4": {"__proto__.test=test", true},
 		"case934130-5": {"constructor.prototype.test=test", true},
 
@@ -76,10 +77,10 @@ func TestMatchDefault(t *testing.T) {
 
 	for key, v := range testGroup { //遍历
 		t.Run(key, func(t *testing.T) {
-			tv := transformDefault(v.value)
-			lowerTv := strings.ToLower(tv)
-			tvd := transformWithBase64Decode(tv)
-			got := matchDefault(lowerTv, tvd)
+			//tv := transformDefault(v.value)
+			//lowerTv := strings.ToLower(tv)
+			//tvd := transformWithBase64Decode(tv)
+			got := matchDefault(v.value)
 			want := v.want
 			if !reflect.DeepEqual(want, got) { //比较
 				t.Errorf("excepted:%v, got:%v", want, got)

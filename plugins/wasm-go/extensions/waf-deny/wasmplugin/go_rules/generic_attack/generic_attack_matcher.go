@@ -7,19 +7,23 @@ import (
 	"strings"
 )
 
-func matchDefault(value string, valueDecode string) bool {
+func matchDefault(value string) bool {
 
 	if m, _ := core.PmEvaluate(rule_tasks.Rule934110Matcher, value, false); m {
 		return true
 	}
 
+	tv := transformDefault(value)
+	tvd := transformWithBase64Decode(tv)
+	tv = strings.ToLower(tv)
+
 	//在调用 insecure_unserialize 之前需要去除空格
-	vrw, _, _ := core.RemoveWhitespace(value)
+	vrw, _, _ := core.RemoveWhitespace(tv)
 	data2 := []byte(vrw)
 
 	var data2Decode []byte
-	if value != valueDecode {
-		vrwdec, _, _ := core.RemoveWhitespace(valueDecode)
+	if tv != tvd {
+		vrwdec, _, _ := core.RemoveWhitespace(tvd)
 		data2Decode = []byte(vrwdec)
 	}
 
@@ -27,12 +31,12 @@ func matchDefault(value string, valueDecode string) bool {
 		return true
 	}
 
-	vrc, _, _ := core.ReplaceComments(value)
+	vrc, _, _ := core.ReplaceComments(tv)
 	dataRc := []byte(vrc)
 
 	var dataRcDecode []byte
-	if value != valueDecode {
-		vrcdec, _, _ := core.ReplaceComments(valueDecode)
+	if tv != tvd {
+		vrcdec, _, _ := core.ReplaceComments(tvd)
 		dataRcDecode = []byte(vrcdec)
 	}
 

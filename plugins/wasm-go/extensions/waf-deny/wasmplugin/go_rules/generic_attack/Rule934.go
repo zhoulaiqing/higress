@@ -23,29 +23,22 @@ func (r *Rule934) EvaluatePhase1(tx *core.Transaction) int {
 			continue
 		}
 
-		tk := transformDefault(k)
-		tkd := transformWithBase64Decode(tk)
-		if matchDefault(strings.ToLower(tk), tkd) {
+		if matchDefault(k) {
 			return r.block(tx)
 		}
 
-		tv := transformDefault(v)
-		tvd := transformWithBase64Decode(tv)
-		if matchDefault(strings.ToLower(tv), tvd) {
+		if matchDefault(v) {
 			return r.block(tx)
 		}
 	}
 
 	for k, v := range tx.Variables.ArgsGet {
-		tk := transformDefault(k)
-		tkd := transformWithBase64Decode(tk)
-		if matchDefault(strings.ToLower(tk), tkd) {
+
+		if matchDefault(k) {
 			return r.block(tx)
 		}
 
-		tv := transformDefault(v)
-		tvd := transformWithBase64Decode(tv)
-		if matchDefault(strings.ToLower(tv), tvd) {
+		if matchDefault(v) {
 			return r.block(tx)
 		}
 	}
@@ -55,30 +48,24 @@ func (r *Rule934) EvaluatePhase1(tx *core.Transaction) int {
 
 func (r *Rule934) Evaluate(tx *core.Transaction) int {
 	for k, v := range tx.Variables.ArgsPost {
-		tk := transformDefault(k)
-		tkd := transformWithBase64Decode(tk)
-		if matchDefault(strings.ToLower(tk), tkd) {
+
+		if matchDefault(k) {
 			return r.block(tx)
 		}
 
-		tv := transformDefault(v)
-		tvd := transformWithBase64Decode(tv)
-		if matchDefault(strings.ToLower(tv), tvd) {
+		if matchDefault(v) {
 			return r.block(tx)
 		}
 	}
 
 	for _, v := range tx.Variables.XML["/*"] {
-		tv := transformDefault(v)
-		tvd := transformWithBase64Decode(tv)
-		if matchDefault(strings.ToLower(tv), tvd) {
+
+		if matchDefault(v) {
 			return r.block(tx)
 		}
 	}
 
-	tv := transformDefault(tx.Variables.RequestFileName)
-	tvd := transformWithBase64Decode(tv)
-	if matchDefault(strings.ToLower(tv), tvd) {
+	if matchDefault(tx.Variables.RequestFileName) {
 		return r.block(tx)
 	}
 
