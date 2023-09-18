@@ -5,6 +5,31 @@ import (
 	"testing"
 )
 
+func TestContentType(t *testing.T) {
+	type testCase struct {
+		value string
+		want  bool //期望的计算结果
+	}
+
+	testGroup := map[string]testCase{
+		"case1": {"application/x-www-form-urlencoded;boundary=\"application/vnd.mycompany.myapp.customer-v2+json", true},
+		"case2": {"application/x-www-form-urlencoded;boundary=\"application/json\"", true},
+		"case3": {"application/xml", false},
+		"case4": {"multipart/form-data; boundary=something", false},
+		"case5": {"application/x-www-form-urlencoded;boundary=\"text/xml\"", true},
+	}
+
+	for key, v := range testGroup { //遍历
+		t.Run(key, func(t *testing.T) {
+			got := matchBodyProcessorBypass([]byte(v.value))
+			want := v.want
+			if !reflect.DeepEqual(want, got) { //比较
+				t.Errorf("excepted:%v, got:%v", want, got)
+			}
+		})
+	}
+}
+
 func TestProtocolAttackDefaultRisk(t *testing.T) {
 	type testCase struct {
 		value string
@@ -106,24 +131,24 @@ func BenchmarkMatchLdapRagel_test(b *testing.B) {
 }
 
 func BenchmarkMatchLdapRegex_test(b *testing.B) {
-	testCases := []string{
-		"(%26(objectCategory=computer)  (userAccountControl:1.2.840.113556.1.4.803:=8192))",
-		"(objectSID=S-1-5-21-73586283-152049171-839522115-1111)",
-		"(userAccountControl:1.2.840.113556.1.4.803:=67108864)(%26(objectCategory=group)(groupType:1.2.840.113556.1.4.803:=2147483648))",
-		"bar)(%26)",
-		"printer)(uid=*)",
-		"void)(objectClass=users))(%26(objectClass=void)",
-		"eb9adbd87d)!(sn=*",
-		"*)!(sn=*",
-		"*)(uid=*))(|(uid=*",
-		"aaa*aaa)(cn>=bob)",
-	}
+	//testCases := []string{
+	//	"(%26(objectCategory=computer)  (userAccountControl:1.2.840.113556.1.4.803:=8192))",
+	//	"(objectSID=S-1-5-21-73586283-152049171-839522115-1111)",
+	//	"(userAccountControl:1.2.840.113556.1.4.803:=67108864)(%26(objectCategory=group)(groupType:1.2.840.113556.1.4.803:=2147483648))",
+	//	"bar)(%26)",
+	//	"printer)(uid=*)",
+	//	"void)(objectClass=users))(%26(objectClass=void)",
+	//	"eb9adbd87d)!(sn=*",
+	//	"*)!(sn=*",
+	//	"*)(uid=*))(|(uid=*",
+	//	"aaa*aaa)(cn>=bob)",
+	//}
 
-	for i := 0; i < b.N; i++ {
-		for _, testCase := range testCases {
-			re921200.MatchString(testCase)
-		}
-	}
+	//for i := 0; i < b.N; i++ {
+	//	for _, testCase := range testCases {
+	//		re921200.MatchString(testCase)
+	//	}
+	//}
 }
 
 //
