@@ -17,42 +17,65 @@ func (r *Rule933) Phase() int {
 	return 2
 }
 
-func (r *Rule933) Evaluate(tx *core.Transaction) int {
+func (r *Rule933) EvaluatePhase1(tx *core.Transaction) int {
+
+	if matchDefault(tx.Variables.RequestFileName) {
+		return r.block(tx)
+	}
+
 	for k, v := range tx.Variables.RequestCookies {
 		if strings.Contains(k, "__utm") {
 			continue
 		}
 
-		if r.doEvaluate(tx, k) {
-			return rule_tasks.BLOCK
+		if matchDefault(k) {
+			return r.block(tx)
 		}
 
-		if r.doEvaluate(tx, v) {
-			return rule_tasks.BLOCK
-		}
-	}
-
-	for _, argMap := range tx.Variables.Args {
-		for k, v := range *argMap {
-			if r.doEvaluate(tx, k) {
-				return rule_tasks.BLOCK
-			}
-
-			if r.doEvaluate(tx, v) {
-				return rule_tasks.BLOCK
-			}
+		if matchDefault(v) {
+			return r.block(tx)
 		}
 	}
 
-	for _, v := range tx.Variables.XML["/*"] {
-		if r.doEvaluate(tx, v) {
-			return rule_tasks.BLOCK
+	for k, v := range tx.Variables.ArgsGet {
+
+		if matchDefault(k) {
+			return r.block(tx)
+		}
+
+		if matchDefault(v) {
+			return r.block(tx)
 		}
 	}
 
 	return rule_tasks.PASS
 }
 
-func (r *Rule933) doEvaluate(tx *core.Transaction, value string) bool {
-	return false
+func (r *Rule933) Evaluate(tx *core.Transaction) int {
+
+	for k, v := range tx.Variables.ArgsPost {
+
+		if matchDefault(k) {
+			return r.block(tx)
+		}
+
+		if matchDefault(v) {
+			return r.block(tx)
+		}
+	}
+
+	for _, v := range tx.Variables.XML["/*"] {
+		if matchDefault(v) {
+			return r.block(tx)
+		}
+	}
+
+	return rule_tasks.PASS
+}
+
+func (r *Rule933) block(tx *core.Transaction) int {
+	tx.Variables.PhpInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
+	tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+
+	return rule_tasks.BLOCK
 }

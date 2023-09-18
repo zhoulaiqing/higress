@@ -23,6 +23,10 @@ func TestMatchDefault(t *testing.T) {
 		"case933160-19": {`strREV%28%24x%29`, true},
 
 		"case933170-1": {`O%3A8%3A%22stdClass%22%3A0%3A%7B%7D`, true},
+
+		"case933190-1": {`%24a%281%29`, true},
+
+		"case933200-1": {`phar://phpinfo.zip/phpinfo.txt`, true},
 	}
 
 	for key, v := range testGroup { //遍历

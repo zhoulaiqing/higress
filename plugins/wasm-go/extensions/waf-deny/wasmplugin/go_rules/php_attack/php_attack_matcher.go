@@ -1,6 +1,9 @@
 package php_attack
 
-import "strings"
+import (
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"strings"
+)
 
 func matchDefault(value string) bool {
 
@@ -15,8 +18,11 @@ func matchDefault(value string) bool {
 	if matchPhpFunctions(data) {
 		return true
 	}
-
 	if matchPhpVariableFunction(data) {
+		return true
+	}
+
+	if matchPhpWrapper([]byte(transformForWrapper(value))) {
 		return true
 	}
 
@@ -32,4 +38,13 @@ func matchFile(value string) bool {
 	}
 
 	return false
+}
+
+func transformForWrapper(value string) string {
+	v, _, _ := core.Utf8ToUnicode(value)
+	v, _, _ = core.UrlDecodeUni(v)
+	v, _, _ = core.RemoveNulls(v)
+	v, _, _ = core.CmdLine(v)
+
+	return v
 }

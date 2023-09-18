@@ -18,6 +18,10 @@ func (r *Rule934) Phase() int {
 }
 
 func (r *Rule934) EvaluatePhase1(tx *core.Transaction) int {
+	if matchDefault(tx.Variables.RequestFileName) {
+		return r.block(tx)
+	}
+
 	for k, v := range tx.Variables.RequestCookies {
 		if strings.Contains(k, "__utm") {
 			continue
@@ -63,10 +67,6 @@ func (r *Rule934) Evaluate(tx *core.Transaction) int {
 		if matchDefault(v) {
 			return r.block(tx)
 		}
-	}
-
-	if matchDefault(tx.Variables.RequestFileName) {
-		return r.block(tx)
 	}
 
 	return rule_tasks.PASS

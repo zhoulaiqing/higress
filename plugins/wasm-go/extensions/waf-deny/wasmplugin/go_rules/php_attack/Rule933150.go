@@ -9,11 +9,14 @@ import (
 // 933120 933130 933150
 
 type Rule933150 struct {
-	*Rule933
 }
 
 func (r *Rule933150) Id() string {
 	return "933150"
+}
+
+func (r *Rule933150) Phase() int {
+	return 2
 }
 
 func (r *Rule933150) Evaluate(tx *core.Transaction) int {

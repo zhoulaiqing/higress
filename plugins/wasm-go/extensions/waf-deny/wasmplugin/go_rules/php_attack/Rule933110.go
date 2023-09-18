@@ -45,7 +45,7 @@ func (r *Rule933110) Evaluate(tx *core.Transaction) int {
 
 func (r *Rule933110) doEvaluate(tx *core.Transaction, value string) bool {
 
-	m := rule_tasks.Re933110.MatchString(strings.ToLower(value))
+	m := matchFile(value)
 	if m {
 		tx.Variables.PhpInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE

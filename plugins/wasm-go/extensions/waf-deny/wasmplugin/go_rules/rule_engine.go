@@ -14,6 +14,7 @@ import (
 
 var Rule941 = &xss.Rule941{}
 var Rule921 = &protocol_attack.Rule921{}
+var Rule933 = &php_attack.Rule933{}
 var Rule934 = &generic_attack.Rule934{}
 
 var (
@@ -34,9 +35,8 @@ var (
 		&rule_932.Rule932140{}, &rule_932.Rule932170{}, &rule_932.Rule932171{}, &rule_932.Rule932175{},
 		&rule_932.Rule932180{}, &rule_932.Rule932230{}, &rule_932.Rule932235{}, &rule_932.Rule932250{}, &rule_932.Rule932260{},
 		&rule_932.Rule932330{}, &rule_932.Rule932370{},
-		&php_attack.Rule933100{}, &php_attack.Rule933110{}, &php_attack.Rule933140{},
-		&php_attack.Rule933150{}, &php_attack.Rule933160{}, &php_attack.Rule933170{}, &php_attack.Rule933180{}, &php_attack.Rule933200{},
-		&php_attack.Rule933210{},
+		Rule933, &php_attack.Rule933110{},
+		&php_attack.Rule933150{},
 		Rule934,
 		&xss.Rule941010{}, Rule941,
 		&sqli.Rule942100{},

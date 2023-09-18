@@ -24,6 +24,12 @@ func (r *Rule941) Evaluate(tx *core.Transaction) int {
 }
 
 func (r *Rule941) EvaluatePhase1(tx *core.Transaction) int {
+	if !tx.Variables.Skip941ForFileName {
+		if r.matchValue(tx.Variables.RequestFileName, false) {
+			return r.block(tx)
+		}
+	}
+
 	_, ok := tx.Variables.RequestHeaders["cookie"]
 	if ok {
 		for k, v := range tx.Variables.RequestCookies {
@@ -86,12 +92,6 @@ func (r *Rule941) evaluateAll(tx *core.Transaction) int {
 	for _, v := range tx.Variables.XML["/*"] {
 
 		if r.matchValue(v, false) {
-			return r.block(tx)
-		}
-	}
-
-	if !tx.Variables.Skip941ForFileName {
-		if r.matchValue(tx.Variables.RequestFileName, false) {
 			return r.block(tx)
 		}
 	}
