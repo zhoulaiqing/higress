@@ -94,7 +94,7 @@ func (r *Rule921) checkContentType(contentType string) bool {
 		return true
 	}
 
-	if strings.ContainsAny(contentType[:index], "\\t\\r\\n\\f,;") {
+	if strings.ContainsAny(contentType[:index], "\t\r\n\f,;") {
 		return false
 	}
 
