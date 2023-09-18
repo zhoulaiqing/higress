@@ -16,6 +16,10 @@ func matchDefault(value string) bool {
 		return true
 	}
 
+	if matchPhpVariableFunction(data) {
+		return true
+	}
+
 	return false
 }
 
