@@ -60,6 +60,7 @@ func (r *Rule933150) Evaluate(tx *core.Transaction) int {
 func (r *Rule933150) doEvaluateDefault(tx *core.Transaction, value string) bool {
 	v, _, _ := core.NormalisePath(value)
 	v, _, _ = core.UrlDecodeUni(v)
+	v, _, _ = core.RemoveWhitespace(v)
 
 	m, _ := core.PmEvaluate(rule_tasks.Rule933Matcher, v, false)
 	if !m {
