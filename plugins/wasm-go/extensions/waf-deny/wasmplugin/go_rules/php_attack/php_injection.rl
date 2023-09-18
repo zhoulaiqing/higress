@@ -17,10 +17,6 @@ func matchPhpInjection(data []byte) bool {
         io = 'std' ('in' |'out'|'err') | ('in'|'out') 'put' | 'fd' | 'memory' | 'temp'| 'filter';
         phpIO = 'php://' io;
 
-        ssh2 = 'ssh2' ('.' ('shell' | 'sftp' | 'scp' | 'exec' | 'tunnel'))?;
-        wrapper = 'bzip2' | 'expect' | 'glob' | 'ogg' | 'phar' |'rar' | ssh2 | 'zip' | 'zlib';
-        phpWrapper = wrapper '://';
-
         objectInjection = ('o' | 'c') ':' digit+ ':"' (any+ -- '"') '":' digit+ ':{' (any* -- '}') '}';
 
         main := |*
@@ -30,10 +26,6 @@ func matchPhpInjection(data []byte) bool {
             };
 
             phpIO => {
-                return true
-            };
-
-            phpWrapper => {
                 return true
             };
 
