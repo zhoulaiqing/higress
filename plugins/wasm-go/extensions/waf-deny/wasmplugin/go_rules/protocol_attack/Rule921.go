@@ -68,13 +68,10 @@ func (r *Rule921) EvaluatePhase1(tx *core.Transaction) int {
 		}
 	}
 
-	for _, argMap := range tx.Variables.Args {
-		for _, v := range *argMap {
-
-			proxywasm.LogInfof("arg value: %s", v)
-			if matchArgGet(transformDefault(v)) {
-				return r.block(tx)
-			}
+	for _, v := range tx.Variables.ArgsGet {
+		proxywasm.LogInfof("arg value: %s", v)
+		if matchArgGet(transformDefault(v)) {
+			return r.block(tx)
 		}
 	}
 

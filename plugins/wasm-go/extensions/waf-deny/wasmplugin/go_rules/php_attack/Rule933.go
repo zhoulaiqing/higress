@@ -19,7 +19,7 @@ func (r *Rule933) Phase() int {
 
 func (r *Rule933) EvaluatePhase1(tx *core.Transaction) int {
 
-	if matchDefault(tx.Variables.RequestFileName) {
+	if matchRequestFileName(tx.Variables.RequestFileName) {
 		return r.block(tx)
 	}
 

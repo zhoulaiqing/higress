@@ -23,13 +23,36 @@ func matchPhpVariableFunction(data []byte) bool {
         comments = comment1 | comment2;
 
         misc = space | attr | body | comments;
+        roundBracketContent = '(' (any+ -- ')') ')';
+        mayEmptyRoundBracketContent = '(' (any* -- ')') ')';
 
-        funcParam = '(' (any+ -- ')') ')';
+        funcHead = varStart (iden | expr) misc* roundBracketContent;
 
-        funcHead = varStart (iden | expr) misc* funcParam;
+        quotes = '"' | "'";
+        quoteContent = quotes (alnum | '_')+ quotes;
+
+        riskFun1 = roundBracketContent roundBracketContent;
+        riskFun2 = roundBracketContent quoteContent roundBracketContent;
+        riskFun3 = '[' digit+ ']' roundBracketContent;
+        riskFun4 = '{' digit+ '}' roundBracketContent;
+
+        temp = '(' | ')' | ',' | '.' | ';' | '/' | '\\';
+        riskFun5 = '$' ^temp+ roundBracketContent;
+        quoteContentExt = quotes (alnum | '_' | '\\')+ quotes;
+        riskFun6 = quoteContentExt roundBracketContent;
+
+        stringBracketed = '(' (any* -- ')') 'string' (any* -- ')') ')';
+        temp2 = alnum | quotes | '.' | '{' | '}' | '[' | ']' | space;
+        riskFun7 = stringBracketed temp2+ mayEmptyRoundBracketContent;
+
+        riskFuncs = riskFun1 | riskFun2 | riskFun3 | riskFun4 | riskFun5 | riskFun6 | riskFun7;
 
         main := |*
             funcHead => {
+                return true
+            };
+
+            riskFuncs => {
                 return true
             };
 

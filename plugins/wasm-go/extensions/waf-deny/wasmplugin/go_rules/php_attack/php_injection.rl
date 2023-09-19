@@ -17,8 +17,6 @@ func matchPhpInjection(data []byte) bool {
         io = 'std' ('in' |'out'|'err') | ('in'|'out') 'put' | 'fd' | 'memory' | 'temp'| 'filter';
         phpIO = 'php://' io;
 
-        objectInjection = ('o' | 'c') ':' digit+ ':"' (any+ -- '"') '":' digit+ ':{' (any* -- '}') '}';
-
         main := |*
 
             dangerTags | otherPhpTags => {
@@ -26,10 +24,6 @@ func matchPhpInjection(data []byte) bool {
             };
 
             phpIO => {
-                return true
-            };
-
-            objectInjection => {
                 return true
             };
 

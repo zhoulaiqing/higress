@@ -235,6 +235,7 @@ var riskFunctions = []string {
 }
 
 func checkFunc(name string) bool {
+    fmt.Printf("Check php func name %s \n", name)
     return slices.Contains(riskFunctions, name)
 }
 
@@ -256,7 +257,6 @@ func matchPhpFunctions(data []byte) bool {
         }
 
         action setFuncName {
-            fmt.Printf("php func name: %s \n", string(data[pb:p]))
             funcName = string(data[pb:p])
         }
 
@@ -266,8 +266,9 @@ func matchPhpFunctions(data []byte) bool {
         comment1 = '/*' (any* -- '*/') '*/';
         comment2 = ('//'|'#') (any* -- '\n') '\n';
         comments = comment1 | comment2;
+        roundBracketContent = '(' (any* -- ')') ')';
 
-        fun = (any* -- iden) '('? quotes* iden+ >mark %setFuncName comments* ')'? quotes* space* '(' (any* -- ')') ')';
+        fun = '('? quotes* iden+ >mark %setFuncName comments* ')'? quotes* space* roundBracketContent;
 
         main := |*
             fun => {

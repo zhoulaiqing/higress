@@ -14,15 +14,40 @@ func matchDefault(value string) bool {
 	if matchPhpInjection(data) {
 		return true
 	}
-
 	if matchPhpFunctions(data) {
 		return true
 	}
 	if matchPhpVariableFunction(data) {
 		return true
 	}
-
+	if matchPhpObjectInjection(data) {
+		return true
+	}
 	if matchPhpWrapper([]byte(transformForWrapper(value))) {
+		return true
+	}
+
+	return false
+}
+
+func matchHeader(value string) bool {
+	lowerV := strings.ToLower(value)
+	data := []byte(lowerV)
+
+	if matchPhpObjectInjection(data) {
+		return true
+	}
+
+	return false
+}
+
+func matchRequestFileName(value string) bool {
+	lowerV := strings.ToLower(value)
+	data := []byte(lowerV)
+	if matchPhpFunctions(data) {
+		return true
+	}
+	if matchPhpVariableFunction(data) {
 		return true
 	}
 

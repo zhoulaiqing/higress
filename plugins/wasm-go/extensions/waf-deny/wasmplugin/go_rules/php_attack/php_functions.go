@@ -237,14 +237,15 @@ var riskFunctions = []string {
 }
 
 func checkFunc(name string) bool {
+    fmt.Printf("Check php func name %s \n", name)
     return slices.Contains(riskFunctions, name)
 }
 
 func matchPhpFunctions(data []byte) bool {
 
-//line php_functions.rl:243
+//line php_functions.rl:244
 
-//line php_functions.go:248
+//line php_functions.go:249
 const phpFunctions_start int = 10
 const phpFunctions_first_final int = 10
 const phpFunctions_error int = -1
@@ -252,7 +253,7 @@ const phpFunctions_error int = -1
 const phpFunctions_en_main int = 10
 
 
-//line php_functions.rl:244
+//line php_functions.rl:245
     cs, p, pe, eof := 0, 0, len(data), len(data)
 
     var ts, te, act int
@@ -262,7 +263,7 @@ const phpFunctions_en_main int = 10
     var funcName string
 
     
-//line php_functions.go:266
+//line php_functions.go:267
 	{
 	cs = phpFunctions_start
 	ts = 0
@@ -270,7 +271,7 @@ const phpFunctions_en_main int = 10
 	act = 0
 	}
 
-//line php_functions.go:274
+//line php_functions.go:275
 	{
 	if p == pe {
 		goto _test_eof
@@ -305,12 +306,12 @@ const phpFunctions_en_main int = 10
 	}
 	goto st_out
 tr0:
-//line php_functions.rl:279
+//line php_functions.rl:280
 p = (te) - 1
 
 	goto st10
 tr11:
-//line php_functions.rl:273
+//line php_functions.rl:274
 te = p+1
 {
                 if checkFunc(funcName) {
@@ -318,8 +319,13 @@ te = p+1
                 }
             }
 	goto st10
-tr20:
-//line php_functions.rl:279
+tr18:
+//line php_functions.rl:280
+te = p+1
+
+	goto st10
+tr21:
+//line php_functions.rl:280
 te = p
 p--
 
@@ -335,15 +341,23 @@ ts = 0
 //line NONE:1
 ts = p
 
-//line php_functions.go:339
-		if data[p] == 95 {
+//line php_functions.go:345
+		switch data[p] {
+		case 34:
 			goto tr19
+		case 95:
+			goto tr20
 		}
-		if 97 <= data[p] && data[p] <= 122 {
+		switch {
+		case data[p] > 40:
+			if 97 <= data[p] && data[p] <= 122 {
+				goto tr20
+			}
+		case data[p] >= 39:
 			goto tr19
 		}
 		goto tr18
-tr18:
+tr19:
 //line NONE:1
 te = p+1
 
@@ -353,28 +367,38 @@ te = p+1
 			goto _test_eof11
 		}
 	st_case_11:
-//line php_functions.go:357
-		if data[p] == 95 {
+//line php_functions.go:371
+		switch data[p] {
+		case 34:
+			goto st0
+		case 39:
+			goto st0
+		case 95:
 			goto tr2
 		}
 		if 97 <= data[p] && data[p] <= 122 {
 			goto tr2
 		}
-		goto st0
+		goto tr21
 	st0:
 		if p++; p == pe {
 			goto _test_eof0
 		}
 	st_case_0:
-		if data[p] == 95 {
+		switch data[p] {
+		case 34:
+			goto st0
+		case 39:
+			goto st0
+		case 95:
 			goto tr2
 		}
 		if 97 <= data[p] && data[p] <= 122 {
 			goto tr2
 		}
-		goto st0
+		goto tr0
 tr2:
-//line php_functions.rl:254
+//line php_functions.rl:255
 
             pb = p
         
@@ -384,7 +408,7 @@ tr2:
 			goto _test_eof1
 		}
 	st_case_1:
-//line php_functions.go:388
+//line php_functions.go:412
 		switch data[p] {
 		case 32:
 			goto tr3
@@ -413,9 +437,8 @@ tr2:
 		}
 		goto tr0
 tr3:
-//line php_functions.rl:258
+//line php_functions.rl:259
 
-            fmt.Printf("php func name: %s \n", string(data[pb:p]))
             funcName = string(data[pb:p])
         
 	goto st2
@@ -424,7 +447,7 @@ tr3:
 			goto _test_eof2
 		}
 	st_case_2:
-//line php_functions.go:428
+//line php_functions.go:451
 		switch data[p] {
 		case 32:
 			goto st2
@@ -436,9 +459,8 @@ tr3:
 		}
 		goto tr0
 tr6:
-//line php_functions.rl:258
+//line php_functions.rl:259
 
-            fmt.Printf("php func name: %s \n", string(data[pb:p]))
             funcName = string(data[pb:p])
         
 	goto st3
@@ -447,15 +469,14 @@ tr6:
 			goto _test_eof3
 		}
 	st_case_3:
-//line php_functions.go:451
+//line php_functions.go:473
 		if data[p] == 41 {
 			goto tr11
 		}
 		goto st3
 tr4:
-//line php_functions.rl:258
+//line php_functions.rl:259
 
-            fmt.Printf("php func name: %s \n", string(data[pb:p]))
             funcName = string(data[pb:p])
         
 	goto st4
@@ -464,7 +485,7 @@ tr4:
 			goto _test_eof4
 		}
 	st_case_4:
-//line php_functions.go:468
+//line php_functions.go:489
 		switch data[p] {
 		case 32:
 			goto st2
@@ -480,9 +501,8 @@ tr4:
 		}
 		goto tr0
 tr5:
-//line php_functions.rl:258
+//line php_functions.rl:259
 
-            fmt.Printf("php func name: %s \n", string(data[pb:p]))
             funcName = string(data[pb:p])
         
 	goto st5
@@ -491,7 +511,7 @@ tr5:
 			goto _test_eof5
 		}
 	st_case_5:
-//line php_functions.go:495
+//line php_functions.go:515
 		if data[p] == 10 {
 			goto st6
 		}
@@ -523,9 +543,8 @@ tr5:
 		}
 		goto tr0
 tr7:
-//line php_functions.rl:258
+//line php_functions.rl:259
 
-            fmt.Printf("php func name: %s \n", string(data[pb:p]))
             funcName = string(data[pb:p])
         
 	goto st7
@@ -534,7 +553,7 @@ tr7:
 			goto _test_eof7
 		}
 	st_case_7:
-//line php_functions.go:538
+//line php_functions.go:557
 		switch data[p] {
 		case 42:
 			goto st8
@@ -563,11 +582,11 @@ tr7:
 			goto st6
 		}
 		goto st8
-tr19:
+tr20:
 //line NONE:1
 te = p+1
 
-//line php_functions.rl:254
+//line php_functions.rl:255
 
             pb = p
         
@@ -577,7 +596,7 @@ te = p+1
 			goto _test_eof12
 		}
 	st_case_12:
-//line php_functions.go:581
+//line php_functions.go:600
 		switch data[p] {
 		case 32:
 			goto tr3
@@ -604,7 +623,7 @@ te = p+1
 		default:
 			goto tr4
 		}
-		goto tr20
+		goto tr21
 	st_out:
 	_test_eof10: cs = 10; goto _test_eof
 	_test_eof11: cs = 11; goto _test_eof
@@ -624,7 +643,7 @@ te = p+1
 	if p == eof {
 		switch cs {
 		case 11:
-			goto tr20
+			goto tr21
 		case 0:
 			goto tr0
 		case 1:
@@ -646,13 +665,13 @@ te = p+1
 		case 9:
 			goto tr0
 		case 12:
-			goto tr20
+			goto tr21
 		}
 	}
 
 	}
 
-//line php_functions.rl:284
+//line php_functions.rl:285
 
         return false
 }

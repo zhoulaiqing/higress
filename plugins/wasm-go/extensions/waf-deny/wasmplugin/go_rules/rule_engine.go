@@ -6,8 +6,6 @@ import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/php_attack"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/protocol_attack"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_932"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_943"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_944"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/sqli"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/xss"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
@@ -42,9 +40,9 @@ var (
 		Rule934,
 		&xss.Rule941010{}, Rule941,
 		&sqli.Rule942100{},
-		&rule_943.Rule943100{}, &rule_943.Rule943110_120{},
-		&rule_944.Rule944100{}, &rule_944.Rule944110{}, &rule_944.Rule944120{}, &rule_944.Rule944130{}, &rule_944.Rule944140{},
-		&rule_944.Rule944150{},
+		//&rule_943.Rule943100{}, &rule_943.Rule943110_120{},
+		//&rule_944.Rule944100{}, &rule_944.Rule944110{}, &rule_944.Rule944120{}, &rule_944.Rule944130{}, &rule_944.Rule944140{},
+		//&rule_944.Rule944150{},
 		&RuleFinal{},
 	}
 )
@@ -76,7 +74,12 @@ func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
 	}
 
 	if phase == 1 {
-		r := Rule921.EvaluatePhase1(tx)
+		r := Rule941.EvaluatePhase1(tx)
+		if !checkBlock(tx, r, Rule941) {
+			return false
+		}
+
+		r = Rule921.EvaluatePhase1(tx)
 		if !checkBlock(tx, r, Rule921) {
 			return false
 		}
@@ -91,10 +94,6 @@ func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
 			return false
 		}
 
-		r = Rule941.EvaluatePhase1(tx)
-		if !checkBlock(tx, r, Rule941) {
-			return false
-		}
 	}
 
 	return true
