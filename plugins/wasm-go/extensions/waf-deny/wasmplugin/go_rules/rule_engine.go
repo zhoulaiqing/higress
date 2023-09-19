@@ -16,6 +16,7 @@ var Rule941 = &xss.Rule941{}
 var Rule921 = &protocol_attack.Rule921{}
 var Rule933 = &php_attack.Rule933{}
 var Rule934 = &generic_attack.Rule934{}
+var Rule932 = &rce_attack.Rule932{}
 
 var (
 	RULES = []Rule{
@@ -31,10 +32,7 @@ var (
 		&Rule922100{}, &Rule922110_120{},
 		&Rule930100{}, &Rule930110{}, &Rule930120{}, &Rule930130{},
 		&Rule931100{}, &Rule931110{}, &Rule931120{},
-		&rce_attack.Rule932230{}, &rce_attack.Rule932115{}, &rce_attack.Rule932125{}, &rce_attack.Rule932130{},
-		&rce_attack.Rule932140{}, &rce_attack.Rule932170{}, &rce_attack.Rule932171{}, &rce_attack.Rule932175{},
-		&rce_attack.Rule932180{}, &rce_attack.Rule932230{}, &rce_attack.Rule932235{}, &rce_attack.Rule932250{}, &rce_attack.Rule932260{},
-		&rce_attack.Rule932330{}, &rce_attack.Rule932370{},
+		Rule932, &rce_attack.Rule932170{}, &rce_attack.Rule932171{},
 		Rule933, &php_attack.Rule933110{}, &php_attack.Rule933150{},
 		Rule934,
 		&xss.Rule941010{}, Rule941,
@@ -89,6 +87,11 @@ func ProcessRulesByPhase(tx *core.Transaction, phase int) bool {
 		}
 
 		r = Rule934.EvaluatePhase1(tx)
+		if !checkBlock(tx, r, Rule934) {
+			return false
+		}
+
+		r = Rule932.EvaluatePhase1(tx)
 		if !checkBlock(tx, r, Rule934) {
 			return false
 		}
