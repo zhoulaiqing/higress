@@ -23,6 +23,12 @@ func (r *Rule933) EvaluatePhase1(tx *core.Transaction) int {
 		return r.block(tx)
 	}
 
+	for _, v := range tx.Variables.RequestHeaders {
+		if matchHeader(v) {
+			return r.block(tx)
+		}
+	}
+
 	for k, v := range tx.Variables.RequestCookies {
 		if strings.Contains(k, "__utm") {
 			continue

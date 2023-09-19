@@ -7,7 +7,7 @@ import (
 
 func matchDefault(value string) bool {
 
-	lowerV := strings.ToLower(value)
+	lowerV := transformDefault(value)
 
 	data := []byte(lowerV)
 
@@ -31,7 +31,7 @@ func matchDefault(value string) bool {
 }
 
 func matchHeader(value string) bool {
-	lowerV := strings.ToLower(value)
+	lowerV := transformDefault(value)
 	data := []byte(lowerV)
 
 	if matchPhpObjectInjection(data) {
@@ -42,7 +42,7 @@ func matchHeader(value string) bool {
 }
 
 func matchRequestFileName(value string) bool {
-	lowerV := strings.ToLower(value)
+	lowerV := transformDefault(value)
 	data := []byte(lowerV)
 	if matchPhpFunctions(data) {
 		return true
@@ -55,7 +55,7 @@ func matchRequestFileName(value string) bool {
 }
 
 func matchFile(value string) bool {
-	lowerV := strings.ToLower(value)
+	lowerV := transformDefault(value)
 	data := []byte(lowerV)
 
 	if matchPhpScriptUploads(data) {
@@ -63,6 +63,11 @@ func matchFile(value string) bool {
 	}
 
 	return false
+}
+
+func transformDefault(value string) string {
+	v, _, _ := core.UrlDecodeUni(value)
+	return strings.ToLower(v)
 }
 
 func transformForWrapper(value string) string {
