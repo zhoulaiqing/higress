@@ -19,7 +19,7 @@ func doCMDLineRce(input string, pos int) string {
 	for i := pos; i < len(input); i++ {
 		a := input[i]
 		switch a {
-		case '"', '\'', '\\', '^':
+		case '\\', '^':
 			/* remove some characters */
 		case ' ', ',', '\t', '\r', '\n':
 			/* replace some characters to space (only one) */
@@ -52,7 +52,7 @@ func needsTransformRce(c byte) bool {
 		return true
 	}
 	switch c {
-	case '"', '\'', '\\', '^', ' ', ',', '\t', '\r', '\n', '/', '(':
+	case '\\', '^', ' ', ',', '\t', '\r', '\n', '/', '(':
 		return true
 	default:
 		return false
