@@ -1,4 +1,4 @@
-package rule_932
+package rce_attack
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
@@ -6,18 +6,15 @@ import (
 	"strings"
 )
 
-type Rule932 struct {
+type Rule932230 struct {
+	*Rule932
 }
 
-func (r *Rule932) Id() string {
-	return "932"
+func (r *Rule932230) Id() string {
+	return "932230"
 }
 
-func (r *Rule932) Phase() int {
-	return 2
-}
-
-func (r *Rule932) Evaluate(tx *core.Transaction) int {
+func (r *Rule932230) Evaluate(tx *core.Transaction) int {
 	for k, v := range tx.Variables.RequestCookies {
 		if strings.Contains(k, "__utm") {
 			continue
@@ -53,6 +50,19 @@ func (r *Rule932) Evaluate(tx *core.Transaction) int {
 	return rule_tasks.PASS
 }
 
-func (r *Rule932) doEvaluate(tx *core.Transaction, value string) bool {
-	return false
+func (r *Rule932230) doEvaluate(tx *core.Transaction, value string) bool {
+
+	v, _, _ := core.UrlDecode(value)
+	//v, _, _ = core.JsDecode(v)
+	//v, _, _ = core.CmdLine(v)
+
+	//fmt.Printf("Rule932230 value: %s transformed value: %s \n", value, v)
+
+	m := rule_tasks.Re932230.MatchString(v)
+	if m {
+		tx.Variables.RceScore += rule_tasks.CRITICAL_ANOMALY_SCORE
+		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
+	}
+
+	return m
 }

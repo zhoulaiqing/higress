@@ -26,6 +26,7 @@ func (r *Rule921) Evaluate(tx *core.Transaction) int {
 			return r.block(tx)
 		}
 
+		proxywasm.LogInfof("arg value: %s", v)
 		if matchDefaultRisk(v) {
 			return r.block(tx)
 		}

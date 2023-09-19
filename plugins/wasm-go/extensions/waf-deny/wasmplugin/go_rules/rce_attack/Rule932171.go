@@ -1,4 +1,4 @@
-package rule_932
+package rce_attack
 
 import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"

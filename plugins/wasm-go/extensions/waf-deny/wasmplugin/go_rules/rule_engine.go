@@ -5,7 +5,7 @@ import (
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/generic_attack"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/php_attack"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/protocol_attack"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rule_932"
+	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/rce_attack"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/sqli"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules/xss"
 	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
@@ -31,12 +31,11 @@ var (
 		&Rule922100{}, &Rule922110_120{},
 		&Rule930100{}, &Rule930110{}, &Rule930120{}, &Rule930130{},
 		&Rule931100{}, &Rule931110{}, &Rule931120{},
-		&rule_932.Rule932230{}, &rule_932.Rule932115{}, &rule_932.Rule932125{}, &rule_932.Rule932130{},
-		&rule_932.Rule932140{}, &rule_932.Rule932170{}, &rule_932.Rule932171{}, &rule_932.Rule932175{},
-		&rule_932.Rule932180{}, &rule_932.Rule932230{}, &rule_932.Rule932235{}, &rule_932.Rule932250{}, &rule_932.Rule932260{},
-		&rule_932.Rule932330{}, &rule_932.Rule932370{},
-		Rule933, &php_attack.Rule933110{},
-		&php_attack.Rule933150{},
+		&rce_attack.Rule932230{}, &rce_attack.Rule932115{}, &rce_attack.Rule932125{}, &rce_attack.Rule932130{},
+		&rce_attack.Rule932140{}, &rce_attack.Rule932170{}, &rce_attack.Rule932171{}, &rce_attack.Rule932175{},
+		&rce_attack.Rule932180{}, &rce_attack.Rule932230{}, &rce_attack.Rule932235{}, &rce_attack.Rule932250{}, &rce_attack.Rule932260{},
+		&rce_attack.Rule932330{}, &rce_attack.Rule932370{},
+		Rule933, &php_attack.Rule933110{}, &php_attack.Rule933150{},
 		Rule934,
 		&xss.Rule941010{}, Rule941,
 		&sqli.Rule942100{},

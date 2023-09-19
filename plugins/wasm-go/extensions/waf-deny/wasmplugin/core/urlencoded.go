@@ -24,10 +24,12 @@ func (*urlencodedBodyProcessor) ProcessRequest(reader io.Reader, tx *Transaction
 		}
 
 		for _, v := range vals {
+			//fmt.Printf("Arg post key: %s, value: %s \n", k, v)
 			tx.Variables.ArgsPost[k] = v
 		}
 	}
 
+	//fmt.Printf("Request body: %s \n", b)
 	tx.Variables.RequestBody = b
 
 	return nil
