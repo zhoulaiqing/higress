@@ -68,12 +68,13 @@ func (r *Rule932) Evaluate(tx *core.Transaction) int {
 
 func (r *Rule932) doEvaluate(tx *core.Transaction, value string) bool {
 
-	if matchDefault(value) {
+	v, _, _ := core.UrlDecode(value)
+	if rule_tasks.Re932230.MatchString(v) {
 		return true
 	}
-	//if rule_tasks.Re932235.MatchString(v) {
-	//	return true
-	//}
+	if rule_tasks.Re932235.MatchString(v) {
+		return true
+	}
 	//if rule_tasks.Re932115.MatchString(v) {
 	//	return true
 	//}

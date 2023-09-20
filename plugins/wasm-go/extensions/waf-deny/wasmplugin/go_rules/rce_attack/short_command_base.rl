@@ -64,7 +64,8 @@ func matchShortCommandBase(data []byte) bool {
 
         path = ('?' | '*' | '[' | ']' |'(' | ')' |'-' | '+' | word+ | '.' | '/' )? '/';
 
-        cmdLiteral = word | ';' ;
+        quotes = '"' | "'"
+        cmdLiteral = word | qutoes | '\\' | '^' ;
 
         command = escape space* cmdPrefix* space* path** cmdLiteral{2,} >mark %setName;
 
