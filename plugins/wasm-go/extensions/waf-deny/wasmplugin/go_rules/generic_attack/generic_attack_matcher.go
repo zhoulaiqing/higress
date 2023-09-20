@@ -2,8 +2,8 @@ package generic_attack
 
 import (
 	"bytes"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	"strings"
 )
 
@@ -54,7 +54,6 @@ func matchDefault(value string) bool {
 
 func transformDefault(value string) string {
 	v := value
-	v, _, _ = core.UrlDecodeUni(v)
 	v, _, _ = core.JsDecode(v)
 
 	return v

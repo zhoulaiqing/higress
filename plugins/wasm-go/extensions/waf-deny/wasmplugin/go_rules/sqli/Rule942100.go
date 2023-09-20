@@ -1,8 +1,8 @@
 package sqli
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	libinjection2 "github.com/wasilibs/go-libinjection"
 )
 
@@ -31,23 +31,7 @@ func (r *Rule942100) doEvaluate(tx *core.Transaction, value *string) bool {
 		return true
 	}
 
-	v, _, _ := core.Utf8ToUnicode(*value)
-	m, _ = libinjection2.IsSQLi(v)
-	if m {
-		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
-		tx.Variables.SqlInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
-		return true
-	}
-
-	v, _, _ = core.UrlDecodeUni(v)
-	m, _ = libinjection2.IsSQLi(v)
-	if m {
-		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
-		tx.Variables.SqlInjectionScore += rule_tasks.CRITICAL_ANOMALY_SCORE
-		return true
-	}
-
-	v, _, _ = core.RemoveNulls(v)
+	v, _, _ := core.RemoveNulls(*value)
 	m, _ = libinjection2.IsSQLi(v)
 	if m {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE

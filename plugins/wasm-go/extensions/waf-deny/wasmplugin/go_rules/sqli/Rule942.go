@@ -1,8 +1,8 @@
 package sqli
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	"strings"
 )
 
@@ -227,7 +227,5 @@ func (r *Rule942) doEvaluate(tx *core.Transaction, value *string) bool {
 }
 
 func (r *Rule942) transform(value *string) string {
-	v, _, _ := core.UrlDecodeUni(*value)
-
-	return v
+	return *value
 }

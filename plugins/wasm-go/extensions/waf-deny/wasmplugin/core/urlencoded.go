@@ -1,7 +1,7 @@
 package core
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/url_util"
+	"github.com/tianchi/waf/wasmplugin/core/url_util"
 	"io"
 	"strings"
 )
@@ -25,12 +25,16 @@ func (*urlencodedBodyProcessor) ProcessRequest(reader io.Reader, tx *Transaction
 
 		for _, v := range vals {
 			//fmt.Printf("Arg post key: %s, value: %s \n", k, v)
-			tx.Variables.ArgsPost[k] = v
+			tv, _, _ := Utf8ToUnicode(v)
+			tv, _, _ = UrlDecodeUni(tv)
+			tx.Variables.ArgsPost[k] = tv
 		}
 	}
 
 	//fmt.Printf("Request body: %s \n", b)
-	tx.Variables.RequestBody = b
+	tv, _, _ := Utf8ToUnicode(b)
+	tv, _, _ = UrlDecodeUni(tv)
+	tx.Variables.RequestBody = tv
 
 	return nil
 }

@@ -1,8 +1,8 @@
 package rule_920
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 )
 
@@ -23,7 +23,7 @@ func (r *Rule920500) Phase() int {
 
 func (r *Rule920500) Evaluate(tx *core.Transaction) int {
 
-	fileName, _, _ := core.UrlDecodeUni(tx.Variables.RequestFileName)
+	fileName := tx.Variables.RequestFileName
 
 	if m := re920500.MatchString(fileName); m {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE

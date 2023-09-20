@@ -1,9 +1,9 @@
 package protocol_attack
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 	"strings"
 )

@@ -3,8 +3,8 @@ package core
 import (
 	"errors"
 	"fmt"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core/url_util"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
+	"github.com/tianchi/waf/wasmplugin/core/url_util"
 	"github.com/wasilibs/go-re2"
 	"io"
 	"math"
@@ -111,7 +111,7 @@ func (tx *Transaction) AddRequestHeader(key string, value string) error {
 	}
 
 	keyl := strings.ToLower(key)
-	tx.Variables.RequestHeaders[keyl] = value
+	tx.Variables.RequestHeaders[keyl] = transformDefault(value)
 
 	switch keyl {
 	case "content-type":
@@ -130,7 +130,8 @@ func (tx *Transaction) AddRequestHeader(key string, value string) error {
 		for k, vr := range values {
 			for _, v := range vr {
 				proxywasm.LogInfof("Add cookie, header key: %s, value: %s", k, v)
-				tx.Variables.RequestCookies[k] = v
+
+				tx.Variables.RequestCookies[k] = transformDefault(v)
 			}
 		}
 	}
@@ -161,7 +162,9 @@ func (tx *Transaction) AddGetRequestArgument(key string, value string) error {
 		return ErrorIllegalCRLF
 	}
 
-	tx.Variables.ArgsGet[key] = value
+	v, _, _ := Utf8ToUnicode(value)
+	v, _, _ = UrlDecodeUni(v)
+	tx.Variables.ArgsGet[key] = v
 	return nil
 }
 
@@ -173,7 +176,9 @@ func (tx *Transaction) checkArgumentLimit() bool {
 func (tx *Transaction) ProcessURI(uri string, method string, httpVersion string) error {
 	tx.Variables.RequestMethod = method
 	tx.Variables.RequestProtocol = httpVersion
-	tx.Variables.RequestUriRaw = uri
+
+	turi := transformDefault(uri)
+	tx.Variables.RequestUriRaw = turi
 	tx.Variables.RequestLine = fmt.Sprintf("%s %s %s", method, uri, httpVersion)
 
 	var err error
@@ -187,13 +192,14 @@ func (tx *Transaction) ProcessURI(uri string, method string, httpVersion string)
 
 	if err != nil {
 		path = uri
-		tx.Variables.RequestUri = uri
+		tx.Variables.RequestUri = turi
 	} else {
 		err = tx.ExtractGetArguments(parsedURL.RawQuery)
 		if err == ErrorIllegalCRLF {
 			return err
 		}
-		tx.Variables.RequestUri = parsedURL.String()
+
+		tx.Variables.RequestUri = transformDefault(parsedURL.String())
 		path = parsedURL.Path
 		query = parsedURL.RawQuery
 	}
@@ -204,14 +210,21 @@ func (tx *Transaction) ProcessURI(uri string, method string, httpVersion string)
 
 	offset := strings.LastIndexAny(path, "/\\")
 	if offset >= 0 && len(path) > offset+1 {
-		tx.Variables.RequestBaseName = path[offset+1:]
+		tx.Variables.RequestBaseName = transformDefault(path[offset+1:])
 	} else {
-		tx.Variables.RequestBaseName = path
+		tx.Variables.RequestBaseName = transformDefault(path)
 	}
 
-	tx.Variables.RequestFileName = path
+	tx.Variables.RequestFileName = transformDefault(path)
 	tx.Variables.QueryString = query
 	return nil
+}
+
+func transformDefault(value string) string {
+	v, _, _ := Utf8ToUnicode(value)
+	v, _, _ = UrlDecodeUni(value)
+
+	return v
 }
 
 func (tx *Transaction) ProcessConnection(client string, cPort int, server string, sPort int) {

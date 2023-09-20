@@ -1,8 +1,8 @@
 package rce_attack
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	"strings"
 )
 
@@ -72,9 +72,9 @@ func (r *Rule932) doEvaluate(tx *core.Transaction, value string) bool {
 	if rule_tasks.Re932230.MatchString(v) {
 		return true
 	}
-	if rule_tasks.Re932235.MatchString(v) {
-		return true
-	}
+	//if rule_tasks.Re932235.MatchString(v) {
+	//	return true
+	//}
 	//if rule_tasks.Re932115.MatchString(v) {
 	//	return true
 	//}

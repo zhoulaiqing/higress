@@ -1,8 +1,8 @@
 package go_rules
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
 	"github.com/stretchr/testify/assert"
+	"github.com/tianchi/waf/wasmplugin/core"
 	"testing"
 )
 

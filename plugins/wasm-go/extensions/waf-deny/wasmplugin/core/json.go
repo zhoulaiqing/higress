@@ -17,13 +17,15 @@ func (js *jsonBodyProcessor) ProcessRequest(reader io.Reader, tx *Transaction, _
 		return err
 	}
 
-	for k, _ := range data {
+	for k, v := range data {
 		if strings.ContainsAny(k, "\r\n") {
 			return ErrorIllegalCRLF
 		}
+		tv, _, _ := Utf8ToUnicode(v)
+		tv, _, _ = UrlDecodeUni(tv)
+		tx.Variables.ArgsPost[k] = tv
 	}
 
-	tx.Variables.ArgsPost = data
 	return nil
 }
 

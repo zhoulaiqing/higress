@@ -1,7 +1,7 @@
 package rule_tasks
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/core"
 	ahocorasick "github.com/wasilibs/go-aho-corasick"
 )
 

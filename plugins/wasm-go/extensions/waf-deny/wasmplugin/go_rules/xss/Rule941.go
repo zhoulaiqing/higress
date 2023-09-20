@@ -2,9 +2,9 @@ package xss
 
 import (
 	"fmt"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	"strings"
 )
 
@@ -161,9 +161,6 @@ func (r *Rule941) matchValue(value string, isHeader bool) bool {
 
 func (r *Rule941) transformDefault(value string) string {
 	v := value
-
-	v, _, _ = core.Utf8ToUnicode(v)
-	v, _, _ = core.UrlDecodeUni(v)
 	v, _, _ = core.HtmlEntityDecode(v)
 	v, _, _ = core.JsDecode(v)
 	v, _, _ = core.CssDecode(v)
@@ -184,8 +181,7 @@ func (r *Rule941) transform350(value string) string {
 }
 
 func (r *Rule941) transform370And400(value string) string {
-	v, _, _ := core.UrlDecodeUni(value)
-	v, _, _ = core.CompressWhitespace(v)
+	v, _, _ := core.CompressWhitespace(value)
 
 	return v
 }

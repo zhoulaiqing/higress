@@ -1,4 +1,4 @@
-module github.com/corazawaf/coraza-proxy-wasm/magefiles
+module github.com/tianchi/waf/magefiles
 
 go 1.19
 

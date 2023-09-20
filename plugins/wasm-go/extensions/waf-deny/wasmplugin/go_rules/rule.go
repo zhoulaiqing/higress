@@ -1,6 +1,6 @@
 package go_rules
 
-import "github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+import "github.com/tianchi/waf/wasmplugin/core"
 
 type Rule interface {
 	Id() string

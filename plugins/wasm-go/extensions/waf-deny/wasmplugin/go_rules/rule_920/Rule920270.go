@@ -1,8 +1,8 @@
 package rule_920
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 )
 
 const BYTE_RANGE_920270 = "1-255"
@@ -22,21 +22,18 @@ func (r *Rule920270) Phase() int {
 
 func (r *Rule920270) Evaluate(tx *core.Transaction) int {
 
-	decodeUri, _, _ := core.UrlDecodeUni(tx.Variables.RequestUri)
-	if !validateByteRange920270.Validate(decodeUri) {
+	if !validateByteRange920270.Validate(tx.Variables.RequestUri) {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 		return rule_tasks.BLOCK
 	}
 
 	for k, v := range tx.Variables.RequestHeaders {
-		decodeK, _, _ := core.UrlDecodeUni(k)
-		if !validateByteRange920270.Validate(decodeK) {
+		if !validateByteRange920270.Validate(k) {
 			tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 			return rule_tasks.BLOCK
 		}
 
-		decodeV, _, _ := core.UrlDecodeUni(v)
-		if !validateByteRange920270.Validate(decodeV) {
+		if !validateByteRange920270.Validate(v) {
 			tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 			return rule_tasks.BLOCK
 		}
@@ -44,14 +41,12 @@ func (r *Rule920270) Evaluate(tx *core.Transaction) int {
 
 	for _, argMap := range tx.Variables.Args {
 		for k, v := range *argMap {
-			decodeK, _, _ := core.UrlDecodeUni(k)
-			if !validateByteRange920270.Validate(decodeK) {
+			if !validateByteRange920270.Validate(k) {
 				tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 				return rule_tasks.BLOCK
 			}
 
-			decodeV, _, _ := core.UrlDecodeUni(v)
-			if !validateByteRange920270.Validate(decodeV) {
+			if !validateByteRange920270.Validate(v) {
 				tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 				return rule_tasks.BLOCK
 			}

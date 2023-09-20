@@ -7,11 +7,11 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/go_rules"
 	"github.com/corazawaf/coraza/v3/debuglog"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm/types"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/go_rules"
 	"math"
 	"net"
 	"strconv"
@@ -300,7 +300,7 @@ func parsePort(b []byte) (int, error) {
 // At this phase, response headers are already sent downstream, therefore an interruption
 // can not change anymore the status code, but only tweak the response body
 func replaceResponseBodyWhenInterrupted(logger debuglog.Logger, bodySize int) types.Action {
-	// TODO(M4tteoP): Update response body interruption logic after https://github.com/corazawaf/coraza-proxy-wasm/issues/26
+	// TODO(M4tteoP): Update response body interruption logic after https://github.com/tianchi/waf/issues/26
 	// Currently returns a body filled with null bytes that replaces the sensitive data potentially leaked
 	err := proxywasm.ReplaceHttpResponseBody(bytes.Repeat([]byte("\x00"), bodySize))
 	if err != nil {

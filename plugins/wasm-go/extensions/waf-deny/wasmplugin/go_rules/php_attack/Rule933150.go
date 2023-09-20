@@ -1,8 +1,8 @@
 package php_attack
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	"strings"
 )
 
@@ -62,7 +62,6 @@ func (r *Rule933150) Evaluate(tx *core.Transaction) int {
 
 func (r *Rule933150) doEvaluateDefault(tx *core.Transaction, value string) bool {
 	v, _, _ := core.NormalisePath(value)
-	v, _, _ = core.UrlDecodeUni(v)
 	v, _, _ = core.RemoveWhitespace(v)
 
 	m, _ := core.PmEvaluate(rule_tasks.Rule933Matcher, v, false)

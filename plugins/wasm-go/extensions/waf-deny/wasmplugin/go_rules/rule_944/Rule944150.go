@@ -1,8 +1,8 @@
 package rule_944
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	"strings"
 )
 
@@ -74,9 +74,7 @@ func (r *Rule944150) Evaluate(tx *core.Transaction) int {
 }
 
 func (r *Rule944150) doEvaluate(tx *core.Transaction, value *string) bool {
-
-	v, _, _ := core.UrlDecodeUni(*value)
-	v, _, _ = core.JsDecode(v)
+	v, _, _ := core.JsDecode(*value)
 	v, _, _ = core.HtmlEntityDecode(v)
 
 	m := rule_tasks.Re944150.MatchString(v)

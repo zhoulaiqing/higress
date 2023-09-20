@@ -1,7 +1,7 @@
 package protocol_attack
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/core"
 	"strings"
 )
 

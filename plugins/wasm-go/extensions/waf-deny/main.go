@@ -6,7 +6,7 @@ package main
 import (
 	"github.com/tetratelabs/proxy-wasm-go-sdk/proxywasm"
 
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin"
+	"github.com/tianchi/waf/wasmplugin"
 )
 
 func main() {

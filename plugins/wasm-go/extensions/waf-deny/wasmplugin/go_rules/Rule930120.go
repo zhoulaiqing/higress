@@ -1,8 +1,8 @@
 package go_rules
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	ahocorasick "github.com/wasilibs/go-aho-corasick"
 	"strings"
 )
@@ -752,9 +752,7 @@ func (r *Rule930120) Evaluate(tx *core.Transaction) int {
 }
 
 func (r *Rule930120) doEvaluate(tx *core.Transaction, value string) bool {
-	v, _, _ := core.Utf8ToUnicode(value)
-	v, _, _ = core.UrlDecodeUni(v)
-	v, _, _ = core.NormalisePathWin(v)
+	v, _, _ := core.NormalisePathWin(value)
 
 	m, _ := core.PmEvaluate(rule930120Matcher, v, false)
 	if m {

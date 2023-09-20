@@ -1,6 +1,6 @@
 package rule_tasks
 
-import "github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+import "github.com/tianchi/waf/wasmplugin/core"
 
 const (
 	PASS  = 1

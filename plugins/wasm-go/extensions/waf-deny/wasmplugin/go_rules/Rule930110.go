@@ -1,8 +1,8 @@
 package go_rules
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 )
 
@@ -74,31 +74,8 @@ func (r *Rule930110) Evaluate(tx *core.Transaction) int {
 
 // 注意是 multiMatch
 func (r *Rule930110) doEvaluate(tx *core.Transaction, value string) bool {
+	v := value
 	m := re930110.MatchString(value)
-	if m {
-		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
-		tx.Variables.LfiScore += rule_tasks.CRITICAL_ANOMALY_SCORE
-		return true
-	}
-
-	v, _, _ := core.Utf8ToUnicode(value)
-	m = re930110.MatchString(v)
-	if m {
-		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
-		tx.Variables.LfiScore += rule_tasks.CRITICAL_ANOMALY_SCORE
-		return true
-	}
-
-	v, _, _ = core.UrlDecodeUni(v)
-	m = re930110.MatchString(v)
-	if m {
-		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
-		tx.Variables.LfiScore += rule_tasks.CRITICAL_ANOMALY_SCORE
-		return true
-	}
-
-	v, _, _ = core.RemoveNulls(v)
-	m = re930110.MatchString(v)
 	if m {
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.LfiScore += rule_tasks.CRITICAL_ANOMALY_SCORE

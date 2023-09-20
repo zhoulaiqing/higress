@@ -1,7 +1,7 @@
 package php_attack
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/core"
 	"strings"
 )
 
@@ -66,14 +66,11 @@ func matchFile(value string) bool {
 }
 
 func transformDefault(value string) string {
-	v, _, _ := core.UrlDecodeUni(value)
-	return strings.ToLower(v)
+	return strings.ToLower(value)
 }
 
 func transformForWrapper(value string) string {
-	v, _, _ := core.Utf8ToUnicode(value)
-	v, _, _ = core.UrlDecodeUni(v)
-	v, _, _ = core.RemoveNulls(v)
+	v, _, _ := core.RemoveNulls(value)
 	v, _, _ = core.CmdLine(v)
 
 	return v

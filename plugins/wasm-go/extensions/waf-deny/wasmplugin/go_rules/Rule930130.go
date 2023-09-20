@@ -1,8 +1,8 @@
 package go_rules
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	ahocorasick "github.com/wasilibs/go-aho-corasick"
 )
 
@@ -251,9 +251,7 @@ func (r *Rule930130) Phase() int {
 }
 
 func (r *Rule930130) Evaluate(tx *core.Transaction) int {
-	v, _, _ := core.Utf8ToUnicode(tx.Variables.RequestFileName)
-	v, _, _ = core.UrlDecodeUni(v)
-	v, _, _ = core.NormalisePathWin(v)
+	v, _, _ := core.NormalisePathWin(tx.Variables.RequestFileName)
 
 	if m, _ := core.PmEvaluate(rule930130Matcher, v, false); m {
 		tx.Variables.LfiScore += rule_tasks.CRITICAL_ANOMALY_SCORE

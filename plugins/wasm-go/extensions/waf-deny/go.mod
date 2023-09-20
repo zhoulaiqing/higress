@@ -1,4 +1,4 @@
-module github.com/corazawaf/coraza-proxy-wasm
+module github.com/tianchi/waf
 
 go 1.19
 

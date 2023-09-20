@@ -1,8 +1,8 @@
 package go_rules
 
 import (
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/core"
-	"github.com/corazawaf/coraza-proxy-wasm/wasmplugin/rule_tasks"
+	"github.com/tianchi/waf/wasmplugin/core"
+	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 	"github.com/wasilibs/go-re2"
 )
 
@@ -34,9 +34,8 @@ func (r *Rule931110) Evaluate(tx *core.Transaction) int {
 }
 
 func (r *Rule931110) doEvaluate(tx *core.Transaction, value string) bool {
-	v, _, _ := core.UrlDecodeUni(value)
 
-	m := re931110.MatchString(v)
+	m := re931110.MatchString(value)
 	if m {
 		tx.Variables.RfiScore += rule_tasks.CRITICAL_ANOMALY_SCORE
 		tx.Variables.InboundAnomalyScorePl1 += rule_tasks.CRITICAL_ANOMALY_SCORE

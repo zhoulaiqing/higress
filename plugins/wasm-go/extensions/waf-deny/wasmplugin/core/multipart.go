@@ -61,7 +61,10 @@ func (mbp *multipartBodyProcessor) ProcessRequest(reader io.Reader, tx *Transact
 				return err
 			}
 			totalSize += int64(len(data))
-			tx.Variables.ArgsPost[p.FormName()] = string(data)
+
+			v, _, _ := Utf8ToUnicode(string(data))
+			v, _, _ = UrlDecodeUni(v)
+			tx.Variables.ArgsPost[p.FormName()] = v
 		}
 		tx.Variables.FilesCombinedSize = fmt.Sprintf("%d", totalSize)
 	}
