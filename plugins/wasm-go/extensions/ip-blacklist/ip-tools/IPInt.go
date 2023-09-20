@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// IPInt 用于存储 IP 地址的数据结构
 type IPInt struct {
 	integers []uint32
 }

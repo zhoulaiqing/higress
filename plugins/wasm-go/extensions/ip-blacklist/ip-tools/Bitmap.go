@@ -24,6 +24,7 @@ func (bm *Bitmap) SetRange(start, end uint32) {
 	if start > end {
 		start, end = end, start
 	}
+	// todo 这里需要优化，需要执行批量更新 Bit
 	for i := start; i <= end; i++ {
 		bm.SetBit(i)
 	}

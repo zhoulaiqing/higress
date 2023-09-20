@@ -13,6 +13,8 @@ import (
 	"github.com/tianchi/waf/wasmplugin/rule_tasks"
 )
 
+// todo 下方是逐渐迁移至语义分析模块的规则 （尚未完成）
+
 var Rule941 = &xss.Rule941{}
 var Rule921 = &protocol_attack.Rule921{}
 var Rule933 = &php_attack.Rule933{}
